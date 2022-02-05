@@ -18,6 +18,6 @@ export const data = (originalData as TableTransaction[])
 
 export const dates = uniq(
   flatten(
-    originalData.map((entry) => Object.keys(entry.transactions))
-  )
+    originalData.map((entry) => Object.keys(entry.transactions)),
+  ),
 ).sort();

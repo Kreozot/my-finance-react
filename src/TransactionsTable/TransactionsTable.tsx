@@ -1,5 +1,7 @@
 import { VFC, memo, useMemo } from 'react';
-import { Column, useExpanded, useGroupBy, useTable, TableState, UseGroupByState, TableInstance, UseExpandedState } from 'react-table';
+import {
+  Column, useExpanded, useGroupBy, useTable, TableState, UseGroupByState, TableInstance, UseExpandedState,
+} from 'react-table';
 import {
   DataTable,
   DataTableCell,
@@ -11,12 +13,12 @@ import {
 } from '@rmwc/data-table';
 
 import { dates, data, RowData } from '../data-transform';
-
-import '@material/data-table/dist/mdc.data-table.css'
-import '@rmwc/data-table/data-table.css'
-import '@rmwc/icon/icon.css'
 import { formatDateKeyHeader } from '../dates';
 import { formatMoney } from '../money';
+
+import '@material/data-table/dist/mdc.data-table.css';
+import '@rmwc/data-table/data-table.css';
+import '@rmwc/icon/icon.css';
 
 type TransactionsTableProps = {
 
@@ -28,7 +30,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
     {
       Header: 'Категория',
-      accessor: 'category'
+      accessor: 'category',
     },
     {
       Header: 'Название',
@@ -38,7 +40,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       Header: formatDateKeyHeader(dateKey),
       accessor: dateKey,
       aggregate: 'sum',
-      Cell: ({ value }: {value:number}) => formatMoney(value),
+      Cell: ({ value }: { value:number }) => formatMoney(value),
     })),
   ] as ReadonlyArray<Column<RowData>>, []);
 
@@ -69,37 +71,37 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       stickyRows={1}
       stickyColumns={2}
     >
-    <DataTableContent>
-      <DataTableHead>
-        {headerGroups.map(headerGroup => (
-          <DataTableRow {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <DataTableHeadCell {...column.getHeaderProps()}>
-                {column.render('Header')}
-              </DataTableHeadCell>
-            ))}
-          </DataTableRow>
-        ))}
-      </DataTableHead>
-      <DataTableBody>
-          {rows.map((row, i) => {
-            prepareRow(row)
+      <DataTableContent>
+        <DataTableHead>
+          {headerGroups.map((headerGroup) => (
+            <DataTableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <DataTableHeadCell {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                </DataTableHeadCell>
+              ))}
+            </DataTableRow>
+          ))}
+        </DataTableHead>
+        <DataTableBody>
+          {rows.map((row) => {
+            prepareRow(row);
             return (
               <DataTableRow {...row.getRowProps()}>
-                {row.cells.map(cell => {
+                {row.cells.map((cell) => {
                   return (
                     <DataTableCell {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </DataTableCell>
-                  )
+                  );
                 })}
               </DataTableRow>
-            )
+            );
           })}
-      </DataTableBody>
+        </DataTableBody>
       </DataTableContent>
     </DataTable>
-  )
+  );
 };
 
 export default memo(TransactionsTable);

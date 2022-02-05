@@ -2,10 +2,10 @@ import React from 'react';
 
 import TransactionsTable from './TransactionsTable/TransactionsTable';
 
-function App() {
+const App = () => {
   return (
-    <TransactionsTable/>
+    <TransactionsTable />
   );
-}
+};
 
 export default App;
