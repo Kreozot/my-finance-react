@@ -1,6 +1,20 @@
 import { VFC, memo, useMemo } from 'react';
 import { useTable, UseTableColumnOptions, UseTableRowProps } from 'react-table';
+import {
+  DataTable,
+  DataTableCell,
+  DataTableHeadCell,
+  DataTableRow,
+  DataTableBody,
+  DataTableContent,
+  DataTableHead,
+} from '@rmwc/data-table';
+
 import { dates, data } from '../data-transform';
+
+import '@material/data-table/dist/mdc.data-table.css'
+import '@rmwc/data-table/data-table.css'
+import '@rmwc/icon/icon.css'
 
 type TransactionsTableProps = {
 
@@ -22,59 +36,48 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     })),
   ], []);
 
-  const tableInstance = useTable({ columns, data });
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data,
+  })
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = tableInstance
-
+  // Render the UI for your table
   return (
-    // apply the table props
-    <table {...getTableProps()}>
-      <thead>
-        {// Loop over the header rows
-        headerGroups.map(headerGroup => (
-          // Apply the header row props
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {// Loop over the headers in each row
-            headerGroup.headers.map(column => (
-              // Apply the header cell props
-              <th {...column.getHeaderProps()}>
-                {// Render the header
-                column.render('Header')}
-              </th>
+    <DataTable
+      {...getTableProps()}
+      stickyRows={1}
+      stickyColumns={2}
+    >
+    <DataTableContent>
+      <DataTableHead>
+        {headerGroups.map(headerGroup => (
+          <DataTableRow {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <DataTableHeadCell {...column.getHeaderProps()}>
+                {column.render('Header')}
+              </DataTableHeadCell>
             ))}
-          </tr>
+          </DataTableRow>
         ))}
-      </thead>
-      {/* Apply the table body props */}
-      <tbody {...getTableBodyProps()}>
-        {// Loop over the table rows
-        rows.map(row => {
-          // Prepare the row for display
-          prepareRow(row)
-          return (
-            // Apply the row props
-            <tr {...row.getRowProps()}>
-              {// Loop over the rows cells
-              row.cells.map(cell => {
-                // Apply the cell props
-                return (
-                  <td {...cell.getCellProps()}>
-                    {// Render the cell contents
-                    cell.render('Cell')}
-                  </td>
-                )
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+      </DataTableHead>
+      <DataTableBody>
+          {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <DataTableRow {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return (
+                    <DataTableCell {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </DataTableCell>
+                  )
+                })}
+              </DataTableRow>
+            )
+          })}
+      </DataTableBody>
+      </DataTableContent>
+    </DataTable>
   )
 };
 
