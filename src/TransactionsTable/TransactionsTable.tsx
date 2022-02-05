@@ -1,6 +1,6 @@
 import { VFC, memo, useMemo } from 'react';
 import {
-  Chart, Dots, Lines,
+  Chart, Dots, Lines, Ticks,
 } from 'rumble-charts';
 import {
   Column,
@@ -66,6 +66,35 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     })),
     {
       Header: 'График',
+      id: 'chart',
+      // eslint-disable-next-line react/no-unstable-nested-components
+      Cell: ({ row }: { row: FixedRow }) => {
+        const chartDataSet = dates.map((dateKey: string) => Math.abs(row?.values?.[dateKey]));
+        return (
+          <Chart
+            series={[{
+              data: chartDataSet,
+            }]}
+            width={200}
+            height={40}
+                    // viewBox="0 -10 200 60"
+            scaleX={{
+              paddingEnd: 0.1,
+              paddingStart: 0.1,
+            }}
+            scaleY={{
+              paddingTop: 5,
+              paddingBottom: 5,
+            }}
+          >
+            <Lines
+              interpolation="linear"
+              lineWidth={1}
+            />
+            <Dots circleRadius={1} />
+          </Chart>
+        );
+      },
     },
   ] as ReadonlyArray<Column<RowData>>, []);
 
@@ -113,8 +142,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
         <DataTableBody>
           {rows.map((row: FixedRow) => {
             prepareRow(row);
-            const chartDataSet = dates.map((dateKey: string) => Math.abs(row?.values?.[dateKey]));
-
             return (
               <DataTableRow {...row.getRowProps()}>
                 {row.cells.map((cell: FixedCell, index) => {
@@ -138,30 +165,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
                     </DataTableCell>
                   );
                 })}
-                <DataTableCell>
-                  <Chart
-                    series={[{
-                      data: chartDataSet,
-                    }]}
-                    width={200}
-                    height={40}
-                    // viewBox="0 -10 200 60"
-                    scaleX={{
-                      paddingEnd: 0.1,
-                      paddingStart: 0.1,
-                    }}
-                    scaleY={{
-                      paddingTop: 5,
-                      paddingBottom: 5,
-                    }}
-                  >
-                    <Lines
-                      interpolation="linear"
-                      lineWidth={1}
-                    />
-                    <Dots circleRadius={1} />
-                  </Chart>
-                </DataTableCell>
               </DataTableRow>
             );
           })}
