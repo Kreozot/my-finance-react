@@ -1,6 +1,18 @@
 import { VFC, memo, useMemo } from 'react';
+import MiniChart from 'react-mini-chart';
 import {
-  Column, useExpanded, useGroupBy, useTable, TableState, UseGroupByState, TableInstance, UseExpandedState,
+  Column,
+  useExpanded,
+  useGroupBy,
+  useTable,
+  TableState,
+  UseGroupByState,
+  TableInstance,
+  UseExpandedState,
+  Cell,
+  UseExpandedRowProps,
+  Row,
+  UseGroupByCellProps,
 } from 'react-table';
 import {
   DataTable,
@@ -27,6 +39,10 @@ type TransactionsTableProps = {
 };
 
 type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
+type FixedCell = Cell<RowData, any> & UseGroupByCellProps<RowData>;
+type FixedRow = (Row<RowData> & UseExpandedRowProps<RowData>) & {
+  cells: FixedCell[]
+};
 
 const DATA_COLUMN_START_INDEX = 2;
 
@@ -46,6 +62,9 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       aggregate: 'sum',
       Cell: ({ value }: { value:number }) => formatMoney(value),
     })),
+    {
+      Header: 'График',
+    },
   ] as ReadonlyArray<Column<RowData>>, []);
 
   const {
@@ -66,7 +85,8 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     useGroupBy,
     useExpanded,
   ) as (TableInstance<RowData> & {
-    state: FixedTableState
+    state: FixedTableState,
+    rows: FixedRow[],
   });
 
   // Render the UI for your table
@@ -89,20 +109,36 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
           ))}
         </DataTableHead>
         <DataTableBody>
-          {rows.map((row) => {
+          {rows.map((row: FixedRow) => {
             prepareRow(row);
+            const chartDataSet = dates.map((dateKey: string) => Math.abs(row?.values?.[dateKey]));
+
             return (
               <DataTableRow {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
-                  const className = index >= DATA_COLUMN_START_INDEX
-                    ? styles.moneyCell
-                    : '';
+                {row.cells.map((cell: FixedCell, index) => {
+                  if (cell.isGrouped) {
+                    return (
+                      <DataTableCell
+                        {...cell.getCellProps()}
+                        {...row.getToggleRowExpandedProps()}
+                      >
+                        {cell.render('Cell')}
+                      </DataTableCell>
+                    );
+                  }
+
                   return (
-                    <DataTableCell {...cell.getCellProps()} className={className}>
+                    <DataTableCell
+                      {...cell.getCellProps()}
+                      alignEnd={index >= DATA_COLUMN_START_INDEX}
+                    >
                       {cell.render('Cell')}
                     </DataTableCell>
                   );
                 })}
+                <DataTableCell>
+                  <MiniChart dataSet={chartDataSet} />
+                </DataTableCell>
               </DataTableRow>
             );
           })}

@@ -3,5 +3,8 @@ const formatNumber = (value: number): string => {
 };
 
 export const formatMoney = (sum: number): string => {
+  if (!sum) {
+    return '';
+  }
   return formatNumber(sum);
 };
