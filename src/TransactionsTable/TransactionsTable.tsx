@@ -1,5 +1,5 @@
 import { VFC, memo, useMemo } from 'react';
-import { useTable, UseTableColumnOptions, UseTableRowProps } from 'react-table';
+import { Column, useExpanded, useGroupBy, useTable, UseTableColumnOptions } from 'react-table';
 import {
   DataTable,
   DataTableCell,
@@ -10,11 +10,13 @@ import {
   DataTableHead,
 } from '@rmwc/data-table';
 
-import { dates, data } from '../data-transform';
+import { dates, data, RowData } from '../data-transform';
 
 import '@material/data-table/dist/mdc.data-table.css'
 import '@rmwc/data-table/data-table.css'
 import '@rmwc/icon/icon.css'
+import { formatDateKeyHeader } from '../dates';
+import { formatMoney } from '../money';
 
 type TransactionsTableProps = {
 
@@ -31,15 +33,32 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       accessor: 'name',
     },
     ...dates.map((dateKey) => ({
-      Header: dateKey,
+      Header: formatDateKeyHeader(dateKey),
       accessor: dateKey,
+      aggregate: 'sum',
+      Cell: ({ value }: {value:number}) => formatMoney(value),
     })),
-  ], []);
+  ] as ReadonlyArray<Column<RowData>>, []);
 
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  })
+  const {
+    getTableProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    // @ts-ignore TS2339
+    state: { groupBy, expanded },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: {
+        // @ts-ignore TS2322
+        groupBy: ['category'],
+      },
+    },
+    useGroupBy,
+    useExpanded,
+  );
 
   // Render the UI for your table
   return (
