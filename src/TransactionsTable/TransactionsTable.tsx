@@ -20,11 +20,15 @@ import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
+import styles from './TransactionsTable.module.scss';
+
 type TransactionsTableProps = {
 
 };
 
 type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
+
+const DATA_COLUMN_START_INDEX = 2;
 
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
@@ -49,6 +53,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     headerGroups,
     rows,
     prepareRow,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- TODO
     state: { groupBy, expanded },
   } = useTable(
     {
@@ -88,9 +93,12 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
             prepareRow(row);
             return (
               <DataTableRow {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+                {row.cells.map((cell, index) => {
+                  const className = index >= DATA_COLUMN_START_INDEX
+                    ? styles.moneyCell
+                    : '';
                   return (
-                    <DataTableCell {...cell.getCellProps()}>
+                    <DataTableCell {...cell.getCellProps()} className={className}>
                       {cell.render('Cell')}
                     </DataTableCell>
                   );
