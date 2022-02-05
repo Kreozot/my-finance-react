@@ -1,5 +1,5 @@
 import { VFC, memo, useMemo } from 'react';
-import { Column, useExpanded, useGroupBy, useTable, UseTableColumnOptions } from 'react-table';
+import { Column, useExpanded, useGroupBy, useTable, TableState, UseGroupByState, TableInstance, UseExpandedState } from 'react-table';
 import {
   DataTable,
   DataTableCell,
@@ -21,6 +21,8 @@ import { formatMoney } from '../money';
 type TransactionsTableProps = {
 
 };
+
+type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
 
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
@@ -45,20 +47,20 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     headerGroups,
     rows,
     prepareRow,
-    // @ts-ignore TS2339
     state: { groupBy, expanded },
   } = useTable(
     {
       columns,
       data,
       initialState: {
-        // @ts-ignore TS2322
         groupBy: ['category'],
-      },
+      } as FixedTableState,
     },
     useGroupBy,
     useExpanded,
-  );
+  ) as (TableInstance<RowData> & {
+    state: FixedTableState
+  });
 
   // Render the UI for your table
   return (
