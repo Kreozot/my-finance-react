@@ -1,5 +1,7 @@
 import { VFC, memo, useMemo } from 'react';
-import MiniChart from 'react-mini-chart';
+import {
+  Chart, Dots, Lines,
+} from 'rumble-charts';
 import {
   Column,
   useExpanded,
@@ -137,7 +139,28 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
                   );
                 })}
                 <DataTableCell>
-                  <MiniChart dataSet={chartDataSet} />
+                  <Chart
+                    series={[{
+                      data: chartDataSet,
+                    }]}
+                    width={200}
+                    height={40}
+                    // viewBox="0 -10 200 60"
+                    scaleX={{
+                      paddingEnd: 0.1,
+                      paddingStart: 0.1,
+                    }}
+                    scaleY={{
+                      paddingTop: 5,
+                      paddingBottom: 5,
+                    }}
+                  >
+                    <Lines
+                      interpolation="linear"
+                      lineWidth={1}
+                    />
+                    <Dots circleRadius={1} />
+                  </Chart>
                 </DataTableCell>
               </DataTableRow>
             );
