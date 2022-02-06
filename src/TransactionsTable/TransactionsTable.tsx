@@ -19,7 +19,7 @@ import {
 
 import { dates, data, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
-import { formatMoney, median } from '../money';
+import { formatMoney, mostAverage, roundInteger } from '../money';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
@@ -27,6 +27,7 @@ import '@rmwc/icon/icon.css';
 
 import ChartCell from './ChartCell';
 import { FixedRow, FixedTableState, FixedCell } from './data-table';
+import MeanCell from './MeanCell';
 
 // import styles from './TransactionsTable.module.scss';
 
@@ -35,27 +36,6 @@ type TransactionsTableProps = {
 };
 
 const DATA_COLUMN_START_INDEX = 2;
-
-const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
-  let firstOccurrence = false;
-  const result = Object.keys(row.values)
-    .filter((key) => /\d\d\d\d-\d\d/.test(key))
-    .map((key) => row.values[key]);
-  if (trimStart) {
-    return result
-      .filter((value) => {
-        if (firstOccurrence) {
-          return true;
-        }
-        if (value) {
-          firstOccurrence = true;
-          return true;
-        }
-        return false;
-      });
-  }
-  return result;
-};
 
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
@@ -73,9 +53,9 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       Cell: ChartCell,
     },
     {
-      Header: 'Медиана',
+      Header: <>Среднее для P<sub>95%</sub></>,
       id: 'median',
-      Cell: ({ row }: CellProps<RowData>) => formatMoney(median(getMoneyDataFromRow(row as FixedRow, true))),
+      Cell: MeanCell,
     },
     ...dates.map((dateKey) => ({
       Header: formatDateKeyHeader(dateKey),

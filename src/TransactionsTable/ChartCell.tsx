@@ -1,14 +1,10 @@
 import { memo, VFC } from 'react';
+import { CellProps } from 'react-table';
 import { Chart, Lines } from 'rumble-charts';
 
-import { dates } from '../data-transform';
-import { FixedRow } from './data-table';
+import { dates, RowData } from '../data-transform';
 
-type ChartCellProps = {
-  row: FixedRow,
-};
-
-const ChartCell: VFC<ChartCellProps> = ({ row }) => {
+const ChartCell: VFC<CellProps<RowData>> = ({ row }) => {
   const chartDataSet = dates.map((dateKey: string) => Math.abs(row.values?.[dateKey]));
   return (
     <Chart
