@@ -39,7 +39,8 @@
     },
     "rules": {
       "react/jsx-props-no-spreading": "off",
-      "@typescript-eslint/no-unused-vars": "warn"
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-debugger": "warn"
     }
   },
   "browserslist": {

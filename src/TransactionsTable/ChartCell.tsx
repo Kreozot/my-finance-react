@@ -13,8 +13,9 @@ const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
 }, [] as number[]);
 
 const ChartCell: VFC<CellProps<RowData>> = ({ row }) => {
-  const chartDataSet = dates.map((dateKey: string) => Math.abs(row.values?.[dateKey]));
-
+  const chartDataSet = row.original
+    ? dates.map((dateKey: string) => Math.abs(row.original.transactions[dateKey] || 0))
+    : dates.map((dateKey: string) => Math.abs(row.values[dateKey] || 0));
   return (
     <Chart
       series={[{
