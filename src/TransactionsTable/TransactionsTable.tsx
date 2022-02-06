@@ -36,6 +36,27 @@ type TransactionsTableProps = {
 
 const DATA_COLUMN_START_INDEX = 2;
 
+const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
+  let firstOccurrence = false;
+  const result = Object.keys(row.values)
+    .filter((key) => /\d\d\d\d-\d\d/.test(key))
+    .map((key) => row.values[key]);
+  if (trimStart) {
+    return result
+      .filter((value) => {
+        if (firstOccurrence) {
+          return true;
+        }
+        if (value) {
+          firstOccurrence = true;
+          return true;
+        }
+        return false;
+      });
+  }
+  return result;
+};
+
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
     {
@@ -51,11 +72,11 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       id: 'chart',
       Cell: ChartCell,
     },
-    // {
-    //   Header: 'Медиана',
-    //   id: 'median',
-    //   Cell: ({ row }: CellProps<RowData>) => median(row.values),
-    // },
+    {
+      Header: 'Медиана',
+      id: 'median',
+      Cell: ({ row }: CellProps<RowData>) => formatMoney(median(getMoneyDataFromRow(row as FixedRow, true))),
+    },
     ...dates.map((dateKey) => ({
       Header: formatDateKeyHeader(dateKey),
       id: dateKey,
