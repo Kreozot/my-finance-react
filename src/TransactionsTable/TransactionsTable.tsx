@@ -1,20 +1,10 @@
 import { VFC, memo, useMemo } from 'react';
 import {
-  Chart, Dots, Lines, Ticks,
-} from 'rumble-charts';
-import {
   Column,
   useExpanded,
   useGroupBy,
   useTable,
-  TableState,
-  UseGroupByState,
   TableInstance,
-  UseExpandedState,
-  Cell,
-  UseExpandedRowProps,
-  Row,
-  UseGroupByCellProps,
 } from 'react-table';
 import {
   DataTable,
@@ -34,16 +24,13 @@ import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
+import ChartCell from './ChartCell';
+import { FixedRow, FixedTableState, FixedCell } from './data-table';
+
 import styles from './TransactionsTable.module.scss';
 
 type TransactionsTableProps = {
 
-};
-
-type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
-type FixedCell = Cell<RowData, any> & UseGroupByCellProps<RowData>;
-type FixedRow = (Row<RowData> & UseExpandedRowProps<RowData>) & {
-  cells: FixedCell[]
 };
 
 const DATA_COLUMN_START_INDEX = 2;
@@ -58,44 +45,17 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       Header: 'Название',
       accessor: 'name',
     },
+    {
+      Header: 'График',
+      id: 'chart',
+      Cell: ChartCell,
+    },
     ...dates.map((dateKey) => ({
       Header: formatDateKeyHeader(dateKey),
       accessor: dateKey,
       aggregate: 'sum',
       Cell: ({ value }: { value:number }) => formatMoney(value),
     })),
-    {
-      Header: 'График',
-      id: 'chart',
-      // eslint-disable-next-line react/no-unstable-nested-components
-      Cell: ({ row }: { row: FixedRow }) => {
-        const chartDataSet = dates.map((dateKey: string) => Math.abs(row?.values?.[dateKey]));
-        return (
-          <Chart
-            series={[{
-              data: chartDataSet,
-            }]}
-            width={200}
-            height={40}
-                    // viewBox="0 -10 200 60"
-            scaleX={{
-              paddingEnd: 0.1,
-              paddingStart: 0.1,
-            }}
-            scaleY={{
-              paddingTop: 5,
-              paddingBottom: 5,
-            }}
-          >
-            <Lines
-              interpolation="linear"
-              lineWidth={1}
-            />
-            <Dots circleRadius={1} />
-          </Chart>
-        );
-      },
-    },
   ] as ReadonlyArray<Column<RowData>>, []);
 
   const {
@@ -103,7 +63,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     headerGroups,
     rows,
     prepareRow,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- TODO
     state: { groupBy, expanded },
   } = useTable(
     {
@@ -120,7 +79,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     rows: FixedRow[],
   });
 
-  // Render the UI for your table
   return (
     <DataTable
       {...getTableProps()}

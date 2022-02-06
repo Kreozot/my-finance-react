@@ -9,7 +9,7 @@ export type RowData = {
   [dateKey: string]: string,
 };
 
-export const data = (originalData as TableTransaction[])
+export const data = (originalData as unknown as TableTransaction[])
   .map((entry) => ({
     category: entry.category,
     name: entry.name,
@@ -18,6 +18,6 @@ export const data = (originalData as TableTransaction[])
 
 export const dates = uniq(
   flatten(
-    originalData.map((entry) => Object.keys(entry.transactions)),
+    (originalData as unknown as TableTransaction[]).map((entry) => Object.keys(entry.transactions)),
   ),
 ).sort();
