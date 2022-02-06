@@ -31,6 +31,7 @@ import MeanCell from './MeanCell';
 import CategoryCell from './CategoryCell';
 
 import styles from './TransactionsTable.module.scss';
+import MoneyCell from './MoneyCell';
 
 type TransactionsTableProps = {
 
@@ -60,7 +61,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       id: dateKey,
       accessor: (originalRow: RowData) => originalRow.transactions[dateKey],
       aggregate: 'sum',
-      Cell: ({ value }: CellProps<RowData>) => formatMoney(value),
+      Cell: MoneyCell,
     })),
   ] as ReadonlyArray<Column<RowData>>, []);
 
