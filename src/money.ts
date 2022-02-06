@@ -1,4 +1,4 @@
-import percentile from 'percentile';
+import percentile from 'just-percentile';
 
 const formatNumber = (value: number): string => {
   return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -16,8 +16,8 @@ export const mostAverage = (data: number[]): number => {
     return 0;
   }
   const absData = data.map(Math.abs);
-  const percentile95 = percentile(95, absData) as number;
-  const percentileValues = absData.filter((value) => Math.abs(value) < Math.abs(percentile95));
+  const percentile95 = percentile(absData, 0.95) as number;
+  const percentileValues = absData.filter((value) => Math.abs(value) <= Math.abs(percentile95));
   const percentileSum = percentileValues.reduce((result, value) => result + value, 0);
   const result = percentileSum / percentileValues.length;
   return result;

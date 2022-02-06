@@ -52,7 +52,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       Cell: ChartCell,
     },
     {
-      Header: <>Среднее для P<sub>95%</sub></>,
+      Header: <>Ср. для P<sub>95%</sub> за год</>,
       id: 'median',
       Cell: MeanCell,
     },

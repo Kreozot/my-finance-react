@@ -6,13 +6,15 @@ import { formatMoney, mostAverage as getMostAverage, roundInteger } from '../mon
 import { FixedRow } from './data-table';
 
 const MEANINGFULL_LIMIT = 100;
+const LAST_MONTHS_COUNT = 12;
 
 const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
   let firstOccurrence = false;
   const result = Object.keys(row.values)
     .filter((key) => /\d\d\d\d-\d\d/.test(key))
     .sort()
-    .map((key) => row.values[key]);
+    .slice(-LAST_MONTHS_COUNT)
+    .map((key) => row.values[key] as number);
   if (trimStart) {
     return result
       .filter((value) => {
@@ -30,7 +32,8 @@ const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
 };
 
 const MeanCell: VFC<CellProps<RowData>> = ({ row }) => {
-  const mostAverage = getMostAverage(getMoneyDataFromRow(row as FixedRow, true));
+  const data = getMoneyDataFromRow(row as FixedRow, true);
+  const mostAverage = getMostAverage(data);
   if (mostAverage < MEANINGFULL_LIMIT) {
     return null;
   }
