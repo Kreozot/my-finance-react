@@ -9,7 +9,7 @@ type ChartCellProps = {
 };
 
 const ChartCell: VFC<ChartCellProps> = ({ row }) => {
-  const chartDataSet = dates.map((dateKey: string) => Math.abs(row?.values?.[dateKey]));
+  const chartDataSet = dates.map((dateKey: string) => Math.abs(row.values?.[dateKey]));
   return (
     <Chart
       series={[{

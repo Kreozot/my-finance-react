@@ -5,6 +5,7 @@ import {
   useGroupBy,
   useTable,
   TableInstance,
+  CellProps,
 } from 'react-table';
 import {
   DataTable,
@@ -18,7 +19,7 @@ import {
 
 import { dates, data, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
-import { formatMoney } from '../money';
+import { formatMoney, median } from '../money';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
@@ -27,7 +28,7 @@ import '@rmwc/icon/icon.css';
 import ChartCell from './ChartCell';
 import { FixedRow, FixedTableState, FixedCell } from './data-table';
 
-import styles from './TransactionsTable.module.scss';
+// import styles from './TransactionsTable.module.scss';
 
 type TransactionsTableProps = {
 
@@ -50,11 +51,17 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       id: 'chart',
       Cell: ChartCell,
     },
+    // {
+    //   Header: 'Медиана',
+    //   id: 'median',
+    //   Cell: ({ row }: CellProps<RowData>) => median(row.values),
+    // },
     ...dates.map((dateKey) => ({
       Header: formatDateKeyHeader(dateKey),
-      accessor: dateKey,
+      id: dateKey,
+      accessor: (originalRow: RowData) => originalRow.transactions[dateKey],
       aggregate: 'sum',
-      Cell: ({ value }: { value:number }) => formatMoney(value),
+      Cell: ({ value }: CellProps<RowData>) => formatMoney(value),
     })),
   ] as ReadonlyArray<Column<RowData>>, []);
 
@@ -63,7 +70,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     headerGroups,
     rows,
     prepareRow,
-    state: { groupBy, expanded },
   } = useTable(
     {
       columns,
