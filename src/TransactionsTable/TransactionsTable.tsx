@@ -30,7 +30,7 @@ import { FixedRow, FixedTableState, FixedCell } from './data-table';
 import MeanCell from './MeanCell';
 import CategoryCell from './CategoryCell';
 
-// import styles from './TransactionsTable.module.scss';
+import styles from './TransactionsTable.module.scss';
 
 type TransactionsTableProps = {
 
@@ -95,7 +95,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
           {headerGroups.map((headerGroup) => (
             <DataTableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <DataTableHeadCell {...column.getHeaderProps()}>
+                <DataTableHeadCell {...column.getHeaderProps()} className={styles.header}>
                   {column.render('Header')}
                 </DataTableHeadCell>
               ))}
