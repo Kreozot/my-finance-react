@@ -23,15 +23,14 @@ export const mostAverage = (data: number[]): number => {
   return result;
 };
 
-/** 12345 => 12000, 123 => 120, 12 => 12 */
+/** 123456 => 123000, 123 => 120, 12 => 12 */
 export const roundInteger = (value: number, roundMin: number = 2, maxZeros: number = 3): number => {
   const valueInteger = Math.round(value);
   const digitCount = valueInteger.toString().length;
-  // if (digitCount <= roundMin) {
-  //   return valueInteger;
-  // }
+  if (digitCount <= roundMin) {
+    return valueInteger;
+  }
   const roundDiv = 10 ** Math.min(maxZeros, digitCount - roundMin);
   const result = Math.round(valueInteger / roundDiv) * roundDiv;
-  console.log(valueInteger, result);
   return result;
 };

@@ -19,7 +19,7 @@ import {
 
 import { dates, data, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
-import { formatMoney, mostAverage, roundInteger } from '../money';
+import { formatMoney } from '../money';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
@@ -28,6 +28,7 @@ import '@rmwc/icon/icon.css';
 import ChartCell from './ChartCell';
 import { FixedRow, FixedTableState, FixedCell } from './data-table';
 import MeanCell from './MeanCell';
+import CategoryCell from './CategoryCell';
 
 // import styles from './TransactionsTable.module.scss';
 
@@ -42,10 +43,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
     {
       Header: 'Категория',
       accessor: 'category',
-    },
-    {
-      Header: 'Название',
-      accessor: 'name',
+      Cell: CategoryCell,
     },
     {
       Header: 'График',
