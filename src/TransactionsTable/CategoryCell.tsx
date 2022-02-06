@@ -14,8 +14,9 @@ const CategoryCell: VFC<CellProps<RowData>> = ({ row }) => {
     );
   }
   const categoryTitle = row.values.category.slice(0, -2);
+  const incomeClassName = row.values.category.slice(-1) === '1' ? styles.income : styles.expenses;
   return (
-    <span className={styles.category}>
+    <span className={`${styles.category} ${incomeClassName}`}>
       {categoryTitle}
     </span>
   );

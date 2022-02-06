@@ -5,7 +5,6 @@ import {
   useGroupBy,
   useTable,
   TableInstance,
-  CellProps,
 } from 'react-table';
 import {
   DataTable,
@@ -19,7 +18,6 @@ import {
 
 import { dates, data, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
-import { formatMoney } from '../money';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
