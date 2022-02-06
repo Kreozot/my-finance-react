@@ -16,7 +16,6 @@ export const getMostAverage = (data: number[]): number => {
     return 0;
   }
   const absData = data.map(Math.abs);
-  console.log(absData);
   const percentile95 = percentile(absData, 0.95) as number;
   const percentileValues = absData.filter((value) => Math.abs(value) <= Math.abs(percentile95));
   const percentileSum = percentileValues.reduce((result, value) => result + value, 0);

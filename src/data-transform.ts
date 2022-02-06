@@ -7,18 +7,17 @@ import { TableTransaction } from './types';
 
 export type RowData = TableTransaction & {
   isIncome: boolean;
-  groupingKey: string;
 };
 
 export const data = [
   ...(tableIncome as unknown as RowData[]).map((entry) => {
     entry.isIncome = true;
-    entry.groupingKey = `${entry.category}-1`;
+    entry.category = `${entry.category}-1`;
     return entry;
   }),
   ...(tableExpenses as unknown as RowData[]).map((entry) => {
     entry.isIncome = false;
-    entry.groupingKey = `${entry.category}-0`;
+    entry.category = `${entry.category}-0`;
     return entry;
   }),
 ];

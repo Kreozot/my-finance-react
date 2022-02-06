@@ -13,9 +13,10 @@ const CategoryCell: VFC<CellProps<RowData>> = ({ row }) => {
       </span>
     );
   }
+  const categoryTitle = row.values.category.slice(0, -2);
   return (
     <span className={styles.category}>
-      {row.values.category}
+      {categoryTitle}
     </span>
   );
 };
