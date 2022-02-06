@@ -1,14 +1,15 @@
 import percentile from 'just-percentile';
+import { sum } from 'lodash';
 
 const formatNumber = (value: number): string => {
   return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };
 
-export const formatMoney = (sum: number): string => {
-  if (!sum) {
+export const formatMoney = (amount: number): string => {
+  if (!amount) {
     return '';
   }
-  return formatNumber(sum);
+  return formatNumber(amount);
 };
 
 export const getMostAverage = (data: number[]): number => {
@@ -18,8 +19,11 @@ export const getMostAverage = (data: number[]): number => {
   const absData = data.map(Math.abs);
   const percentile95 = percentile(absData, 0.95) as number;
   const percentileValues = absData.filter((value) => Math.abs(value) <= Math.abs(percentile95));
-  const percentileSum = percentileValues.reduce((result, value) => result + value, 0);
-  const result = percentileSum / percentileValues.length;
+  const percentileSum = sum(percentileValues);
+
+  const result = percentileSum > 0
+    ? percentileSum / percentileValues.length
+    : sum(absData) / absData.length;
   return result;
 };
 
