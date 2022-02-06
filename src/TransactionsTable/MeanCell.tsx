@@ -2,7 +2,7 @@ import { memo, VFC } from 'react';
 import { CellProps } from 'react-table';
 
 import { RowData } from '../data-transform';
-import { formatMoney, mostAverage as getMostAverage, roundInteger } from '../money';
+import { formatMoney, getMostAverage, roundInteger } from '../money';
 import { FixedRow } from './data-table';
 
 const MEANINGFULL_LIMIT = 100;
@@ -14,7 +14,7 @@ const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
     .filter((key) => /\d\d\d\d-\d\d/.test(key))
     .sort()
     .slice(-LAST_MONTHS_COUNT)
-    .map((key) => row.values[key] as number);
+    .map((key) => row.values[key] || 0 as number);
   if (trimStart) {
     return result
       .filter((value) => {

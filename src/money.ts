@@ -11,11 +11,12 @@ export const formatMoney = (sum: number): string => {
   return formatNumber(sum);
 };
 
-export const mostAverage = (data: number[]): number => {
+export const getMostAverage = (data: number[]): number => {
   if (!data.length) {
     return 0;
   }
   const absData = data.map(Math.abs);
+  console.log(absData);
   const percentile95 = percentile(absData, 0.95) as number;
   const percentileValues = absData.filter((value) => Math.abs(value) <= Math.abs(percentile95));
   const percentileSum = percentileValues.reduce((result, value) => result + value, 0);

@@ -2,8 +2,7 @@ import { memo, VFC } from 'react';
 import { CellProps } from 'react-table';
 
 import { RowData } from '../data-transform';
-import { formatMoney, mostAverage as getMostAverage, roundInteger } from '../money';
-import { FixedRow } from './data-table';
+import { formatMoney } from '../money';
 
 import styles from './MoneyCell.module.scss';
 

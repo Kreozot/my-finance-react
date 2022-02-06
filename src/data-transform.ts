@@ -1,14 +1,30 @@
+/* eslint-disable no-param-reassign */
 import { uniq, flatten } from 'lodash';
 
-import originalData from './table.json';
+import tableIncome from './tableIncome.json';
+import tableExpenses from './tableExpenses.json';
 import { TableTransaction } from './types';
 
-export type RowData = TableTransaction;
+export type RowData = TableTransaction & {
+  isIncome: boolean;
+  groupingKey: string;
+};
 
-export const data = (originalData as unknown as RowData[]);
+export const data = [
+  ...(tableIncome as unknown as RowData[]).map((entry) => {
+    entry.isIncome = true;
+    entry.groupingKey = `${entry.category}-1`;
+    return entry;
+  }),
+  ...(tableExpenses as unknown as RowData[]).map((entry) => {
+    entry.isIncome = false;
+    entry.groupingKey = `${entry.category}-0`;
+    return entry;
+  }),
+];
 
 export const dates: string[] = uniq(
   flatten(
-    (originalData as unknown as TableTransaction[]).map((entry) => Object.keys(entry.transactions)),
+    data.map((entry) => Object.keys(entry.transactions)),
   ),
 ).sort();
