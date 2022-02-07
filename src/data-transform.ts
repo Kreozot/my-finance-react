@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { uniq, flatten } from 'lodash';
 
-import tableIncome from './tableIncome.json';
-import tableExpenses from './tableExpenses.json';
+import tableIncome from './data/tableIncome.json';
+import tableExpenses from './data/tableExpenses.json';
 import { TableTransaction } from './types';
 
 export type RowData = TableTransaction & {
