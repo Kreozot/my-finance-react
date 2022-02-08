@@ -4,6 +4,7 @@ import { CellProps } from 'react-table';
 import { RowData } from '../data-transform';
 import { formatMoney, getMostAverage, roundInteger } from '../money';
 import { FixedRow } from './data-table';
+import MoneyCell from './MoneyCell';
 
 const MEANINGFULL_LIMIT = 100;
 const LAST_MONTHS_COUNT = 12;
@@ -38,9 +39,7 @@ const MeanCell: VFC<CellProps<RowData>> = ({ row }) => {
     return null;
   }
   return (
-    <>
-      {formatMoney(roundInteger(mostAverage))}
-    </>
+    <MoneyCell value={roundInteger(mostAverage)} />
   );
 };
 

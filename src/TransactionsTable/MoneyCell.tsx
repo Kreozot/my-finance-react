@@ -8,10 +8,10 @@ import styles from './MoneyCell.module.scss';
 
 const MEANINGFULL_LIMIT = 100;
 
-const MoneyCell: VFC<CellProps<RowData>> = ({ value }) => {
+const MoneyCell: VFC<Partial<CellProps<RowData>>> = ({ value }) => {
   const className = (Math.abs(value) < MEANINGFULL_LIMIT) ? styles.secondary : '';
   return (
-    <span className={className}>
+    <span className={`${className} ${styles.money}`}>
       {formatMoney(value)}
     </span>
   );

@@ -1,11 +1,12 @@
 import { memo, VFC } from 'react';
-import { CellProps } from 'react-table';
+import { Icon } from '@rmwc/icon';
 
-import { RowData } from '../data-transform';
+import { FixedCellProps } from './data-table';
+import { tableData } from '../data-transform';
 
 import styles from './CategoryCell.module.scss';
 
-const CategoryCell: VFC<CellProps<RowData>> = ({ row }) => {
+const CategoryCell: VFC<FixedCellProps> = ({ row, cell }) => {
   if (row.original) {
     return (
       <span className={styles.name}>
@@ -15,9 +16,20 @@ const CategoryCell: VFC<CellProps<RowData>> = ({ row }) => {
   }
   const categoryTitle = row.values.category.slice(0, -2);
   const incomeClassName = row.values.category.slice(-1) === '1' ? styles.income : styles.expenses;
+
   return (
-    <span className={`${styles.category} ${incomeClassName}`}>
-      {categoryTitle}
+    <span>
+      <span
+        className={`${styles.category} ${incomeClassName}`}
+        {...row.getToggleRowExpandedProps()}
+      >
+        {categoryTitle}
+      </span>
+
+      <Icon
+        icon={{ icon: 'visibility', size: 'small' }}
+        onClick={() => tableData.hideCategory(cell.value)}
+      />
     </span>
   );
 };

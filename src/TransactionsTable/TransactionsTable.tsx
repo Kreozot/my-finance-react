@@ -1,4 +1,4 @@
-import { VFC, memo, useMemo } from 'react';
+import { VFC, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Column,
@@ -16,7 +16,6 @@ import {
   DataTableContent,
   DataTableHead,
 } from '@rmwc/data-table';
-import { Icon } from '@rmwc/icon';
 
 import { dates, tableData, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
@@ -37,8 +36,6 @@ import MoneyCell from './MoneyCell';
 type TransactionsTableProps = {
 
 };
-
-const DATA_COLUMN_START_INDEX = 2;
 
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
   const columns = useMemo(() => [
@@ -109,18 +106,13 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
             prepareRow(row);
             return (
               <DataTableRow {...row.getRowProps()}>
-                {row.cells.map((cell: FixedCell, index) => {
+                {row.cells.map((cell: FixedCell) => {
                   if (cell.isGrouped) {
                     return (
                       <DataTableCell
                         {...cell.getCellProps()}
-                        {...row.getToggleRowExpandedProps()}
                       >
                         {cell.render('Cell')}
-                        <Icon
-                          icon={{ icon: 'visibility', size: 'small' }}
-                          onClick={() => tableData.hideCategory(cell.value)}
-                        />
                       </DataTableCell>
                     );
                   }
@@ -128,7 +120,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
                   return (
                     <DataTableCell
                       {...cell.getCellProps()}
-                      alignEnd={index >= DATA_COLUMN_START_INDEX}
                     >
                       {cell.render('Cell')}
                     </DataTableCell>
