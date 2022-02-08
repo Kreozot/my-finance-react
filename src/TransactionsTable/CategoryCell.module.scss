@@ -1,5 +1,21 @@
+.visibilityButton {
+  display: none;
+  cursor: pointer;
+}
+
 .category {
+  display: flex;
+
+  &:hover {
+    .visibilityButton {
+      display: inline-flex;
+    }
+  }
+}
+
+.categoryName {
   font-weight: bold;
+  width: 100%;
 }
 
 .name {

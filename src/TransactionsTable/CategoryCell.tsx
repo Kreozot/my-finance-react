@@ -18,15 +18,16 @@ const CategoryCell: VFC<FixedCellProps> = ({ row, cell }) => {
   const incomeClassName = row.values.category.slice(-1) === '1' ? styles.income : styles.expenses;
 
   return (
-    <span>
+    <span className={styles.category}>
       <span
-        className={`${styles.category} ${incomeClassName}`}
+        className={`${styles.categoryName} ${incomeClassName}`}
         {...row.getToggleRowExpandedProps()}
       >
         {categoryTitle}
       </span>
 
       <Icon
+        className={styles.visibilityButton}
         icon={{ icon: 'visibility', size: 'small' }}
         onClick={() => tableData.hideCategory(cell.value)}
       />
