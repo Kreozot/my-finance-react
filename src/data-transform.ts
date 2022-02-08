@@ -1,11 +1,13 @@
 /* eslint-disable max-classes-per-file -- TODO Исправить */
 /* eslint-disable no-param-reassign */
 import { uniq, flatten } from 'lodash';
-import { computed, makeAutoObservable } from 'mobx';
+import { autorun, computed, makeAutoObservable } from 'mobx';
 
 import tableIncome from './data/tableIncome.json';
 import tableExpenses from './data/tableExpenses.json';
 import { DateSumMap, TableTransaction } from './types';
+
+const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
 
 // export type RowData = TableTransaction & {
 //   isIncome: boolean;
@@ -42,7 +44,7 @@ export class RowData {
 class TableData {
   pureData: RowData[];
 
-  hiddenCategories: Set<string> = new Set();
+  hiddenCategories: Set<string> = new Set(initialHiddenCategories);
 
   constructor(data: RowData[]) {
     this.pureData = data;
@@ -65,13 +67,9 @@ export const tableData = new TableData([
   ...(tableExpenses as unknown as TableTransaction[]).map((entry) => new RowData(entry, false)),
 ]);
 
-// export const hideCategory = (categoryName: string) => {
-//   data.forEach((rowData) => {
-//     if (rowData.category === categoryName) {
-//       rowData.hide();
-//     }
-//   });
-// };
+autorun(() => {
+  localStorage.setItem('hiddenCategories', JSON.stringify(tableData.hiddenCategories));
+});
 
 export const dates: string[] = uniq(
   flatten(
