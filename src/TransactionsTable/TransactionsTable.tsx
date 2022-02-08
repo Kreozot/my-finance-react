@@ -1,4 +1,5 @@
 import { VFC, memo, useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 import {
   Column,
   useExpanded,
@@ -15,11 +16,13 @@ import {
   DataTableContent,
   DataTableHead,
 } from '@rmwc/data-table';
+import { Icon } from '@rmwc/icon';
 
-import { dates, data, RowData } from '../data-transform';
+import { dates, tableData, RowData } from '../data-transform';
 import { formatDateKeyHeader } from '../dates';
 
 import '@material/data-table/dist/mdc.data-table.css';
+import 'material-design-icons/iconfont/material-icons.css';
 import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
@@ -71,7 +74,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
   } = useTable(
     {
       columns,
-      data,
+      data: tableData.data,
       initialState: {
         groupBy: ['category'],
       } as FixedTableState,
@@ -114,6 +117,10 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
                         {...row.getToggleRowExpandedProps()}
                       >
                         {cell.render('Cell')}
+                        <Icon
+                          icon={{ icon: 'visibility', size: 'small' }}
+                          onClick={() => tableData.hideCategory(cell.value)}
+                        />
                       </DataTableCell>
                     );
                   }
@@ -136,4 +143,4 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
   );
 };
 
-export default memo(TransactionsTable);
+export default observer(TransactionsTable);
