@@ -107,16 +107,6 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
             return (
               <DataTableRow {...row.getRowProps()}>
                 {row.cells.map((cell: FixedCell) => {
-                  if (cell.isGrouped) {
-                    return (
-                      <DataTableCell
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render('Cell')}
-                      </DataTableCell>
-                    );
-                  }
-
                   return (
                     <DataTableCell
                       {...cell.getCellProps()}
