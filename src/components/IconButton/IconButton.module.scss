@@ -1,0 +1,11 @@
+@import '../../mixins.scss';
+
+.iconButton {
+  @include buttonReset;
+  @include activeElement;
+}
+
+.processing {
+  opacity: 0.3;
+  pointer-events: none;
+}

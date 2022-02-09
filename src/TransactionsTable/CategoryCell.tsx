@@ -1,6 +1,6 @@
 import { memo, VFC } from 'react';
-import { Icon } from '@rmwc/icon';
 
+import IconButton from '../components/IconButton/IconButton';
 import { FixedCellProps } from './data-table';
 import { tableData } from '../store';
 
@@ -26,9 +26,10 @@ const CategoryCell: VFC<FixedCellProps> = ({ row, cell }) => {
         {categoryTitle}
       </span>
 
-      <Icon
+      <IconButton
         className={styles.visibilityButton}
-        icon={{ icon: 'visibility', size: 'small' }}
+        title="Скрыть категорию"
+        icon="visibility"
         onClick={() => tableData.hideCategory(cell.value)}
       />
     </span>

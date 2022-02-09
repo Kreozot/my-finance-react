@@ -1,6 +1,5 @@
 .visibilityButton {
   display: none;
-  cursor: pointer;
 }
 
 .category {
@@ -9,6 +8,7 @@
   &:hover {
     .visibilityButton {
       display: inline-flex;
+      cursor: pointer;
     }
   }
 }
@@ -23,9 +23,9 @@
 }
 
 .income {
-  color: darkgreen;
+  color: rgb(0, 59, 0);
 }
 
 .expenses {
-  color: darkred;
+  color: rgb(68, 0, 0);
 }
