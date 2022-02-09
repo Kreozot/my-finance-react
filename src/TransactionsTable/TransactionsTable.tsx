@@ -17,7 +17,7 @@ import {
   DataTableHead,
 } from '@rmwc/data-table';
 
-import { dates, tableData, RowData } from '../data-transform';
+import { dates, tableData, RowData } from '../store';
 import { formatDateKeyHeader } from '../dates';
 
 import '@material/data-table/dist/mdc.data-table.css';

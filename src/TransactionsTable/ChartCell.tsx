@@ -2,7 +2,7 @@ import { memo, VFC } from 'react';
 import { CellProps } from 'react-table';
 import { Chart, Lines, Ticks } from 'rumble-charts';
 
-import { dates, RowData } from '../data-transform';
+import { dates, RowData } from '../store';
 
 const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
   const month = dateKey.slice(5, 7);

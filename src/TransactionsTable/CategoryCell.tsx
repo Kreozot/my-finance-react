@@ -2,7 +2,7 @@ import { memo, VFC } from 'react';
 import { Icon } from '@rmwc/icon';
 
 import { FixedCellProps } from './data-table';
-import { tableData } from '../data-transform';
+import { tableData } from '../store';
 
 import styles from './CategoryCell.module.scss';
 

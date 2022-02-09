@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react';
 import { CellProps } from 'react-table';
 
-import { RowData } from '../data-transform';
+import { RowData } from '../store';
 import { formatMoney } from '../money';
 
 import styles from './MoneyCell.module.scss';
