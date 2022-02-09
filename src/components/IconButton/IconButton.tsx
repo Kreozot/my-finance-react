@@ -4,7 +4,7 @@ import { Icon } from '@rmwc/icon';
 import styles from './IconButton.module.scss';
 
 type IconButtonProps = {
-  className: string;
+  className?: string;
   icon: string;
   title: string
   onClick: () => void;
@@ -12,8 +12,9 @@ type IconButtonProps = {
 
 export const IconButton: VFC<IconButtonProps> = memo((props) => {
   const {
-    className, icon, title, onClick,
+    className = '', icon, title, onClick,
   } = props;
+
   return (
     <button
       type="button"

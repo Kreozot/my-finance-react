@@ -29,7 +29,7 @@ export const CategoryCell: VFC<FixedCellProps> = memo(({ row, cell }) => {
       <IconButton
         className={styles.visibilityButton}
         title="Скрыть категорию"
-        icon="visibility"
+        icon="visibility_off"
         onClick={() => tableData.hideCategory(cell.value)}
       />
     </span>

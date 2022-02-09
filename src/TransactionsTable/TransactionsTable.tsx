@@ -1,4 +1,6 @@
-import { VFC, useMemo } from 'react';
+import {
+  VFC, useMemo, useCallback, useState,
+} from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Column,
@@ -31,15 +33,28 @@ import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
 import styles from './TransactionsTable.module.scss';
+import { ToolbarCell } from './ToolbarCell';
 
 type TransactionsTableProps = {
 
 };
 
 const TransactionsTable: VFC<TransactionsTableProps> = () => {
+  const [areHiddenCategoriesShown, setHiddenCategoriesShown] = useState(false);
+  const toggleHiddenCategoriesShown = useCallback(() => {
+    setHiddenCategoriesShown(!areHiddenCategoriesShown);
+  }, [areHiddenCategoriesShown]);
+
+  const CategoryHeader = useMemo(() => (
+    <ToolbarCell
+      showHiddenCategories={toggleHiddenCategoriesShown}
+      areHiddenCategoriesShown={areHiddenCategoriesShown}
+    />
+  ), [toggleHiddenCategoriesShown, areHiddenCategoriesShown]);
+
   const columns = useMemo(() => [
     {
-      Header: 'Категория',
+      Header: CategoryHeader,
       accessor: 'category',
       Cell: CategoryCell,
     },
@@ -60,7 +75,7 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       aggregate: 'sum',
       Cell: MoneyCell,
     })),
-  ] as ReadonlyArray<Column<RowData>>, []);
+  ] as ReadonlyArray<Column<RowData>>, [CategoryHeader]);
 
   const {
     getTableProps,
