@@ -25,6 +25,7 @@
 @mixin activeElement {
   color: rgb(92, 95, 141);
   transition: color, 0.3s;
+  cursor: pointer;
 
   &:hover {
     color: rgb(30, 34, 112);
