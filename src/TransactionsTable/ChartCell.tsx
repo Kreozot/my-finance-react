@@ -12,7 +12,7 @@ const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
   return result;
 }, [] as number[]);
 
-const ChartCell: VFC<CellProps<RowData>> = ({ row }) => {
+export const ChartCell: VFC<CellProps<RowData>> = memo(({ row }) => {
   const chartDataSet = row.original
     ? dates.map((dateKey: string) => Math.abs(row.original.transactions[dateKey] || 0))
     : dates.map((dateKey: string) => Math.abs(row.values[dateKey] || 0));
@@ -51,5 +51,4 @@ const ChartCell: VFC<CellProps<RowData>> = ({ row }) => {
       />
     </Chart>
   );
-};
-export default memo(ChartCell);
+});

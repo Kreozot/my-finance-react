@@ -1,12 +1,12 @@
 import { memo, VFC } from 'react';
 
-import IconButton from '../components/IconButton/IconButton';
+import { IconButton } from '../components/IconButton';
 import { FixedCellProps } from './data-table';
 import { tableData } from '../store';
 
 import styles from './CategoryCell.module.scss';
 
-const CategoryCell: VFC<FixedCellProps> = ({ row, cell }) => {
+export const CategoryCell: VFC<FixedCellProps> = memo(({ row, cell }) => {
   if (row.original) {
     return (
       <span className={styles.name}>
@@ -34,6 +34,4 @@ const CategoryCell: VFC<FixedCellProps> = ({ row, cell }) => {
       />
     </span>
   );
-};
-
-export default memo(CategoryCell);
+});

@@ -10,7 +10,7 @@ type IconButtonProps = {
   onClick: () => void;
 };
 
-const IconButtom: VFC<IconButtonProps> = (props) => {
+export const IconButton: VFC<IconButtonProps> = memo((props) => {
   const {
     className, icon, title, onClick,
   } = props;
@@ -27,6 +27,4 @@ const IconButtom: VFC<IconButtonProps> = (props) => {
       />
     </button>
   );
-};
-
-export default memo(IconButtom);
+});
