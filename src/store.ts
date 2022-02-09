@@ -50,6 +50,7 @@ class TableData {
     this.pureData = data;
     makeAutoObservable(this, {
       data: computed,
+      isCategoryHidden: false,
     });
   }
 
@@ -59,6 +60,14 @@ class TableData {
 
   hideCategory(category: string) {
     this.hiddenCategories.add(category);
+  }
+
+  showCategory(category: string) {
+    this.hiddenCategories.add(category);
+  }
+
+  isCategoryHidden(category: string) {
+    return this.hiddenCategories.has(category);
   }
 }
 
