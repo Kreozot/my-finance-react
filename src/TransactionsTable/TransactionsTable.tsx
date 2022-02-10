@@ -42,7 +42,7 @@ type TransactionsTableProps = {
 
 };
 
-const TransactionsTable: VFC<TransactionsTableProps> = () => {
+export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const categoryFilter = useCallback((rows: FixedRow[], id: string, filterHidden: boolean) => {
     return rows.filter((row) => {
       const categoryName = row.values[id];
@@ -142,6 +142,4 @@ const TransactionsTable: VFC<TransactionsTableProps> = () => {
       </DataTableContent>
     </DataTable>
   );
-};
-
-export default observer(TransactionsTable);
+});

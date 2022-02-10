@@ -5,6 +5,7 @@ import { FixedCellProps } from './data-table';
 import { tableData } from '../store';
 
 import styles from './CategoryCell.module.scss';
+import { VisibilityButton } from './VisibilityButton';
 
 export const CategoryCell: VFC<FixedCellProps> = memo(({ row, cell }) => {
   if (row.original) {
@@ -26,12 +27,7 @@ export const CategoryCell: VFC<FixedCellProps> = memo(({ row, cell }) => {
         {categoryTitle}
       </span>
 
-      <IconButton
-        className={styles.visibilityButton}
-        title="Скрыть категорию"
-        icon="visibility_off"
-        onClick={() => tableData.hideCategory(cell.value)}
-      />
+      <VisibilityButton category={cell.value} />
     </span>
   );
 });

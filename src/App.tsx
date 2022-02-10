@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TransactionsTable from './TransactionsTable/TransactionsTable';
+import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
 const App = () => {
   return (

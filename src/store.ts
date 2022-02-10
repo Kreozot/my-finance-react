@@ -63,7 +63,7 @@ class TableData {
   }
 
   showCategory(category: string) {
-    this.hiddenCategories.add(category);
+    this.hiddenCategories.delete(category);
   }
 
   isCategoryHidden(category: string) {
