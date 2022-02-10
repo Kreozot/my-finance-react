@@ -8,6 +8,7 @@
     "test": "react-scripts test"
   },
   "dependencies": {
+    "@material-design-icons/svg": "^0.10.6",
     "@material/data-table": "^13.0.0",
     "@rmwc/data-table": "^6.1.4",
     "@rmwc/icon": "^6.1.4",

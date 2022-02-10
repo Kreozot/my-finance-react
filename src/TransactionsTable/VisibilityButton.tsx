@@ -2,6 +2,10 @@ import { observer } from 'mobx-react-lite';
 import {
   useCallback, useMemo, VFC,
 } from 'react';
+
+import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/filled/visibility.svg';
+import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
+
 import { IconButton } from '../components/IconButton';
 import { tableData } from '../store';
 
@@ -24,8 +28,8 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
 
   const icon = useMemo(() => {
     return isHidden
-      ? 'visibility_off'
-      : 'visibility';
+      ? VisibilityOffIcon
+      : VisibilityIcon;
   }, [isHidden]);
 
   const toggleFilter = useCallback(() => {
@@ -41,7 +45,7 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
       <IconButton
         title={title}
         onClick={toggleFilter}
-        icon={icon}
+        Icon={icon}
         className={styles.visibilityButton}
       />
     </span>

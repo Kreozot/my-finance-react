@@ -2,25 +2,25 @@ import {
   memo, useCallback, useMemo, VFC,
 } from 'react';
 
-import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/filled/visibility.svg';
-import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
+import { ReactComponent as FilterIcon } from '@material-design-icons/svg/filled/filter_alt.svg';
+import { ReactComponent as FilterOffIcon } from '@material-design-icons/svg/filled/filter_alt_off.svg';
 
 import { IconButton } from '../components/IconButton';
 import { FixedFilterProps } from './data-table';
 
-export const HiddenCategoriesFilter: VFC<FixedFilterProps> = memo(({ column }) => {
+export const DateFilter: VFC<FixedFilterProps> = memo(({ column }) => {
   const { setFilter, filterValue } = column;
 
   const title = useMemo(() => {
     return filterValue
-      ? 'Показать скрытые категории'
-      : 'Не показывать скрытые категории';
+      ? 'Отключить фильтр по месяцу'
+      : 'Фильтровать по этому месяцу';
   }, [filterValue]);
 
   const icon = useMemo(() => {
     return filterValue
-      ? VisibilityOffIcon
-      : VisibilityIcon;
+      ? FilterOffIcon
+      : FilterIcon;
   }, [filterValue]);
 
   const toggleFilter = useCallback(() => setFilter(!filterValue), [filterValue, setFilter]);

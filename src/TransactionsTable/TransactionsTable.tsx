@@ -36,16 +36,24 @@ import '@rmwc/icon/icon.css';
 
 import styles from './TransactionsTable.module.scss';
 import { HiddenCategoriesFilter } from './HiddenCategoriesFilter';
+import { DateFilter } from './DateFilter';
 
 type TransactionsTableProps = {
 
 };
 
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
-  const categoryFilter = useCallback((rows: FixedRow[], id: string, filterHidden: boolean) => {
+  const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
       const categoryName = row.values[id];
-      return !filterHidden || !tableData.isCategoryHidden(categoryName);
+      return !filterValue || !tableData.isCategoryHidden(categoryName);
+    });
+  }, []);
+
+  const dateFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
+    return rows.filter((row) => {
+      const value = row.values[id];
+      return !filterValue || Boolean(value);
     });
   }, []);
 
@@ -74,10 +82,12 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       id: dateKey,
       accessor: (originalRow: RowData) => originalRow.transactions[dateKey],
       aggregate: 'sum',
-      disableFilters: true,
+      // disableFilters: true,
+      Filter: DateFilter,
+      filter: dateFilter,
       Cell: MoneyCell,
     })),
-  ] as ReadonlyArray<Column<RowData>>, [categoryFilter]);
+  ] as ReadonlyArray<Column<RowData>>, [categoryFilter, dateFilter]);
 
   const {
     getTableProps,

@@ -1,18 +1,19 @@
-import { memo, VFC } from 'react';
-import { Icon } from '@rmwc/icon';
+import {
+  FunctionComponent, memo, SVGProps, VFC,
+} from 'react';
 
 import styles from './IconButton.module.scss';
 
 type IconButtonProps = {
   className?: string;
-  icon: string;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string | undefined; }>;
   title: string
   onClick: () => void;
 };
 
 export const IconButton: VFC<IconButtonProps> = memo((props) => {
   const {
-    className = '', icon, title, onClick,
+    className = '', Icon, title, onClick,
   } = props;
 
   return (
@@ -23,8 +24,8 @@ export const IconButton: VFC<IconButtonProps> = memo((props) => {
       onClick={onClick}
     >
       <Icon
-        className={styles.visibilityButton}
-        icon={{ icon, size: 'small' }}
+        className={styles.icon}
+        // icon={{ icon, size: 'small' }}
       />
     </button>
   );
