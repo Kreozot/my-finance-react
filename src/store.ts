@@ -9,9 +9,11 @@ import { DateSumMap, TableTransaction } from './types';
 
 const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
 
-// export type RowData = TableTransaction & {
-//   isIncome: boolean;
-// };
+export const dates: string[] = uniq(
+  flatten(
+    [...tableIncome, ...tableExpenses].map((entry) => Object.keys(entry.transactions)),
+  ),
+).sort();
 
 export class RowData {
   category: string;
@@ -50,12 +52,22 @@ class TableData {
     this.pureData = data;
     makeAutoObservable(this, {
       data: computed,
-      isCategoryHidden: false,
+      incomeSumRow: computed,
+      expensesSumRow: computed,
+      tableRows: computed,
     });
   }
 
   get data() {
     return this.pureData.filter(({ category }) => !this.hiddenCategories.has(category));
+  }
+
+  get tableRows() {
+    return [
+      this.incomeSumRow,
+      this.expensesSumRow,
+      ...this.pureData,
+    ];
   }
 
   hideCategory(category: string) {
@@ -69,6 +81,27 @@ class TableData {
   isCategoryHidden(category: string) {
     return this.hiddenCategories.has(category);
   }
+
+  static calculateSumRow(data: RowData[], title: string): RowData {
+    return data.reduce((result, entry) => {
+      dates.forEach((dateKey) => {
+        result.transactions[dateKey] = (result.transactions[dateKey] || 0) + (entry.transactions[dateKey] || 0);
+      });
+      return result;
+    }, {
+      category: title,
+      name: '',
+      transactions: {},
+    } as RowData);
+  }
+
+  get incomeSumRow() {
+    return TableData.calculateSumRow(this.data.filter(({ isIncome }) => isIncome), 'Доход-1');
+  }
+
+  get expensesSumRow() {
+    return TableData.calculateSumRow(this.data.filter(({ isIncome }) => !isIncome), 'Расход-0');
+  }
 }
 
 export const tableData = new TableData([
@@ -79,9 +112,3 @@ export const tableData = new TableData([
 autorun(() => {
   localStorage.setItem('hiddenCategories', JSON.stringify(tableData.hiddenCategories));
 });
-
-export const dates: string[] = uniq(
-  flatten(
-    tableData.data.map((entry) => Object.keys(entry.transactions)),
-  ),
-).sort();

@@ -87,7 +87,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   } = useTable(
     {
       columns,
-      data: tableData.pureData,
+      data: tableData.tableRows,
       initialState: {
         groupBy: ['category'],
       } as FixedTableState,
