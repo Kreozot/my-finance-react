@@ -6,26 +6,33 @@ import {
   UseExpandedRowProps,
   Row,
   UseGroupByCellProps,
-  HeaderGroup,
   UseFiltersColumnProps,
   ColumnInstance,
   UseTableHeaderGroupProps,
   FilterProps,
+  CellProps,
+  TableInstance,
 } from 'react-table';
 
 export type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
 export type FixedCell = Cell<RowData, any> & UseGroupByCellProps<RowData>;
-export type FixedRow = (Row<RowData> & UseExpandedRowProps<RowData>) & {
+export type FixedRow = Omit<Row<RowData>, 'cells' | 'original'> & UseExpandedRowProps<RowData> & {
   cells: FixedCell[];
+  original: RowData;
 };
-export type FixedCellProps = CellProps<RowData> & {
+export type FixedCellProps = Omit<CellProps<RowData>, 'cell' | 'row'> & {
   cell: FixedCell;
   row: FixedRow;
 };
 export type FixedColumnProps = ColumnInstance<RowData> & UseFiltersColumnProps<RowData>;
-export type FixedFilterProps = FilterProps<RowData> & {
+export type FixedFilterProps = Omit<FilterProps<RowData>, 'column'> & {
   column: FixedColumnProps,
 };
-export type FixedHeaderGroup = UseTableHeaderGroupProps<RowData> & FixedColumnProps & {
+export type FixedHeaderGroup = Omit<UseTableHeaderGroupProps<RowData>, 'headers'> & FixedColumnProps & {
   headers: Array<FixedHeaderGroup>;
+};
+export type FixedTableInstance = Omit<TableInstance<RowData>, 'rows' | 'headerGroups'> & {
+  state: FixedTableState,
+  rows: FixedRow[],
+  headerGroups: FixedHeaderGroup[],
 };

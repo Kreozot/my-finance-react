@@ -1,31 +1,34 @@
 .visibilityButton {
-  display: none;
+  visibility: hidden;
+  cursor: pointer;
+  font-size: 0;
 }
 
 .category {
   display: flex;
+  align-items: center;
 
   &:hover {
     .visibilityButton {
-      display: inline-flex;
-      cursor: pointer;
+      visibility: visible;
     }
   }
-}
-
-.categoryName {
-  font-weight: bold;
-  width: 100%;
 }
 
 .name {
   margin-left: 24px;
 }
 
+.categoryName {
+  font-weight: bold;
+  width: 100%;
+  color: rgb(68, 0, 0);
+}
+
 .income {
   color: rgb(0, 59, 0);
 }
 
-.expenses {
-  color: rgb(68, 0, 0);
+.hidden {
+  opacity: 0.6;
 }

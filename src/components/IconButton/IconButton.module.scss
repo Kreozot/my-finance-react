@@ -1,8 +1,7 @@
 @import '../../mixins.scss';
 
 .iconButton {
-  @include buttonReset;
-  @include activeElement;
+  @include iconButton;
 }
 
 .processing {

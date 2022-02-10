@@ -1,3 +1,9 @@
-.header {
+.headerCell {
+  display: flex;
+  align-items: center;
+}
+
+.headerTitle {
   font-weight: bold;
+  flex: 1;
 }

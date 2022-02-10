@@ -31,3 +31,10 @@
     color: rgb(30, 34, 112);
   }
 }
+
+@mixin iconButton {
+  @include buttonReset;
+  @include activeElement;
+
+  font-size: 0;
+}

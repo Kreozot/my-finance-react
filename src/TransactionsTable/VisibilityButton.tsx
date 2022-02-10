@@ -5,6 +5,8 @@ import {
 import { IconButton } from '../components/IconButton';
 import { tableData } from '../store';
 
+import styles from './CategoryCell.module.scss';
+
 type VisibilityButtonProps = {
   category: string;
 };
@@ -40,6 +42,7 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
         title={title}
         onClick={toggleFilter}
         icon={icon}
+        className={styles.visibilityButton}
       />
     </span>
   );

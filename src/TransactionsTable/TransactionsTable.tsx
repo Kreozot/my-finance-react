@@ -7,7 +7,6 @@ import {
   useExpanded,
   useGroupBy,
   useTable,
-  TableInstance,
   useFilters,
 } from 'react-table';
 import {
@@ -24,7 +23,7 @@ import { dates, tableData, RowData } from '../store';
 import { formatDateKeyHeader } from '../dates';
 import { ChartCell } from './ChartCell';
 import {
-  FixedRow, FixedTableState, FixedCell, FixedHeaderGroup, FixedColumnProps,
+  FixedRow, FixedTableState, FixedTableInstance,
 } from './data-table';
 import { MeanCell } from './MeanCell';
 import { CategoryCell } from './CategoryCell';
@@ -96,11 +95,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
     useFilters,
     useGroupBy,
     useExpanded,
-  ) as (TableInstance<RowData> & {
-    state: FixedTableState,
-    rows: FixedRow[],
-    headerGroups: FixedHeaderGroup[],
-  });
+  ) as FixedTableInstance;
 
   return (
     <DataTable
@@ -110,23 +105,27 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
     >
       <DataTableContent>
         <DataTableHead>
-          {headerGroups.map((headerGroup: FixedHeaderGroup) => (
+          {headerGroups.map((headerGroup) => (
             <DataTableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column: FixedColumnProps) => (
-                <DataTableHeadCell {...column.getHeaderProps()} className={styles.header}>
-                  {column.render('Header')}
-                  {column.canFilter ? column.render('Filter') : null}
+              {headerGroup.headers.map((column) => (
+                <DataTableHeadCell {...column.getHeaderProps()}>
+                  <span className={styles.headerCell}>
+                    <span className={styles.headerTitle}>
+                      {column.render('Header')}
+                    </span>
+                    {column.canFilter ? column.render('Filter') : null}
+                  </span>
                 </DataTableHeadCell>
               ))}
             </DataTableRow>
           ))}
         </DataTableHead>
         <DataTableBody>
-          {rows.map((row: FixedRow) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <DataTableRow {...row.getRowProps()}>
-                {row.cells.map((cell: FixedCell) => {
+                {row.cells.map((cell) => {
                   return (
                     <DataTableCell
                       {...cell.getCellProps()}
