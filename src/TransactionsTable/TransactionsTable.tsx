@@ -140,7 +140,9 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                   return (
                     <DataTableCell
                       {...cell.getCellProps()}
-                      className={classNames({ [styles.highlightedCell]: row.index < 2 })}
+                      className={classNames({
+                        [styles.highlightedCell]: row.index < 2 || cell.column.filterValue,
+                      })}
                     >
                       {cell.render('Cell')}
                     </DataTableCell>

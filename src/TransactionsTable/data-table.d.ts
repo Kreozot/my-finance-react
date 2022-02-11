@@ -15,7 +15,9 @@ import {
 } from 'react-table';
 
 export type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
-export type FixedCell = Cell<RowData, any> & UseGroupByCellProps<RowData>;
+export type FixedCell = Omit<Cell<RowData, any>, 'column'> & UseGroupByCellProps<RowData> & {
+  column: FixedColumnProps;
+};
 export type FixedRow = Omit<Row<RowData>, 'cells' | 'original'> & UseExpandedRowProps<RowData> & {
   cells: FixedCell[];
   original: RowData;
