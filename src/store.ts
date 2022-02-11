@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file -- TODO Исправить */
 /* eslint-disable no-param-reassign */
-import { uniq, flatten } from 'lodash';
+import {
+  uniq, flatten, minBy, groupBy,
+} from 'lodash';
 import { autorun, computed, makeAutoObservable } from 'mobx';
 
 import tableIncome from './data/tableIncome.json';
@@ -14,6 +16,11 @@ export const dates: string[] = uniq(
     [...tableIncome, ...tableExpenses].map((entry) => Object.keys(entry.transactions)),
   ),
 ).sort();
+
+const datesByYears = groupBy(dates, (dateKey) => dateKey.slice(0, 4));
+export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
+  return minBy(datesByYears[year], (dateKey) => dateKey.slice(-2));
+});
 
 export class RowData {
   category: string;

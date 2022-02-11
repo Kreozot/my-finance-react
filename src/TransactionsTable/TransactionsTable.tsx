@@ -20,7 +20,9 @@ import {
 } from '@rmwc/data-table';
 import classNames from 'classnames';
 
-import { dates, tableData, RowData } from '../store';
+import {
+  dates, tableData, RowData, firstMonthKeys,
+} from '../store';
 import { formatDateKeyHeader } from '../dates';
 import { ChartCell } from './ChartCell';
 import {
@@ -83,7 +85,6 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       id: dateKey,
       accessor: (originalRow: RowData) => originalRow.transactions[dateKey],
       aggregate: 'sum',
-      // disableFilters: true,
       Filter: DateFilter,
       filter: dateFilter,
       Cell: MoneyCell,
@@ -119,7 +120,12 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
           {headerGroups.map((headerGroup) => (
             <DataTableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <DataTableHeadCell {...column.getHeaderProps()}>
+                <DataTableHeadCell
+                  {...column.getHeaderProps()}
+                  className={classNames({
+                    [styles.firstMonthCell]: firstMonthKeys.includes(column.id),
+                  })}
+                >
                   <span className={styles.headerCell}>
                     <span className={styles.headerTitle}>
                       {column.render('Header')}
@@ -142,6 +148,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                       {...cell.getCellProps()}
                       className={classNames({
                         [styles.highlightedCell]: row.index < 2 || cell.column.filterValue,
+                        [styles.firstMonthCell]: firstMonthKeys.includes(cell.column.id),
                       })}
                     >
                       {cell.render('Cell')}
