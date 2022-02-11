@@ -40,25 +40,24 @@ import '@rmwc/icon/icon.css';
 import styles from './TransactionsTable.module.scss';
 import { HiddenCategoriesFilter } from './HiddenCategoriesFilter';
 import { DateFilter } from './DateFilter';
+import { isSummaryRow } from './tableUtils';
 
 type TransactionsTableProps = {
 
 };
 
-const SUMMARY_ROWS_COUNT = 3;
-
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
       const categoryName = row.values[id];
-      return !filterValue || !tableData.isCategoryHidden(categoryName);
+      return !filterValue || isSummaryRow(row) || !tableData.isCategoryHidden(categoryName);
     });
   }, []);
 
   const dateFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
       const value = row.values[id];
-      return !filterValue || Boolean(value);
+      return !filterValue || isSummaryRow(row) || Boolean(value);
     });
   }, []);
 
@@ -149,7 +148,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                     <DataTableCell
                       {...cell.getCellProps()}
                       className={classNames({
-                        [styles.highlightedCell]: row.index < SUMMARY_ROWS_COUNT || cell.column.filterValue,
+                        [styles.highlightedCell]: isSummaryRow(row) || cell.column.filterValue,
                         [styles.firstMonthCell]: firstMonthKeys.includes(cell.column.id),
                       })}
                     >
