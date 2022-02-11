@@ -61,6 +61,7 @@ class TableData {
       data: computed,
       incomeSumRow: computed,
       expensesSumRow: computed,
+      marginSumRow: computed,
       tableRows: computed,
     });
   }
@@ -73,6 +74,7 @@ class TableData {
     return [
       this.incomeSumRow,
       this.expensesSumRow,
+      this.marginSumRow,
       ...this.pureData,
     ];
   }
@@ -108,6 +110,10 @@ class TableData {
 
   get expensesSumRow() {
     return TableData.calculateSumRow(this.data.filter(({ isIncome }) => !isIncome), 'Расход-0');
+  }
+
+  get marginSumRow() {
+    return TableData.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток-2');
   }
 }
 

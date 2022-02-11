@@ -26,12 +26,10 @@ export const DateFilter: VFC<FixedFilterProps> = memo(({ column }) => {
   const toggleFilter = useCallback(() => setFilter(!filterValue), [filterValue, setFilter]);
 
   return (
-    <span>
-      <IconButton
-        title={title}
-        onClick={toggleFilter}
-        Icon={icon}
-      />
-    </span>
+    <IconButton
+      title={title}
+      onClick={toggleFilter}
+      Icon={icon}
+    />
   );
 });

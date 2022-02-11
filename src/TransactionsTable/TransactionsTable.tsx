@@ -45,6 +45,8 @@ type TransactionsTableProps = {
 
 };
 
+const SUMMARY_ROWS_COUNT = 3;
+
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
@@ -147,7 +149,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                     <DataTableCell
                       {...cell.getCellProps()}
                       className={classNames({
-                        [styles.highlightedCell]: row.index < 2 || cell.column.filterValue,
+                        [styles.highlightedCell]: row.index < SUMMARY_ROWS_COUNT || cell.column.filterValue,
                         [styles.firstMonthCell]: firstMonthKeys.includes(cell.column.id),
                       })}
                     >
