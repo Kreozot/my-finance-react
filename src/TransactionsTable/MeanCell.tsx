@@ -35,7 +35,7 @@ const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
 export const MeanCell: VFC<CellProps<RowData>> = memo(({ row }) => {
   const data = getMoneyDataFromRow(row as FixedRow, true);
   const mostAverage = getMostAverage(data);
-  if (mostAverage < MEANINGFULL_LIMIT) {
+  if (Math.abs(mostAverage) < MEANINGFULL_LIMIT) {
     return null;
   }
   return (

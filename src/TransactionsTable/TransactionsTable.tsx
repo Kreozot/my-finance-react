@@ -77,7 +77,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       disableFilters: true,
     },
     {
-      Header: <>Ср. для P<sub>95%</sub> за год</>,
+      Header: 'Среднее за год',
       id: 'median',
       Cell: MeanCell,
       disableFilters: true,

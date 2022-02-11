@@ -1,8 +1,7 @@
 import { memo, VFC } from 'react';
-import { CellProps } from 'react-table';
 import { Chart, Lines, Ticks } from 'rumble-charts';
 
-import { dates, RowData } from '../store';
+import { dates } from '../store';
 import { FixedCellProps, FixedRow } from './data-table';
 import { isNonAbsoluteRow } from './tableUtils';
 
