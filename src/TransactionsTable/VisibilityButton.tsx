@@ -41,13 +41,11 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
   }, [category, isHidden]);
 
   return (
-    <span>
-      <IconButton
-        title={title}
-        onClick={toggleFilter}
-        Icon={icon}
-        className={styles.visibilityButton}
-      />
-    </span>
+    <IconButton
+      title={title}
+      onClick={toggleFilter}
+      Icon={icon}
+      className={styles.visibilityButton}
+    />
   );
 });

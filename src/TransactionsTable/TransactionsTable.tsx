@@ -18,6 +18,7 @@ import {
   DataTableContent,
   DataTableHead,
 } from '@rmwc/data-table';
+import classNames from 'classnames';
 
 import { dates, tableData, RowData } from '../store';
 import { formatDateKeyHeader } from '../dates';
@@ -139,6 +140,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                   return (
                     <DataTableCell
                       {...cell.getCellProps()}
+                      className={classNames({ [styles.highlightedCell]: row.index < 2 })}
                     >
                       {cell.render('Cell')}
                     </DataTableCell>
