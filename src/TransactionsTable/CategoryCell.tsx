@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 
 import { FixedCellProps } from './data-table';
-import { RowData, tableData } from '../store';
+import { tableData } from '../store';
 
 import styles from './CategoryCell.module.scss';
 import { VisibilityButton } from './VisibilityButton';
@@ -11,7 +11,7 @@ import { isIncomeRow, isSummaryRow } from './tableUtils';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
-    const isHidden = tableData.isCategoryHidden((row.original as RowData).category);
+    const isHidden = tableData.isCategoryHidden(row.original.category);
     const className = classNames(styles.name, { [styles.hidden]: isHidden });
     return (
       <span className={className}>

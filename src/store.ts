@@ -1,20 +1,18 @@
 /* eslint-disable max-classes-per-file -- TODO Исправить */
 /* eslint-disable no-param-reassign */
 import {
-  uniq, flatten, minBy, groupBy,
+  uniq, minBy, groupBy,
 } from 'lodash';
-import { autorun, computed, makeAutoObservable } from 'mobx';
+import { autorun, makeAutoObservable } from 'mobx';
+import { getRowData } from './convertData';
 
-import tableIncome from './data/tableIncome.json';
-import tableExpenses from './data/tableExpenses.json';
-import { DateSumMap, TableTransaction } from './types';
+import transactionsData from './data/allTransactions.json';
+import { RowData, Transaction } from './types';
 
 const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
 
 export const dates: string[] = uniq(
-  flatten(
-    [...tableIncome, ...tableExpenses].map((entry) => Object.keys(entry.transactions)),
-  ),
+  transactionsData.map((entry) => entry.dateKey),
 ).sort();
 
 const datesByYears = groupBy(dates, (dateKey) => dateKey.slice(0, 4));
@@ -22,52 +20,30 @@ export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
   return minBy(datesByYears[year], (dateKey) => dateKey.slice(-2));
 });
 
-export class RowData {
-  category: string;
-
-  name: string;
-
-  transactions: DateSumMap;
-
-  isIncome: boolean;
-
-  isHidden: boolean = false;
-
-  constructor(transaction: TableTransaction, isIncome: boolean) {
-    this.category = `${transaction.category}-${isIncome ? 1 : 0}`;
-    this.name = transaction.name;
-    this.transactions = transaction.transactions;
-    this.isIncome = isIncome;
-    makeAutoObservable(this);
-  }
-
-  hide() {
-    this.isHidden = true;
-  }
-
-  show() {
-    this.isHidden = false;
-  }
-}
-
 class TableData {
-  pureData: RowData[];
+  transactions: Transaction[];
 
   hiddenCategories: Set<string> = new Set(initialHiddenCategories);
 
-  constructor(data: RowData[]) {
-    this.pureData = data;
-    makeAutoObservable(this, {
-      data: computed,
-      incomeSumRow: computed,
-      expensesSumRow: computed,
-      marginSumRow: computed,
-      tableRows: computed,
-    });
+  constructor(transactions: Transaction[]) {
+    this.transactions = transactions;
+    makeAutoObservable(this);
   }
 
-  get data() {
-    return this.pureData.filter(({ category }) => !this.hiddenCategories.has(category));
+  get incomeTransactions() {
+    return this.transactions.filter((transaction) => transaction.amount > 0);
+  }
+
+  get expenseTransactions() {
+    return this.transactions.filter((transaction) => transaction.amount < 0);
+  }
+
+  get incomeRowData() {
+    return getRowData(this.incomeTransactions, true);
+  }
+
+  get expenseRowData() {
+    return getRowData(this.expenseTransactions, false);
   }
 
   get tableRows() {
@@ -75,7 +51,8 @@ class TableData {
       this.incomeSumRow,
       this.expensesSumRow,
       this.marginSumRow,
-      ...this.pureData,
+      ...this.incomeRowData,
+      ...this.expenseRowData,
     ];
   }
 
@@ -105,11 +82,11 @@ class TableData {
   }
 
   get incomeSumRow() {
-    return TableData.calculateSumRow(this.data.filter(({ isIncome }) => isIncome), 'Доход-1');
+    return TableData.calculateSumRow(this.incomeRowData, 'Доход-1');
   }
 
   get expensesSumRow() {
-    return TableData.calculateSumRow(this.data.filter(({ isIncome }) => !isIncome), 'Расход-0');
+    return TableData.calculateSumRow(this.expenseRowData, 'Расход-0');
   }
 
   get marginSumRow() {
@@ -117,10 +94,7 @@ class TableData {
   }
 }
 
-export const tableData = new TableData([
-  ...(tableIncome as unknown as TableTransaction[]).map((entry) => new RowData(entry, true)),
-  ...(tableExpenses as unknown as TableTransaction[]).map((entry) => new RowData(entry, false)),
-]);
+export const tableData = new TableData(transactionsData as unknown as Transaction[]);
 
 autorun(() => {
   localStorage.setItem('hiddenCategories', JSON.stringify(tableData.hiddenCategories));

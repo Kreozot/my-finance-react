@@ -3,7 +3,6 @@ import {
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Column,
   useExpanded,
   useGroupBy,
   useTable,
@@ -21,12 +20,12 @@ import {
 import classNames from 'classnames';
 
 import {
-  dates, tableData, RowData, firstMonthKeys,
+  dates, tableData, firstMonthKeys,
 } from '../store';
 import { formatDateKeyHeader } from '../dates';
 import { ChartCell } from './ChartCell';
 import {
-  FixedRow, FixedTableState, FixedTableInstance,
+  FixedRow, FixedTableState, FixedTableInstance, FixedColumn,
 } from './data-table';
 import { MeanCell } from './MeanCell';
 import { CategoryCell } from './CategoryCell';
@@ -40,6 +39,7 @@ import styles from './TransactionsTable.module.scss';
 import { HiddenCategoriesFilter } from './HiddenCategoriesFilter';
 import { DateFilter } from './DateFilter';
 import { isSummaryRow } from './tableUtils';
+import { RowData } from '../types';
 
 type TransactionsTableProps = {
 
@@ -89,7 +89,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       filter: dateFilter,
       Cell: MoneyCell,
     })),
-  ] as ReadonlyArray<Column<RowData>>, [categoryFilter, dateFilter]);
+  ] as ReadonlyArray<FixedColumn>, [categoryFilter, dateFilter]);
 
   const {
     getTableProps,

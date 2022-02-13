@@ -1,9 +1,7 @@
 import { memo, VFC } from 'react';
-import { CellProps } from 'react-table';
 
-import { RowData } from '../store';
 import { getMostAverage, roundInteger } from '../money';
-import { FixedRow } from './data-table';
+import { FixedCellProps, FixedRow } from './data-table';
 import { MoneyCell } from './MoneyCell';
 
 const MEANINGFULL_LIMIT = 100;
@@ -32,7 +30,7 @@ const getMoneyDataFromRow = (row: FixedRow, trimStart: boolean = false) => {
   return result;
 };
 
-export const MeanCell: VFC<CellProps<RowData>> = memo(({ row }) => {
+export const MeanCell: VFC<FixedCellProps> = memo(({ row }) => {
   const data = getMoneyDataFromRow(row as FixedRow, true);
   const mostAverage = getMostAverage(data);
   if (Math.abs(mostAverage) < MEANINGFULL_LIMIT) {

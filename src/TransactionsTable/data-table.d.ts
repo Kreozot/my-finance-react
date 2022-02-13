@@ -12,8 +12,10 @@ import {
   FilterProps,
   CellProps,
   TableInstance,
+  Column,
 } from 'react-table';
 
+export type FixedColumn = Column<RowData>;
 export type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;
 export type FixedCell = Omit<Cell<RowData, any>, 'column'> & UseGroupByCellProps<RowData> & {
   column: FixedColumnProps;
