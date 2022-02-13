@@ -5,6 +5,8 @@ import { dates } from '../store';
 import { FixedCellProps, FixedRow } from './data-table';
 import { isNonAbsoluteRow } from './tableUtils';
 
+import styles from './ChartCell.module.scss';
+
 const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
   const month = dateKey.slice(5, 7);
   if (month === '01') {
@@ -27,6 +29,7 @@ export const ChartCell: VFC<FixedCellProps> = memo(({ row }) => {
 
   return (
     <Chart
+      className={styles.chart}
       series={[{
         data: chartDataSet,
       }]}
