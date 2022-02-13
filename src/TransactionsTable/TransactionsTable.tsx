@@ -21,23 +21,21 @@ import classNames from 'classnames';
 
 import {
   dates, tableData, firstMonthKeys,
-} from '../store';
-import { formatDateKeyHeader } from '../dates';
-import { ChartCell } from './ChartCell';
+} from 'store';
+import { formatDateKeyHeader } from 'dates';
+import {
+  ChartCell, MeanCell, CategoryCell, MoneyCell,
+} from './cells';
+import { DateFilter, HiddenCategoriesFilter } from './filters';
 import {
   FixedRow, FixedTableState, FixedTableInstance, FixedColumn,
 } from './data-table';
-import { MeanCell } from './MeanCell';
-import { CategoryCell } from './CategoryCell';
-import { MoneyCell } from './MoneyCell';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
 import styles from './TransactionsTable.module.scss';
-import { HiddenCategoriesFilter } from './HiddenCategoriesFilter';
-import { DateFilter } from './DateFilter';
 import { isSummaryRow } from './tableUtils';
 import { RowData } from '../types';
 

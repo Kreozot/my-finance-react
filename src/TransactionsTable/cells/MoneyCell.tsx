@@ -1,10 +1,10 @@
 import { memo, VFC } from 'react';
 
-import { formatMoney } from '../money';
+import { formatMoney } from 'money';
+import { isNonAbsoluteRow } from '../tableUtils';
+import { FixedCellProps } from '../data-table';
 
 import styles from './MoneyCell.module.scss';
-import { isNonAbsoluteRow } from './tableUtils';
-import { FixedCellProps } from './data-table';
 
 const MEANINGFULL_LIMIT = 100;
 

@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react';
 
-import { getMostAverage, roundInteger } from '../money';
-import { FixedCellProps, FixedRow } from './data-table';
+import { getMostAverage, roundInteger } from 'money';
+import { FixedCellProps, FixedRow } from '../data-table';
 import { MoneyCell } from './MoneyCell';
 
 const MEANINGFULL_LIMIT = 100;

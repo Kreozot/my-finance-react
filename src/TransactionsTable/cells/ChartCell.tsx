@@ -1,9 +1,9 @@
 import { memo, VFC } from 'react';
 import { Chart, Lines, Ticks } from 'rumble-charts';
 
-import { dates } from '../store';
-import { FixedCellProps, FixedRow } from './data-table';
-import { isNonAbsoluteRow } from './tableUtils';
+import { dates } from 'store';
+import { FixedCellProps, FixedRow } from '../data-table';
+import { isNonAbsoluteRow } from '../tableUtils';
 
 import styles from './ChartCell.module.scss';
 

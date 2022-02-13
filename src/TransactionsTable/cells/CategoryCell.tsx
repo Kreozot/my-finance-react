@@ -2,12 +2,12 @@ import { VFC } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 
-import { FixedCellProps } from './data-table';
-import { tableData } from '../store';
+import { tableData } from 'store';
+import { FixedCellProps } from '../data-table';
+import { isIncomeRow, isSummaryRow } from '../tableUtils';
+import { VisibilityButton } from './VisibilityButton';
 
 import styles from './CategoryCell.module.scss';
-import { VisibilityButton } from './VisibilityButton';
-import { isIncomeRow, isSummaryRow } from './tableUtils';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {

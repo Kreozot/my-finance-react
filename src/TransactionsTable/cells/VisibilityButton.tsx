@@ -6,8 +6,8 @@ import {
 import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/filled/visibility.svg';
 import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
 
-import { IconButton } from '../components/IconButton';
-import { tableData } from '../store';
+import { IconButton } from 'components/IconButton';
+import { tableData } from 'store';
 
 import styles from './CategoryCell.module.scss';
 

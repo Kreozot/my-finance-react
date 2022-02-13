@@ -5,8 +5,8 @@ import {
 import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/filled/visibility.svg';
 import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
 
-import { IconButton } from '../components/IconButton';
-import { FixedFilterProps } from './data-table';
+import { IconButton } from 'components/IconButton';
+import { FixedFilterProps } from '../data-table';
 
 export const HiddenCategoriesFilter: VFC<FixedFilterProps> = memo(({ column }) => {
   const { setFilter, filterValue } = column;
