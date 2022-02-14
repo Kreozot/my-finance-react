@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file -- TODO Исправить */
 /* eslint-disable no-param-reassign */
 import {
   uniq, minBy, groupBy,
@@ -56,16 +55,16 @@ class TableData {
     ];
   }
 
-  hideCategory(category: string) {
-    this.hiddenCategories.add(category);
+  hideCategory(categoryName: string) {
+    this.hiddenCategories.add(categoryName);
   }
 
-  showCategory(category: string) {
-    this.hiddenCategories.delete(category);
+  showCategory(categoryName: string) {
+    this.hiddenCategories.delete(categoryName);
   }
 
-  isCategoryHidden(category: string) {
-    return this.hiddenCategories.has(category);
+  isCategoryHidden(categoryName: string) {
+    return this.hiddenCategories.has(categoryName);
   }
 
   static calculateSumRow(data: RowData[], title: string): RowData {
@@ -75,8 +74,8 @@ class TableData {
       });
       return result;
     }, {
-      category: title,
-      name: '',
+      categoryName: title,
+      itemName: '',
       transactions: {},
     } as RowData);
   }

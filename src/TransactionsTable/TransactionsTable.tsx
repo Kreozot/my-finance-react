@@ -22,6 +22,7 @@ import classNames from 'classnames';
 import {
   dates, tableData, firstMonthKeys,
 } from 'store';
+import { RowData } from 'types';
 import { formatDateKeyHeader } from 'dates';
 import {
   ChartCell, MeanCell, CategoryCell, MoneyCell,
@@ -30,14 +31,13 @@ import { DateFilter, HiddenCategoriesFilter } from './filters';
 import {
   FixedRow, FixedTableState, FixedTableInstance, FixedColumn,
 } from './data-table';
+import { isSummaryRow } from './tableUtils';
 
 import '@material/data-table/dist/mdc.data-table.css';
 import '@rmwc/data-table/data-table.css';
 import '@rmwc/icon/icon.css';
 
 import styles from './TransactionsTable.module.scss';
-import { isSummaryRow } from './tableUtils';
-import { RowData } from '../types';
 
 type TransactionsTableProps = {
 
@@ -61,7 +61,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const columns = useMemo(() => [
     {
       Header: 'Категория',
-      accessor: 'category',
+      accessor: 'categoryName',
       Cell: CategoryCell,
       Filter: HiddenCategoriesFilter,
       filter: categoryFilter,
@@ -99,7 +99,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       columns,
       data: tableData.tableRows,
       initialState: {
-        groupBy: ['category'],
+        groupBy: ['categoryName'],
       } as FixedTableState,
     },
     useFilters,

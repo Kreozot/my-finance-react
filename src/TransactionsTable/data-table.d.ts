@@ -14,6 +14,7 @@ import {
   TableInstance,
   Column,
 } from 'react-table';
+import { RowData } from 'types';
 
 export type FixedColumn = Column<RowData>;
 export type FixedTableState = TableState<RowData> & UseGroupByState<RowData> & UseExpandedState<RowData>;

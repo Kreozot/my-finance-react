@@ -21,20 +21,12 @@ export type TransactionsSum = {
   currency: string,
 };
 
-export type GroupedTransactions = {
-  [dateKey: string]: {
-    [category: string]: {
-      [name: string]: number,
-    },
-  },
-};
-
 export type DateSumMap = {
   [dateKey: string]: number,
 };
 
 export type RowData = {
-  category: string,
-  name: string,
+  categoryName: string,
+  itemName: string,
   transactions: DateSumMap,
 };

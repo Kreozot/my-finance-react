@@ -31,8 +31,8 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
         return Math.round(sum);
       });
       return {
-        category: category + (isIncome ? '-1' : '-0'),
-        name,
+        categoryName: category + (isIncome ? '-1' : '-0'),
+        itemName: name,
         transactions: transactionsSummary,
       };
     });
