@@ -1,16 +1,14 @@
 import { useCallback, useState, VFC } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Dialog, DialogTitle, DialogActions, DialogContent, DialogButton,
+  Dialog, DialogActions, DialogContent, DialogButton,
 } from '@rmwc/dialog';
-import { TextField } from '@rmwc/textfield';
 import { FormField } from '@rmwc/formfield';
-import { Checkbox } from '@rmwc/checkbox';
+import { TextField } from 'components/TextField';
+import { Checkbox } from 'components/Checkbox';
 import { categoryDialogState } from './categoryDialogState';
 
-import '@rmwc/textfield/styles';
 import '@rmwc/formfield/styles';
-import '@rmwc/checkbox/styles';
 import '@material/dialog/dist/mdc.dialog.css';
 import '@material/button/dist/mdc.button.css';
 import '@material/ripple/dist/mdc.ripple.css';
@@ -57,27 +55,27 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
         <Checkbox
           label={<span>Название категории <strong>{categoryName}</strong></span>}
           checked={isCategoryChecked}
-          onChange={handleCategoryCheck}
+          onValueChange={setCategoryChecked}
         />
         <Checkbox
           label={<span>Название перевода <strong>{itemName}</strong></span>}
           checked={isItemChecked}
-          onChange={handleItemCheck}
+          onValueChange={setItemChecked}
         />
 
         <h4>Трансформации</h4>
         <FormField>
           <span className={styles.fieldLabel}>Категория</span>
           <TextField
-            id="categoryName"
             value={newCategoryName}
+            onValueChange={setNewCategoryName}
           />
         </FormField>
         <FormField>
           <span className={styles.fieldLabel}>Название перевода</span>
           <TextField
-            id="categoryName"
             value={newItemName}
+            onValueChange={setNewItemName}
           />
         </FormField>
       </DialogContent>
