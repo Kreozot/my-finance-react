@@ -36,14 +36,6 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     categoryDialogState.hide();
   }, []);
 
-  const handleCategoryCheck = useCallback(({ event: { currentTarget: { checked } } }) => {
-    setCategoryChecked(checked);
-  }, []);
-
-  const handleItemCheck = useCallback(({ event: { currentTarget: { checked } } }) => {
-    setItemChecked(checked);
-  }, []);
-
   return (
     <Dialog
       open={isVisible}
