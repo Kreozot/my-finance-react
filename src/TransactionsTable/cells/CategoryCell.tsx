@@ -23,13 +23,13 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
         <span className={className}>
           {itemName}
         </span>
-        {/* <IconButton
+        <IconButton
           title="Редактировать информацию"
           Icon={EditIcon}
           onClick={() => {
             categoryDialogState.show(categoryName, itemName);
           }}
-        /> */}
+        />
       </span>
     );
   }

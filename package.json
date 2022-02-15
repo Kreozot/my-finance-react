@@ -5,13 +5,21 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "plop": "plop"
   },
   "dependencies": {
     "@material-design-icons/svg": "^0.10.6",
+    "@material/button": "^13.0.0",
     "@material/data-table": "^13.0.0",
+    "@material/dialog": "^13.0.0",
+    "@material/ripple": "^13.0.0",
+    "@rmwc/checkbox": "^6.1.4",
     "@rmwc/data-table": "^6.1.4",
+    "@rmwc/dialog": "^6.1.4",
+    "@rmwc/formfield": "^6.1.4",
     "@rmwc/icon": "^6.1.4",
+    "@rmwc/textfield": "^6.1.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -47,7 +55,22 @@
       "react/jsx-props-no-spreading": "off",
       "@typescript-eslint/no-unused-vars": "warn",
       "no-debugger": "warn"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "plopfile.ts"
+        ],
+        "env": {
+          "node": true,
+          "browser": false
+        },
+        "rules": {
+          "import/no-extraneous-dependencies": "off",
+          "no-console": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -73,6 +96,9 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "inquirer-directory": "^2.2.0",
+    "plop": "^2.7.6",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   }
 }

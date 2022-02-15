@@ -1,4 +1,9 @@
-# Способы определения категории
+## TODO: Убрать из .env GENERATE_SOURCEMAP=false после выхода патча react-scripts 5.0.1+ (https://stackoverflow.com/questions/63195843/webpack-module-warning-failed-to-parse-source-map-from-data-url)
+
+
+
+
+## Способы определения категории
 
 1. По Категории
 2. По Имени

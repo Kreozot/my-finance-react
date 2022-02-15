@@ -22,10 +22,17 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "*.ts"
   ],
   "exclude": [
     "node_modules",
     "src/data"
-  ]
+  ],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

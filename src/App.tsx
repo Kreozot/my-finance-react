@@ -1,8 +1,12 @@
+import { CategoryDialog } from './CategoryDialog';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
 const App = () => {
   return (
-    <TransactionsTable />
+    <>
+      <TransactionsTable />
+      <CategoryDialog />
+    </>
   );
 };
 
