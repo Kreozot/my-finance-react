@@ -29,7 +29,7 @@ import {
 } from './cells';
 import { DateFilter, HiddenCategoriesFilter } from './filters';
 import {
-  FixedRow, FixedTableState, FixedTableInstance, FixedColumn, FixedTableOptions,
+  FixedRow, FixedTableInstance, FixedColumn, FixedTableOptions,
 } from './data-table';
 import { isSummaryRow } from './tableUtils';
 
@@ -105,7 +105,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       columns,
       data: tableData.tableRows,
       initialState: {
-        groupBy: ['isIncome', 'categoryName'],
+        groupBy: ['categoryName'],
         hiddenColumns: ['isIncome'],
       },
     } as FixedTableOptions,
