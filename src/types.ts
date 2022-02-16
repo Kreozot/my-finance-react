@@ -29,4 +29,5 @@ export type RowData = {
   categoryName: string,
   itemName: string,
   transactions: DateSumMap,
+  isIncome: boolean,
 };

@@ -20,9 +20,9 @@ const convertMoney = (amount: number, currency: string): number => {
 // TODO: Группировать по категории и имени в один проход
 export const getRowData = (originalTransactions: Transaction[], isIncome: boolean): RowData[] => {
   const categoryGroups = groupBy(originalTransactions, 'category');
-  const categoryNameGroups = mapValues(categoryGroups, (categoryGroup, category): RowData[] => {
+  const categoryNameGroups = mapValues(categoryGroups, (categoryGroup, categoryName): RowData[] => {
     const nameGroups = groupBy(categoryGroup, 'name');
-    const nameDateGroups = mapValues(nameGroups, (nameGroup, name): RowData => {
+    const nameDateGroups = mapValues(nameGroups, (nameGroup, itemName): RowData => {
       const dateGroups = groupBy(nameGroup, 'dateKey');
       const transactionsSummary: DateSumMap = mapValues(dateGroups, (transactions): number => {
         const sum = transactions.reduce((result, transaction) => {
@@ -31,8 +31,9 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
         return Math.round(sum);
       });
       return {
-        categoryName: category + (isIncome ? '-1' : '-0'),
-        itemName: name,
+        categoryName: categoryName + (isIncome ? '-1' : '-0'),
+        itemName,
+        isIncome,
         transactions: transactionsSummary,
       };
     });

@@ -1,4 +1,6 @@
-import { useCallback, useState, VFC } from 'react';
+import {
+  useCallback, useEffect, useState, VFC,
+} from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Dialog, DialogActions, DialogContent, DialogButton,
@@ -19,6 +21,7 @@ type CategoryDialogProps = {
 
 };
 
+// TODO Возможность сбрасывать текстовые поля
 export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const {
     categoryName, itemName, isVisible,
@@ -28,6 +31,14 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const [isItemChecked, setItemChecked] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [newItemName, setNewItemName] = useState(itemName);
+
+  useEffect(() => {
+    setNewCategoryName(categoryName);
+  }, [categoryName]);
+
+  useEffect(() => {
+    setNewItemName(itemName);
+  }, [itemName]);
 
   const handleClose = useCallback(({ detail: { action } }) => {
     if (action === 'accept') {

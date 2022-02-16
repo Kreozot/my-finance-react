@@ -29,7 +29,7 @@ import {
 } from './cells';
 import { DateFilter, HiddenCategoriesFilter } from './filters';
 import {
-  FixedRow, FixedTableState, FixedTableInstance, FixedColumn,
+  FixedRow, FixedTableState, FixedTableInstance, FixedColumn, FixedTableOptions,
 } from './data-table';
 import { isSummaryRow } from './tableUtils';
 
@@ -67,6 +67,12 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       filter: categoryFilter,
     },
     {
+      Header: 'Тип',
+      accessor: 'isIncome',
+      Cell: () => <span />,
+      disableFilters: true,
+    },
+    {
       Header: 'График',
       id: 'chart',
       Cell: ChartCell,
@@ -99,9 +105,10 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       columns,
       data: tableData.tableRows,
       initialState: {
-        groupBy: ['categoryName'],
-      } as FixedTableState,
-    },
+        groupBy: ['isIncome', 'categoryName'],
+        hiddenColumns: ['isIncome'],
+      },
+    } as FixedTableOptions,
     useFilters,
     useGroupBy,
     useExpanded,
