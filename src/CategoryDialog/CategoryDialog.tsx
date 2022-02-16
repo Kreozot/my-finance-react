@@ -1,11 +1,13 @@
 import {
-  useCallback, useEffect, useState, VFC,
+  useCallback, useEffect, useMemo, useState, VFC,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Dialog, DialogActions, DialogContent, DialogButton,
 } from '@rmwc/dialog';
 import { FormField } from '@rmwc/formfield';
+
+import { tableData } from 'store';
 import { TextField } from 'components/TextField';
 import { Checkbox } from 'components/Checkbox';
 import { categoryDialogState } from './categoryDialogState';
@@ -42,10 +44,32 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
 
   const handleClose = useCallback(({ detail: { action } }) => {
     if (action === 'accept') {
-      console.log('ok');
+      tableData.addTransformer({
+        byCategoryName: isCategoryChecked,
+        byItemName: isItemChecked,
+        categoryName,
+        itemName,
+        newCategoryName,
+        newItemName,
+      });
     }
     categoryDialogState.hide();
-  }, []);
+  }, [
+    isCategoryChecked,
+    isItemChecked,
+    categoryName,
+    itemName,
+    newCategoryName,
+    newItemName,
+  ]);
+
+  const isCategoryConditionDisabled = useMemo(() => {
+    return tableData.forbiddenToTransformCategoryNames.includes(categoryName);
+  }, [categoryName]);
+
+  const isItemConditionDisabled = useMemo(() => {
+    return tableData.forbiddenToTransformItemNames.includes(itemName);
+  }, [itemName]);
 
   return (
     <Dialog
@@ -55,16 +79,24 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     >
       <DialogContent>
         <h4>Условия</h4>
-        <Checkbox
-          label={<span>Название категории <strong>{categoryName}</strong></span>}
-          checked={isCategoryChecked}
-          onValueChange={setCategoryChecked}
-        />
-        <Checkbox
-          label={<span>Название перевода <strong>{itemName}</strong></span>}
-          checked={isItemChecked}
-          onValueChange={setItemChecked}
-        />
+        <FormField>
+          <Checkbox
+            id="categoryCheck"
+            label={<span>Название категории <strong>{categoryName}</strong></span>}
+            checked={isCategoryChecked}
+            onValueChange={setCategoryChecked}
+            disabled={isCategoryConditionDisabled}
+          />
+        </FormField>
+        <FormField>
+          <Checkbox
+            id="itemCheck"
+            label={<span>Название перевода <strong>{itemName}</strong></span>}
+            checked={isItemChecked}
+            onValueChange={setItemChecked}
+            disabled={isItemConditionDisabled}
+          />
+        </FormField>
 
         <h4>Трансформации</h4>
         <FormField>

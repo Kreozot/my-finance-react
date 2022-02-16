@@ -18,6 +18,7 @@ const convertMoney = (amount: number, currency: string): number => {
 };
 
 // TODO: Группировать по категории и имени в один проход
+// TODO: Рассмотреть перенос группировки полностью в таблицу
 export const getRowData = (originalTransactions: Transaction[], isIncome: boolean): RowData[] => {
   const categoryGroups = groupBy(originalTransactions, 'category');
   const categoryNameGroups = mapValues(categoryGroups, (categoryGroup, categoryName): RowData[] => {
