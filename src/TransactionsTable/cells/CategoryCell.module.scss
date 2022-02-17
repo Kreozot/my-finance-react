@@ -1,7 +1,6 @@
 .visibilityButton {
   visibility: hidden;
-  cursor: pointer;
-  font-size: 0;
+  opacity: 0;
 }
 
 .category {
@@ -12,13 +11,15 @@
   &:hover {
     .visibilityButton {
       visibility: visible;
+      opacity: 1;
     }
   }
 }
 
 .name {
-  margin-left: 24px;
+  margin-left: 16px;
   white-space: normal;
+  flex: 1;
 }
 
 .categoryName {
@@ -32,4 +33,20 @@
 
 .hidden {
   opacity: 0.5;
+}
+
+.editButton {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.nameCell {
+  display: flex;
+
+  &:hover {
+    .editButton {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }

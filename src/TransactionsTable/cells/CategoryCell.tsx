@@ -20,13 +20,14 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
     const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
     return (
-      <span>
+      <span className={styles.nameCell}>
         <span className={className}>
           {itemName}
         </span>
         <IconButton
           title="Редактировать информацию"
           Icon={EditIcon}
+          className={styles.editButton}
           onClick={() => {
             categoryDialogState.show(categoryName, itemName);
           }}
