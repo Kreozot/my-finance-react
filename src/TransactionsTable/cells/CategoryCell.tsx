@@ -6,6 +6,7 @@ import { tableData } from 'store';
 import { IconButton } from 'components/IconButton';
 import { categoryDialogState } from 'CategoryDialog/categoryDialogState';
 import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/edit.svg';
+import { decodeCategory } from 'convertData';
 import { FixedCellProps } from '../data-table';
 import { isIncomeRow, isSummaryRow } from '../tableUtils';
 import { VisibilityButton } from './VisibilityButton';
@@ -14,8 +15,8 @@ import styles from './CategoryCell.module.scss';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
-    const { categoryName, itemName } = row.original;
-    const isHidden = tableData.isCategoryHidden(categoryName);
+    const { categoryCode, itemName } = row.original;
+    const isHidden = tableData.isCategoryHidden(categoryCode);
     const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
     return (
@@ -27,14 +28,14 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
           title="Редактировать информацию"
           Icon={EditIcon}
           onClick={() => {
-            categoryDialogState.show(categoryName, itemName);
+            categoryDialogState.show(categoryCode, itemName);
           }}
         />
       </span>
     );
   }
 
-  const categoryTitle = row.values.categoryName.slice(0, -2);
+  const { categoryName } = decodeCategory(row.values.categoryCode);
   const isHidden = tableData.isCategoryHidden(cell.value);
   const className = classNames(styles.categoryName, {
     [styles.income]: isIncomeRow(row),
@@ -47,10 +48,10 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
         className={className}
         {...(!isSummaryRow(row) ? row.getToggleRowExpandedProps() : {})}
       >
-        {categoryTitle}
+        {categoryName}
       </span>
 
-      {!isSummaryRow(row) && <VisibilityButton categoryName={cell.value} />}
+      {!isSummaryRow(row) && <VisibilityButton categoryCode={cell.value} />}
     </span>
   );
 });

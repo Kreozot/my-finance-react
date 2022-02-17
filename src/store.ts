@@ -3,10 +3,10 @@ import {
   uniq, minBy, groupBy,
 } from 'lodash';
 import { autorun, makeAutoObservable } from 'mobx';
-import { getRowData } from './convertData';
+import { getCategoryCode, getRowData } from './convertData';
 
 import transactionsData from './data/allTransactions.json';
-import { RowData, Transaction } from './types';
+import { CategoryType, RowData, Transaction } from './types';
 
 const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
 const initialTransformers = JSON.parse(localStorage.getItem('transformers') || '[]');
@@ -20,20 +20,33 @@ export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
   return minBy(datesByYears[year], (dateKey) => dateKey.slice(-2));
 });
 
+/** Преобразователь транзакции
+ *
+ * Меняет поля транзакции если она соответствует условиям проверки
+ */
 export type Transformer = {
+  /** Есть ли проверка по названию категории */
   byCategoryName: boolean;
+  /** Есть ли проверка по названию перевода */
   byItemName: boolean;
+  /** Название категории */
   categoryName: string;
+  /** Название перевода */
   itemName: string;
+  /** Новое название категории */
   newCategoryName: string;
+  /** Новое название перевода */
   newItemName: string;
 };
 
 class TableData {
+  /** Исходный список транзакций */
   transactions: Transaction[];
 
+  /** Список кодов категорий, скрытых пользователем */
   hiddenCategories: Set<string> = new Set(initialHiddenCategories);
 
+  /** Список преобразователей транзакций */
   transformers: Transformer[] = initialTransformers;
 
   constructor(transactions: Transaction[]) {
@@ -113,41 +126,42 @@ class TableData {
     ];
   }
 
-  hideCategory(categoryName: string) {
-    this.hiddenCategories.add(categoryName);
+  hideCategory(categoryCode: string) {
+    this.hiddenCategories.add(categoryCode);
   }
 
-  showCategory(categoryName: string) {
-    this.hiddenCategories.delete(categoryName);
+  showCategory(categoryCode: string) {
+    this.hiddenCategories.delete(categoryCode);
   }
 
-  isCategoryHidden(categoryName: string) {
-    return this.hiddenCategories.has(categoryName);
+  isCategoryHidden(categoryCode: string) {
+    return this.hiddenCategories.has(categoryCode);
   }
 
-  static calculateSumRow(data: RowData[], title: string): RowData {
+  static calculateSumRow(data: RowData[], categoryName: string, categoryType: CategoryType): RowData {
     return data.reduce((result, entry) => {
       dates.forEach((dateKey) => {
         result.transactions[dateKey] = (result.transactions[dateKey] || 0) + (entry.transactions[dateKey] || 0);
       });
       return result;
     }, {
-      categoryName: title,
+      categoryName,
+      categoryCode: getCategoryCode(categoryName, categoryType),
       itemName: '',
       transactions: {},
     } as RowData);
   }
 
   get incomeSumRow() {
-    return TableData.calculateSumRow(this.incomeRowData, 'Доход-1');
+    return TableData.calculateSumRow(this.incomeRowData, 'Доход', CategoryType.Income);
   }
 
   get expensesSumRow() {
-    return TableData.calculateSumRow(this.expenseRowData, 'Расход-0');
+    return TableData.calculateSumRow(this.expenseRowData, 'Расход', CategoryType.Expense);
   }
 
   get marginSumRow() {
-    return TableData.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток-2');
+    return TableData.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток', CategoryType.Both);
   }
 }
 

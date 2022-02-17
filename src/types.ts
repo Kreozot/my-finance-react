@@ -1,3 +1,9 @@
+export enum CategoryType {
+  Expense = 0,
+  Income = 1,
+  Both = 2,
+}
+
 export type Transaction = {
   hash?: string,
   /** Дата и время */
@@ -26,8 +32,16 @@ export type DateSumMap = {
 };
 
 export type RowData = {
+  /** Название категории */
   categoryName: string,
+  categoryType: CategoryType,
+  /** Внутренний код категории для группировки таблицы
+   *
+   * Постфикс -0 для расходов, -1 для доходов, -2 для строк с отображением отрицательных значений
+   */
+  categoryCode: string,
+  /** Название перевода */
   itemName: string,
+  /** Суммы транзакций по месяцам */
   transactions: DateSumMap,
-  isIncome: boolean,
 };

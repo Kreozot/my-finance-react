@@ -1,13 +1,21 @@
+import { decodeCategory } from 'convertData';
+import { CategoryType } from 'types';
 import { FixedRow } from './data-table';
 
 const SUMMARY_ROWS_COUNT = 3;
 
 export const isNonAbsoluteRow = (row?: FixedRow) => {
-  return row?.values?.categoryName?.slice(-1) === '2';
+  const categoryCode = row?.values?.categoryCode;
+  if (categoryCode) {
+    return decodeCategory(categoryCode).categoryType === CategoryType.Both;
+  }
 };
 
 export const isIncomeRow = (row?: FixedRow) => {
-  return row?.values?.categoryName?.slice(-1) === '1';
+  const categoryCode = row?.values?.categoryCode;
+  if (categoryCode) {
+    return decodeCategory(categoryCode).categoryType === CategoryType.Income;
+  }
 };
 
 export const isSummaryRow = (row: FixedRow) => {

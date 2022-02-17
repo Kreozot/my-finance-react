@@ -46,8 +46,8 @@ type TransactionsTableProps = {
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
-      const categoryName = row.values[id];
-      return !filterValue || isSummaryRow(row) || !tableData.isCategoryHidden(categoryName);
+      const categoryCode = row.values[id];
+      return !filterValue || isSummaryRow(row) || !tableData.isCategoryHidden(categoryCode);
     });
   }, []);
 
@@ -61,14 +61,20 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const columns = useMemo(() => [
     {
       Header: 'Категория',
-      accessor: 'categoryName',
+      accessor: 'categoryCode',
       Cell: CategoryCell,
       Filter: HiddenCategoriesFilter,
       filter: categoryFilter,
     },
     {
       Header: 'Тип',
-      accessor: 'isIncome',
+      accessor: 'categoryType',
+      Cell: () => <span />,
+      disableFilters: true,
+    },
+    {
+      Header: 'Название категории',
+      accessor: 'categoryName',
       Cell: () => <span />,
       disableFilters: true,
     },
@@ -105,8 +111,8 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       columns,
       data: tableData.tableRows,
       initialState: {
-        groupBy: ['categoryName'],
-        hiddenColumns: ['isIncome'],
+        groupBy: ['categoryCode'],
+        hiddenColumns: ['categoryName', 'categoryType'],
       },
     } as FixedTableOptions,
     useFilters,

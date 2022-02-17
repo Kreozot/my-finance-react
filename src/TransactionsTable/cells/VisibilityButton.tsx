@@ -12,13 +12,13 @@ import { tableData } from 'store';
 import styles from './CategoryCell.module.scss';
 
 type VisibilityButtonProps = {
-  categoryName: string;
+  categoryCode: string;
 };
 
 export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => {
-  const { categoryName } = props;
+  const { categoryCode } = props;
 
-  const isHidden = tableData.isCategoryHidden(categoryName);
+  const isHidden = tableData.isCategoryHidden(categoryCode);
 
   const title = useMemo(() => {
     return isHidden
@@ -34,11 +34,11 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
 
   const toggleFilter = useCallback(() => {
     if (isHidden) {
-      tableData.showCategory(categoryName);
+      tableData.showCategory(categoryCode);
     } else {
-      tableData.hideCategory(categoryName);
+      tableData.hideCategory(categoryCode);
     }
-  }, [categoryName, isHidden]);
+  }, [categoryCode, isHidden]);
 
   return (
     <IconButton

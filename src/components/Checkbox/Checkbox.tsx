@@ -2,6 +2,7 @@ import { VFC, memo, useCallback } from 'react';
 import { Checkbox as RMWCCheckbox, CheckboxProps as RMWCCheckboxProps } from '@rmwc/checkbox';
 
 import '@rmwc/checkbox/styles';
+import './Checkbox.module.scss';
 
 type CheckboxProps = Omit<RMWCCheckboxProps, 'onChange'> & {
   onValueChange: (value: boolean) => void,

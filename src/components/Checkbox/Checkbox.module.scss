@@ -1,0 +1,5 @@
+:global {
+  .mdc-checkbox--disabled + label {
+    opacity: 0.5;
+  }
+}

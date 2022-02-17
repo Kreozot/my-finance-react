@@ -3,6 +3,7 @@ import {
 } from 'lodash';
 
 import {
+  CategoryType,
   DateSumMap, RowData, Transaction,
 } from './types';
 
@@ -15,6 +16,21 @@ const convertMoney = (amount: number, currency: string): number => {
   }
   // TODO: Конвертация валюты
   return amount;
+};
+
+export const getCategoryCode = (categoryName: string, categoryType: CategoryType): string => {
+  return `${categoryName}-${categoryType}`;
+};
+
+export const decodeCategory = (categoryCode: string): { categoryType: CategoryType, categoryName: string } => {
+  const categoryType = Number(categoryCode.slice(-1)) as CategoryType;
+  if (!Object.values(CategoryType)?.includes(categoryType)) {
+    throw new Error(`Значение ${categoryCode.slice(-1)} не является типом категории`);
+  }
+  return {
+    categoryType,
+    categoryName: categoryCode.slice(0, -2),
+  };
 };
 
 // TODO: Группировать по категории и имени в один проход
@@ -31,10 +47,12 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
         }, 0);
         return Math.round(sum);
       });
+      const categoryType = isIncome ? CategoryType.Income : CategoryType.Expense;
       return {
-        categoryName: categoryName + (isIncome ? '-1' : '-0'),
+        categoryName,
+        categoryType,
+        categoryCode: getCategoryCode(categoryName, categoryType),
         itemName,
-        isIncome,
         transactions: transactionsSummary,
       };
     });
