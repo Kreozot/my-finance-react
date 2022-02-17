@@ -36,10 +36,12 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
 
   useEffect(() => {
     setNewCategoryName(categoryName);
+    setCategoryChecked(false);
   }, [categoryName]);
 
   useEffect(() => {
     setNewItemName(itemName);
+    setItemChecked(false);
   }, [itemName]);
 
   const handleClose = useCallback(({ detail: { action } }) => {
@@ -75,7 +77,6 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     <Dialog
       open={isVisible}
       onClose={handleClose}
-      onClosed={(evt) => console.log(evt.detail.action)}
     >
       <DialogContent>
         <h4>Условия</h4>
@@ -119,7 +120,11 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
         <DialogButton action="close">
           Отмена
         </DialogButton>
-        <DialogButton action="accept" isDefaultAction>
+        <DialogButton
+          action="accept"
+          isDefaultAction
+          disabled={!isCategoryChecked && !isItemChecked}
+        >
           Применить
         </DialogButton>
       </DialogActions>

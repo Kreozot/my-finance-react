@@ -15,7 +15,7 @@ import styles from './CategoryCell.module.scss';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
-    const { categoryCode, itemName } = row.original;
+    const { categoryCode, categoryName, itemName } = row.original;
     const isHidden = tableData.isCategoryHidden(categoryCode);
     const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
@@ -28,7 +28,7 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
           title="Редактировать информацию"
           Icon={EditIcon}
           onClick={() => {
-            categoryDialogState.show(categoryCode, itemName);
+            categoryDialogState.show(categoryName, itemName);
           }}
         />
       </span>
