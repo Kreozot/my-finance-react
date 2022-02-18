@@ -8,6 +8,8 @@ import { getCategoryCode, getRowData } from './convertData';
 import transactionsData from './data/allTransactions.json';
 import { CategoryType, RowData, Transaction } from './types';
 
+const EXCLUDE_HIDDEN_CATEGORIES_FROM_SUM_ROWS = true;
+
 const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
 const initialTransformers = JSON.parse(localStorage.getItem('transformers') || '[]');
 
@@ -144,11 +146,13 @@ class TableData {
     return this.hiddenCategories.has(categoryCode);
   }
 
-  static calculateSumRow(data: RowData[], categoryName: string, categoryType: CategoryType): RowData {
+  calculateSumRow(data: RowData[], categoryName: string, categoryType: CategoryType): RowData {
     return data.reduce((result, entry) => {
-      dates.forEach((dateKey) => {
-        result.transactions[dateKey] = (result.transactions[dateKey] || 0) + (entry.transactions[dateKey] || 0);
-      });
+      if (!EXCLUDE_HIDDEN_CATEGORIES_FROM_SUM_ROWS || !this.hiddenCategories.has(entry.categoryCode)) {
+        dates.forEach((dateKey) => {
+          result.transactions[dateKey] = (result.transactions[dateKey] || 0) + (entry.transactions[dateKey] || 0);
+        });
+      }
       return result;
     }, {
       categoryName,
@@ -159,15 +163,15 @@ class TableData {
   }
 
   get incomeSumRow() {
-    return TableData.calculateSumRow(this.incomeRowData, 'Доход', CategoryType.Income);
+    return this.calculateSumRow(this.incomeRowData, 'Доход', CategoryType.Income);
   }
 
   get expensesSumRow() {
-    return TableData.calculateSumRow(this.expenseRowData, 'Расход', CategoryType.Expense);
+    return this.calculateSumRow(this.expenseRowData, 'Расход', CategoryType.Expense);
   }
 
   get marginSumRow() {
-    return TableData.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток', CategoryType.Both);
+    return this.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток', CategoryType.Both);
   }
 }
 
