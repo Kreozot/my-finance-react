@@ -1,6 +1,8 @@
 .visibilityButton {
-  visibility: hidden;
-  opacity: 0;
+  @media (hover: hover) {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
 .category {
@@ -36,8 +38,10 @@
 }
 
 .editButton {
-  visibility: hidden;
-  opacity: 0;
+  @media (hover: hover) {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
 .nameCell {
