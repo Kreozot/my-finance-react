@@ -107,12 +107,14 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
         <h4>Трансформации</h4>
         <p>Выберите трансформации, которые будут применяться к записям</p>
         <FormField className={styles.field}>
-          <Checkbox
-            id="newCategoryCheck"
-            checked={isNewCategoryChecked}
-            onValueChange={setNewCategoryChecked}
-          />
-          <span className={styles.fieldLabel}>Категория</span>
+          <span className={styles.fieldLabel}>
+            <Checkbox
+              id="newCategoryCheck"
+              checked={isNewCategoryChecked}
+              onValueChange={setNewCategoryChecked}
+              label="Категория"
+            />
+          </span>
           <TextField
             value={newCategoryName}
             onValueChange={setNewCategoryName}
@@ -121,12 +123,14 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
           />
         </FormField>
         <FormField className={styles.field}>
-          <Checkbox
-            id="newItemCheck"
-            checked={isNewItemChecked}
-            onValueChange={setNewItemChecked}
-          />
-          <span className={styles.fieldLabel}>Название перевода</span>
+          <span className={styles.fieldLabel}>
+            <Checkbox
+              id="newItemCheck"
+              checked={isNewItemChecked}
+              onValueChange={setNewItemChecked}
+              label="Название перевода"
+            />
+          </span>
           <TextField
             value={newItemName}
             onValueChange={setNewItemName}
