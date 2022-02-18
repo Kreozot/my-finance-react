@@ -1,3 +1,24 @@
 .fieldLabel {
-  width: 150px;
+  min-width: 150px;
+}
+
+.field {
+  width: 100%;
+}
+
+:global {
+  .mdc-dialog__content > .mdc-form-field {
+    display: flex;
+  }
+
+  @media (min-width: 592px) {
+    .mdc-dialog .mdc-dialog__surface {
+        max-width: calc(100% - 32px);
+    }
+  }
+  @media (min-width: 650px) {
+    .mdc-dialog .mdc-dialog__surface {
+        min-width: 628px;
+    }
+  }
 }

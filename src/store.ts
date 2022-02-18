@@ -34,9 +34,9 @@ export type Transformer = {
   /** Название перевода */
   itemName: string;
   /** Новое название категории */
-  newCategoryName: string;
+  newCategoryName?: string;
   /** Новое название перевода */
-  newItemName: string;
+  newItemName?: string;
 };
 
 class TableData {
@@ -92,6 +92,12 @@ class TableData {
     if ((transformer.byCategoryName && this.forbiddenToTransformCategoryNames.includes(transformer.categoryName))
       || (transformer.byItemName && this.forbiddenToTransformCategoryNames.includes(transformer.itemName))) {
       throw new Error('Запрещено добавление в качестве условий полей, в которые преобразуются другие записи');
+    }
+    if (!transformer.newCategoryName && !transformer.newItemName) {
+      return;
+    }
+    if (!transformer.byCategoryName && !transformer.byItemName) {
+      return;
     }
     this.transformers.push(transformer);
   }
