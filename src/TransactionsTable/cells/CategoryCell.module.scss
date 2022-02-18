@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   min-width: 230px;
+  min-height: 40px;
 
   &:hover {
     .visibilityButton {
@@ -46,6 +47,8 @@
 
 .nameCell {
   display: flex;
+  min-height: 40px;
+  align-items: center;
 
   &:hover {
     .editButton {
