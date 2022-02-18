@@ -111,6 +111,9 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       columns,
       data: tableData.tableRows,
       initialState: {
+        filters: [
+          { id: 'categoryCode', value: true },
+        ],
         groupBy: ['categoryCode'],
         hiddenColumns: ['categoryName', 'categoryType'],
       },
