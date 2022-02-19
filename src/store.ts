@@ -3,6 +3,7 @@ import {
   uniq, minBy, groupBy,
 } from 'lodash';
 import { autorun, makeAutoObservable } from 'mobx';
+import { loadSetting, saveSetting, Setting } from 'settingsStorage';
 import { getCategoryCode, getRowData } from './convertData';
 
 import transactionsData from './data/allTransactions.json';
@@ -10,8 +11,8 @@ import { CategoryType, RowData, Transaction } from './types';
 
 const EXCLUDE_HIDDEN_CATEGORIES_FROM_SUM_ROWS = true;
 
-const initialHiddenCategories = JSON.parse(localStorage.getItem('hiddenCategories') || '[]');
-const initialTransformers = JSON.parse(localStorage.getItem('transformers') || '[]');
+const initialHiddenCategories = loadSetting(Setting.HiddenCategories) || [];
+const initialTransformers = loadSetting(Setting.Transformers) || [];
 
 export const dates: string[] = uniq(
   transactionsData.map((entry) => entry.dateKey),
@@ -179,9 +180,9 @@ class TableData {
 export const tableData = new TableData(transactionsData as unknown as Transaction[]);
 
 autorun(() => {
-  localStorage.setItem('hiddenCategories', JSON.stringify(tableData.hiddenCategories));
+  saveSetting(Setting.HiddenCategories, tableData.hiddenCategories);
 });
 
 autorun(() => {
-  localStorage.setItem('transformers', JSON.stringify(tableData.transformers));
+  saveSetting(Setting.Transformers, tableData.transformers);
 });

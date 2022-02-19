@@ -24,6 +24,7 @@ import {
 } from 'store';
 import { RowData } from 'types';
 import { formatDateKeyHeader } from 'dates';
+import { loadSetting, Setting } from 'settingsStorage';
 import {
   ChartCell, MeanCell, CategoryCell, MoneyCell,
 } from './cells';
@@ -112,7 +113,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       data: tableData.tableRows,
       initialState: {
         filters: [
-          { id: 'categoryCode', value: true },
+          { id: 'categoryCode', value: loadSetting(Setting.HiddenCategoriesFilter) },
         ],
         groupBy: ['categoryCode'],
         hiddenColumns: ['categoryName', 'categoryType'],

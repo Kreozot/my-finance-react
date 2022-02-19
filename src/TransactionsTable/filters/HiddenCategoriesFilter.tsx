@@ -6,6 +6,7 @@ import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/fil
 import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
 
 import { IconButton } from 'components/IconButton';
+import { saveSetting, Setting } from 'settingsStorage';
 import { FixedFilterProps } from '../data-table';
 
 export const HiddenCategoriesFilter: VFC<FixedFilterProps> = memo(({ column }) => {
@@ -23,7 +24,10 @@ export const HiddenCategoriesFilter: VFC<FixedFilterProps> = memo(({ column }) =
       : VisibilityIcon;
   }, [filterValue]);
 
-  const toggleFilter = useCallback(() => setFilter(!filterValue), [filterValue, setFilter]);
+  const toggleFilter = useCallback(() => {
+    setFilter(!filterValue);
+    saveSetting(Setting.HiddenCategoriesFilter, !filterValue);
+  }, [filterValue, setFilter]);
 
   return (
     <IconButton
