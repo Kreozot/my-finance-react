@@ -24,7 +24,7 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
 
     return (
       <span className={styles.nameCell}>
-        {banks.map((bank) => <BankIcon bank={bank} />)}
+        {banks.map((bank) => <BankIcon bank={bank} key={bank} />)}
         <span className={className}>
           {itemName}
         </span>
