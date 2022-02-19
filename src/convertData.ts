@@ -1,8 +1,9 @@
 import {
-  groupBy, mapValues, values, flatten,
+  groupBy, mapValues, values, flatten, uniq,
 } from 'lodash';
 
 import {
+  Bank,
   CategoryType,
   DateSumMap, RowData, Transaction,
 } from './types';
@@ -48,12 +49,14 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
         return Math.round(sum);
       });
       const categoryType = isIncome ? CategoryType.Income : CategoryType.Expense;
+      const banks = uniq(nameGroup.map(({ bank }) => bank));
       return {
         categoryName,
         categoryType,
         categoryCode: getCategoryCode(categoryName, categoryType),
         itemName,
         transactions: transactionsSummary,
+        banks,
       };
     });
     return values(nameDateGroups);

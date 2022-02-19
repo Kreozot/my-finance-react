@@ -18,6 +18,8 @@ export type Transaction = {
   category: string,
   /** Код валюты */
   currency: string,
+  /** Банк, где выполнена операция */
+  bank: Bank,
 };
 
 export type TransactionsSum = {
@@ -44,4 +46,12 @@ export type RowData = {
   itemName: string,
   /** Суммы транзакций по месяцам */
   transactions: DateSumMap,
+  /** Банки, в которых были переводы с таким названием */
+  banks: Bank[],
 };
+
+export enum Bank {
+  Tinkoff = 'tinkoff',
+  Sberbank = 'sberbank',
+  Alfabank = 'alfabank',
+}

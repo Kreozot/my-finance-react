@@ -12,15 +12,19 @@ import { isIncomeRow, isSummaryRow } from '../tableUtils';
 import { VisibilityButton } from './VisibilityButton';
 
 import styles from './CategoryCell.module.scss';
+import { BankIcon } from './BankIcon';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
-    const { categoryCode, categoryName, itemName } = row.original;
+    const {
+      categoryCode, categoryName, itemName, banks,
+    } = row.original;
     const isHidden = tableData.isCategoryHidden(categoryCode);
     const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
     return (
       <span className={styles.nameCell}>
+        {banks.map((bank) => <BankIcon bank={bank} />)}
         <span className={className}>
           {itemName}
         </span>
