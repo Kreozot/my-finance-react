@@ -185,7 +185,7 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
         <DialogButton
           action="accept"
           isDefaultAction
-          disabled={!isCategoryChecked && !isItemChecked}
+          disabled={!isCategoryChecked && !isItemChecked && !isItemRegExpChecked}
         >
           Применить
         </DialogButton>
