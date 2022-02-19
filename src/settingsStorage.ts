@@ -1,3 +1,5 @@
+import { isRegExp, isString } from 'lodash';
+
 export enum Setting {
   HiddenCategoriesFilter = 'hiddenCategoriesFilter',
   HiddenCategories = 'hiddenCategories',
@@ -5,14 +7,14 @@ export enum Setting {
 }
 
 const replacer = (key: string, value: any): any => {
-  if (key === 'itemNameRegExp') {
+  if (isRegExp(value)) {
     return value.toString();
   }
   return value;
 };
 
 const reviver = (key: string, value: any): any => {
-  if (key === 'itemNameRegExp') {
+  if (isString(value) && value[0] === '/' && value[value.length - 1] === '/') {
     return new RegExp(value.slice(1, -1));
   }
   return value;
