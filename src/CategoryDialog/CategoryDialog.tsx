@@ -23,6 +23,10 @@ type CategoryDialogProps = {
 
 };
 
+const escapeRegExp = (text: string) => {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
+};
+
 // TODO Возможность сбрасывать текстовые поля
 export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const {
@@ -31,16 +35,20 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
 
   const [isCategoryChecked, setCategoryChecked] = useState(false);
   const [isItemChecked, setItemChecked] = useState(false);
+  const [isItemRegExpChecked, setItemRegExpChecked] = useState(false);
   const [isNewCategoryChecked, setNewCategoryChecked] = useState(false);
   const [isNewItemChecked, setNewItemChecked] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
+  const [itemNameRegExp, setItemNameRegExp] = useState(itemName);
   const [newItemName, setNewItemName] = useState(itemName);
 
   useEffect(() => {
     setNewCategoryName(categoryName);
     setNewItemName(itemName);
+    setItemNameRegExp(escapeRegExp(itemName));
     setCategoryChecked(false);
     setItemChecked(false);
+    setItemRegExpChecked(false);
     setNewCategoryChecked(false);
     setNewItemChecked(false);
   }, [itemName, categoryName]);
@@ -48,14 +56,13 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const handleClose = useCallback(({ detail: { action } }: DialogOnCloseEventT) => {
     if (action === 'accept') {
       tableData.addTransformer({
-        byCategoryName: isCategoryChecked,
-        byItemName: isItemChecked,
-        categoryName,
-        itemName,
+        categoryName: isCategoryChecked ? categoryName : undefined,
+        itemName: isItemChecked ? itemName : undefined,
+        itemNameRegExp: isItemRegExpChecked ? new RegExp(itemNameRegExp) : undefined,
         newCategoryName: isNewCategoryChecked && categoryName !== newCategoryName
           ? newCategoryName
           : undefined,
-        newItemName: isNewItemChecked && itemName !== newItemName
+        newItemName: isNewItemChecked && itemNameRegExp !== newItemName
           ? newItemName
           : undefined,
       });
@@ -64,8 +71,10 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   }, [
     isCategoryChecked,
     isItemChecked,
+    isItemRegExpChecked,
     categoryName,
     itemName,
+    itemNameRegExp,
     newCategoryName,
     newItemName,
     isNewCategoryChecked,
@@ -79,6 +88,18 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const isItemConditionDisabled = useMemo(() => {
     return tableData.forbiddenToTransformItemNames.includes(itemName);
   }, [itemName]);
+
+  useEffect(() => {
+    if (isItemRegExpChecked) {
+      setItemChecked(false);
+    }
+  }, [isItemRegExpChecked]);
+
+  useEffect(() => {
+    if (isItemChecked) {
+      setItemRegExpChecked(false);
+    }
+  }, [isItemChecked]);
 
   return (
     <Dialog
@@ -103,6 +124,23 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
           onValueChange={setItemChecked}
           disabled={isItemConditionDisabled}
         />
+        <FormField className={styles.field}>
+          <span className={styles.fieldLabel}>
+            <Checkbox
+              id="itemRegExpCheck"
+              label={<span>Название перевода (RegExp)</span>}
+              checked={isItemRegExpChecked}
+              onValueChange={setItemRegExpChecked}
+              disabled={isItemConditionDisabled}
+            />
+          </span>
+          <TextField
+            value={itemNameRegExp}
+            onValueChange={setItemNameRegExp}
+            fullwidth
+            disabled={!isItemRegExpChecked}
+          />
+        </FormField>
 
         <h4>Трансформации</h4>
         <p>Выберите трансформации, которые будут применяться к записям</p>

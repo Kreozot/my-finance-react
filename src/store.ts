@@ -27,14 +27,12 @@ export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
  * Меняет поля транзакции если она соответствует условиям проверки
  */
 export type Transformer = {
-  /** Есть ли проверка по названию категории */
-  byCategoryName: boolean;
-  /** Есть ли проверка по названию перевода */
-  byItemName: boolean;
   /** Название категории */
-  categoryName: string;
+  categoryName?: string;
   /** Название перевода */
-  itemName: string;
+  itemName?: string;
+  /** RegExp названия перевода */
+  itemNameRegExp?: RegExp;
   /** Новое название категории */
   newCategoryName?: string;
   /** Новое название перевода */
@@ -58,15 +56,18 @@ class TableData {
 
   transformTransaction(transaction: Transaction): Transaction {
     const transformer = this.transformers.find((tempTransformer) => {
-      if (!tempTransformer.byCategoryName && !tempTransformer.byItemName) {
+      if (!tempTransformer.categoryName && !tempTransformer.itemName && !tempTransformer.itemNameRegExp) {
         return false;
       }
-      const passByCategoryName = (!tempTransformer.byCategoryName
+      const passByCategoryName = (!tempTransformer.categoryName
         || tempTransformer.categoryName === transaction.category);
-      const passByItemName = (!tempTransformer.byItemName
+      const passByItemName = (!tempTransformer.itemName
         || tempTransformer.itemName === transaction.name);
-      return passByCategoryName && passByItemName;
+      const passByItemNameRegExp = (!tempTransformer.itemNameRegExp
+        || tempTransformer.itemNameRegExp.test(transaction.name));
+      return passByCategoryName && passByItemName && passByItemNameRegExp;
     });
+    // TODO: Использование групп при замене имени, найденного по регулярному выражению
     if (transformer) {
       return {
         ...transaction,
@@ -91,14 +92,14 @@ class TableData {
   }
 
   addTransformer(transformer: Transformer) {
-    if ((transformer.byCategoryName && this.forbiddenToTransformCategoryNames.includes(transformer.categoryName))
-      || (transformer.byItemName && this.forbiddenToTransformCategoryNames.includes(transformer.itemName))) {
+    if ((transformer.categoryName && this.forbiddenToTransformCategoryNames.includes(transformer.categoryName))
+      || (transformer.itemName && this.forbiddenToTransformCategoryNames.includes(transformer.itemName))) {
       throw new Error('Запрещено добавление в качестве условий полей, в которые преобразуются другие записи');
     }
     if (!transformer.newCategoryName && !transformer.newItemName) {
       return;
     }
-    if (!transformer.byCategoryName && !transformer.byItemName) {
+    if (!transformer.categoryName && !transformer.itemName && !transformer.itemNameRegExp) {
       return;
     }
     this.transformers.push(transformer);
