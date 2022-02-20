@@ -6,6 +6,7 @@ import {
   Dialog, DialogActions, DialogContent, DialogButton, DialogOnCloseEventT,
 } from '@rmwc/dialog';
 import { FormField } from '@rmwc/formfield';
+import { toast } from 'react-toastify';
 
 import { tableData } from 'store';
 import { TextField } from 'components/TextField';
@@ -55,19 +56,35 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   }, [itemName, categoryName]);
 
   const handleClose = useCallback(({ detail: { action } }: DialogOnCloseEventT) => {
-    if (action === 'accept') {
-      tableData.addTransformer({
-        categoryName: isCategoryChecked ? categoryName : undefined,
-        itemName: isItemChecked ? itemName : undefined,
-        itemNameRegExp: isItemRegExpChecked ? new RegExp(itemNameRegExp) : undefined,
-        newCategoryName: isNewCategoryChecked && categoryName !== newCategoryName
-          ? newCategoryName
-          : undefined,
-        newItemName: isNewItemChecked && itemNameRegExp !== newItemName
-          ? newItemName
-          : undefined,
-      });
-    }
+    categoryDialogState.hide();
+  }, []);
+  const handleAcceptClick = useCallback(() => {
+    const toastId = toast.loading('Применение изменений');
+    setTimeout(() => {
+      try {
+        tableData.addTransformer({
+          categoryName: isCategoryChecked ? categoryName : undefined,
+          itemName: isItemChecked ? itemName : undefined,
+          itemNameRegExp: isItemRegExpChecked ? new RegExp(itemNameRegExp) : undefined,
+          newCategoryName: isNewCategoryChecked && categoryName !== newCategoryName
+            ? newCategoryName
+            : undefined,
+          newItemName: isNewItemChecked && itemNameRegExp !== newItemName
+            ? newItemName
+            : undefined,
+        });
+        toast.dismiss(toastId);
+        toast('Успешно', {
+          type: toast.TYPE.SUCCESS,
+        });
+      } catch (err) {
+        categoryDialogState.show();
+        toast.dismiss(toastId);
+        toast((err as Error).message, {
+          type: toast.TYPE.ERROR,
+        });
+      }
+    }, 0);
     categoryDialogState.hide();
   }, [
     isCategoryChecked,
@@ -184,8 +201,9 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
           Отмена
         </DialogButton>
         <DialogButton
-          action="accept"
+          // action="accept"
           isDefaultAction
+          onClick={handleAcceptClick}
           disabled={!isCategoryChecked && !isItemChecked && !isItemRegExpChecked}
         >
           Применить

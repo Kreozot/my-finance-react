@@ -129,7 +129,6 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   ) as FixedTableInstance;
 
   useEffect(() => {
-    console.log(expanded);
     setExpandedState(expanded || {});
   }, [expanded]);
 

@@ -34,7 +34,7 @@ export type DateSumMap = {
 };
 
 export type RowData = {
-  // id: string,
+  id: string,
   /** Название категории */
   categoryName: string,
   categoryType: CategoryType,

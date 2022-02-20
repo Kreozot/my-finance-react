@@ -3,7 +3,6 @@ import {
 } from 'lodash';
 
 import {
-  Bank,
   CategoryType,
   DateSumMap, RowData, Transaction,
 } from './types';
@@ -52,6 +51,7 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
       const banks = uniq(nameGroup.map(({ bank }) => bank));
       const categoryCode = getCategoryCode(categoryName, categoryType);
       return {
+        id: `${categoryCode}:${itemName}`,
         categoryName,
         categoryType,
         categoryCode,

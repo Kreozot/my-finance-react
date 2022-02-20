@@ -11,9 +11,13 @@ class CategoryDialogState {
     makeAutoObservable(this);
   }
 
-  show(categoryName: string, itemName: string) {
-    this.categoryName = categoryName;
-    this.itemName = itemName;
+  show(categoryName?: string, itemName?: string) {
+    if (categoryName) {
+      this.categoryName = categoryName;
+    }
+    if (itemName) {
+      this.itemName = itemName;
+    }
     this.isVisible = true;
   }
 
