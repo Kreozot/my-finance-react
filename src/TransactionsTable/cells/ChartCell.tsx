@@ -1,11 +1,18 @@
 import { memo, VFC } from 'react';
-import { Chart, Lines, Ticks } from 'rumble-charts';
+import {
+  Chart, Lines, Ticks, Labels,
+} from 'rumble-charts';
 
 import { dates } from 'store';
+import { formatMoney } from 'money';
 import { FixedCellProps, FixedRow } from '../data-table';
 import { isNonAbsoluteRow } from '../tableUtils';
 
 import styles from './ChartCell.module.scss';
+
+const formatLabel = (text: string) => {
+  return formatMoney(Number(text));
+};
 
 const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
   const month = dateKey.slice(5, 7);
@@ -16,7 +23,7 @@ const yearTicks = dates.reduce((result, dateKey: string, index: number) => {
 }, [] as number[]);
 
 const getValue = (row: FixedRow, dateKey: string) => {
-  const value = row.original
+  const value: number = row.original
     ? row.original.transactions[dateKey] || 0
     : row.values[dateKey] || 0;
   return isNonAbsoluteRow(row)
@@ -26,6 +33,7 @@ const getValue = (row: FixedRow, dateKey: string) => {
 
 export const ChartCell: VFC<FixedCellProps> = memo(({ row }) => {
   const chartDataSet = dates.map((dateKey: string) => getValue(row, dateKey));
+  const max = Math.max(...chartDataSet);
 
   return (
     <Chart
@@ -74,6 +82,24 @@ export const ChartCell: VFC<FixedCellProps> = memo(({ row }) => {
       <Lines
         interpolation="linear"
         lineWidth={1}
+      />
+      <Ticks
+        lineVisible={false}
+        position="top"
+        labelVisible
+        axis="y"
+        ticks={[max]}
+        labelFormat={formatLabel}
+        labelStyle={{
+          fill: 'silver',
+          dominantBaseline: 'hanging',
+          fontSize: 10,
+          enableBackground: true,
+          // backgroundColor: 'white',
+        }}
+        // labelAttributes={{
+        //   y: 10,
+        // }}
       />
     </Chart>
   );

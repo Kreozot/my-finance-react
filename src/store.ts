@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {
-  uniq, minBy, groupBy,
+  uniq, minBy, groupBy, sortBy,
 } from 'lodash';
 import { autorun, makeAutoObservable } from 'mobx';
 import { loadSetting, saveSetting, Setting } from 'settingsStorage';
@@ -107,15 +107,21 @@ class TableData {
   }
 
   get incomeTransactions() {
-    return this.transactions
-      .filter((transaction) => transaction.amount > 0)
-      .map(this.transformTransaction.bind(this));
+    return sortBy(
+      this.transactions
+        .filter((transaction) => transaction.amount > 0)
+        .map(this.transformTransaction.bind(this)),
+      ['category', 'name'],
+    );
   }
 
   get expenseTransactions() {
-    return this.transactions
-      .filter((transaction) => transaction.amount < 0)
-      .map(this.transformTransaction.bind(this));
+    return sortBy(
+      this.transactions
+        .filter((transaction) => transaction.amount < 0)
+        .map(this.transformTransaction.bind(this)),
+      ['category', 'name'],
+    );
   }
 
   get incomeRowData() {

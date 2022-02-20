@@ -50,10 +50,11 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
       });
       const categoryType = isIncome ? CategoryType.Income : CategoryType.Expense;
       const banks = uniq(nameGroup.map(({ bank }) => bank));
+      const categoryCode = getCategoryCode(categoryName, categoryType);
       return {
         categoryName,
         categoryType,
-        categoryCode: getCategoryCode(categoryName, categoryType),
+        categoryCode,
         itemName,
         transactions: transactionsSummary,
         banks,

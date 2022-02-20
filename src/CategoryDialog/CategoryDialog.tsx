@@ -28,6 +28,7 @@ const escapeRegExp = (text: string) => {
 };
 
 // TODO Возможность сбрасывать текстовые поля
+// TODO Обработка ошибок
 export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   const {
     categoryName, itemName, isVisible,

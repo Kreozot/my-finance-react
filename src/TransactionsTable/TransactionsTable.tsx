@@ -1,5 +1,5 @@
 import {
-  VFC, useMemo, useCallback,
+  VFC, useMemo, useCallback, useState, useEffect,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
@@ -45,6 +45,8 @@ type TransactionsTableProps = {
 };
 
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
+  const [expandedState, setExpandedState] = useState({});
+
   const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
       const categoryCode = row.values[id];
@@ -107,6 +109,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
     headerGroups,
     rows,
     prepareRow,
+    state: { expanded },
   } = useTable(
     {
       columns,
@@ -116,6 +119,7 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
           { id: 'categoryCode', value: loadSetting(Setting.HiddenCategoriesFilter) },
         ],
         groupBy: ['categoryCode'],
+        expanded: expandedState,
         hiddenColumns: ['categoryName', 'categoryType'],
       },
     } as FixedTableOptions,
@@ -123,6 +127,11 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
     useGroupBy,
     useExpanded,
   ) as FixedTableInstance;
+
+  useEffect(() => {
+    console.log(expanded);
+    setExpandedState(expanded || {});
+  }, [expanded]);
 
   return (
     <DataTable

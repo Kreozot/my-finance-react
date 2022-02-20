@@ -57,3 +57,9 @@
     }
   }
 }
+
+.banks {
+  flex-direction: column;
+  grid-gap: 2px;
+  display: flex;
+}
