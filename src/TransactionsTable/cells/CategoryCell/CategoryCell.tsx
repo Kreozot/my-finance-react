@@ -7,8 +7,8 @@ import { IconButton } from 'components/IconButton';
 import { categoryDialogState } from 'CategoryDialog/categoryDialogState';
 import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/edit.svg';
 import { decodeCategory } from 'convertData';
-import { FixedCellProps } from '../data-table';
-import { isIncomeRow, isSummaryRow } from '../tableUtils';
+import { FixedCellProps } from '../../data-table';
+import { isIncomeRow, isSummaryRow } from '../../tableUtils';
 import { VisibilityButton } from './VisibilityButton';
 
 import styles from './CategoryCell.module.scss';
