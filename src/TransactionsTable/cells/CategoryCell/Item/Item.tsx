@@ -34,8 +34,6 @@ export const Item: VFC<ItemProps> = memo((props) => {
 
   const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
-  console.log('render', itemName);
-
   return (
     <span className={styles.nameCell}>
       <span className={styles.banks}>
