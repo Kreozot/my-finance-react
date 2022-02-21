@@ -3,6 +3,8 @@ import {
   uniq, minBy, groupBy, sortBy,
 } from 'lodash';
 import { autorun, makeAutoObservable } from 'mobx';
+import getHash from 'object-hash';
+
 import { loadSetting, saveSetting, Setting } from 'settingsStorage';
 import { getCategoryCode, getRowData } from './convertData';
 
@@ -28,6 +30,8 @@ export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
  * Меняет поля транзакции если она соответствует условиям проверки
  */
 export type Transformer = {
+  /** Идентификатор трансформации */
+  id?: string;
   /** Название категории */
   categoryName?: string;
   /** Название перевода */
@@ -68,12 +72,13 @@ class TableData {
         || tempTransformer.itemNameRegExp.test(transaction.name));
       return passByCategoryName && passByItemName && passByItemNameRegExp;
     });
-    // TODO: Использование групп при замене имени, найденного по регулярному выражению
+    // TODO: Использование вхождений ($1) при замене имени, найденного по регулярному выражению
     if (transformer) {
       return {
         ...transaction,
         category: transformer.newCategoryName || transaction.category,
         name: transformer.newItemName || transaction.name,
+        transformerId: transformer.id,
       };
     }
     return transaction;
@@ -103,6 +108,7 @@ class TableData {
     if (!transformer.categoryName && !transformer.itemName && !transformer.itemNameRegExp) {
       return;
     }
+    transformer.id = getHash(transformer, { algorithm: 'sha1' });
     this.transformers.push(transformer);
   }
 

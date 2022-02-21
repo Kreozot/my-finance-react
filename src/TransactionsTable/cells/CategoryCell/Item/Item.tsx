@@ -17,11 +17,12 @@ type ItemProps = {
   /** Сериализованный массив банков, чтобы мемоизировать функцию */
   banksString: string,
   isHidden: boolean,
+  isTransformed: boolean,
 };
 
 export const Item: VFC<ItemProps> = memo((props) => {
   const {
-    categoryName, itemName, banksString, isHidden,
+    categoryName, itemName, banksString, isHidden, isTransformed,
   } = props;
 
   const banks = useMemo(() => {
@@ -35,7 +36,10 @@ export const Item: VFC<ItemProps> = memo((props) => {
   const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
   return (
-    <span className={styles.nameCell}>
+    <span className={classNames(styles.nameCell, {
+      [styles.transformed]: isTransformed,
+    })}
+    >
       <span className={styles.banks}>
         {banks.map((bank) => <BankIcon bank={bank} key={bank} />)}
       </span>

@@ -33,3 +33,10 @@
     opacity: 0;
   }
 }
+
+.transformed {
+  .editButton {
+    visibility: visible;
+    opacity: 0.5;
+  }
+}

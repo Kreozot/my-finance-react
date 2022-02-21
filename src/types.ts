@@ -20,6 +20,8 @@ export type Transaction = {
   currency: string,
   /** Банк, где выполнена операция */
   bank: Bank,
+  /** Идентификатор трансформации, которая была применена к записи */
+  transformerId?: string,
 };
 
 export type TransactionsSum = {
@@ -49,6 +51,7 @@ export type RowData = {
   transactions: DateSumMap,
   /** Банки, в которых были переводы с таким названием */
   banks: Bank[],
+  transformerId?: string,
 };
 
 export enum Bank {

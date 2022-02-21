@@ -14,7 +14,7 @@ import { Item } from './Item';
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
     const {
-      categoryCode, categoryName, itemName, banks,
+      categoryCode, categoryName, itemName, banks, transformerId,
     } = row.original;
     const isHidden = tableData.isCategoryHidden(categoryCode);
 
@@ -24,6 +24,7 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
         itemName={itemName}
         banksString={banks.join(';')}
         isHidden={isHidden}
+        isTransformed={Boolean(transformerId)}
       />
     );
   }

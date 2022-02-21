@@ -3,7 +3,7 @@ import {
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Dialog, DialogActions, DialogContent, DialogButton, DialogOnCloseEventT,
+  Dialog, DialogActions, DialogContent, DialogButton,
 } from '@rmwc/dialog';
 import { FormField } from '@rmwc/formfield';
 import { toast } from 'react-toastify';
@@ -55,7 +55,7 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     setNewItemChecked(false);
   }, [itemName, categoryName]);
 
-  const handleClose = useCallback(({ detail: { action } }: DialogOnCloseEventT) => {
+  const handleClose = useCallback(() => {
     categoryDialogState.hide();
   }, []);
   const handleAcceptClick = useCallback(() => {
