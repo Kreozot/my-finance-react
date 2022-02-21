@@ -1,4 +1,6 @@
-import { VFC, memo, useMemo } from 'react';
+import {
+  VFC, memo, useMemo, useCallback,
+} from 'react';
 import classNames from 'classnames';
 import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/edit.svg';
 
@@ -26,7 +28,13 @@ export const Item: VFC<ItemProps> = memo((props) => {
     return banksString.split(';') as Bank[];
   }, [banksString]);
 
+  const handleEditClick = useCallback(() => {
+    categoryDialogState.show(categoryName, itemName);
+  }, [categoryName, itemName]);
+
   const className = classNames(styles.name, { [styles.hidden]: isHidden });
+
+  console.log('render', itemName);
 
   return (
     <span className={styles.nameCell}>
@@ -40,9 +48,7 @@ export const Item: VFC<ItemProps> = memo((props) => {
         title="Редактировать информацию"
         Icon={EditIcon}
         className={styles.editButton}
-        onClick={() => {
-          categoryDialogState.show(categoryName, itemName);
-        }}
+        onClick={handleEditClick}
       />
     </span>
   );

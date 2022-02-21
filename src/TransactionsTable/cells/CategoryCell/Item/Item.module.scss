@@ -1,0 +1,35 @@
+.name {
+  margin-left: 16px;
+  white-space: normal;
+  flex: 1;
+}
+
+.nameCell {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+
+  &:hover {
+    .editButton {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.hidden {
+  opacity: 0.5;
+}
+
+.banks {
+  flex-direction: column;
+  grid-gap: 2px;
+  display: flex;
+}
+
+.editButton {
+  @media (hover: hover) {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
