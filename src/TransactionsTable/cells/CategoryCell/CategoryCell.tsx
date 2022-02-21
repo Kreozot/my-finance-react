@@ -13,6 +13,7 @@ import { VisibilityButton } from './VisibilityButton';
 
 import styles from './CategoryCell.module.scss';
 import { BankIcon } from './BankIcon';
+import { Item } from './Item';
 
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
@@ -20,25 +21,14 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
       categoryCode, categoryName, itemName, banks,
     } = row.original;
     const isHidden = tableData.isCategoryHidden(categoryCode);
-    const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
     return (
-      <span className={styles.nameCell}>
-        <span className={styles.banks}>
-          {banks.map((bank) => <BankIcon bank={bank} key={bank} />)}
-        </span>
-        <span className={className}>
-          {itemName}
-        </span>
-        <IconButton
-          title="Редактировать информацию"
-          Icon={EditIcon}
-          className={styles.editButton}
-          onClick={() => {
-            categoryDialogState.show(categoryName, itemName);
-          }}
-        />
-      </span>
+      <Item
+        categoryName={categoryName}
+        itemName={itemName}
+        banksString={banks.join(';')}
+        isHidden={isHidden}
+      />
     );
   }
 
