@@ -1,5 +1,5 @@
 import { CategoryCell } from './CategoryCell';
-import { ChartCell } from './ChartCell';
+import { ChartCell } from './ChartCell/ChartCell';
 import { MeanCell } from './MeanCell';
 import { MoneyCell } from './MoneyCell';
 

@@ -1,8 +1,8 @@
 import { memo, useMemo, VFC } from 'react';
 
 import { dates } from 'store';
-import { FixedCellProps, FixedRow } from '../data-table';
-import { isNonAbsoluteRow } from '../tableUtils';
+import { FixedCellProps, FixedRow } from '../../data-table';
+import { isNonAbsoluteRow } from '../../tableUtils';
 
 import { Chart } from './Chart';
 
