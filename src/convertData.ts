@@ -50,7 +50,8 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
       const categoryType = isIncome ? CategoryType.Income : CategoryType.Expense;
       const banks = uniq(nameGroup.map(({ bank }) => bank));
       // eslint-disable-next-line @typescript-eslint/no-shadow
-      const transformerId = uniq(nameGroup.map(({ transformerId }) => transformerId)).filter((id) => id)?.[0];
+      const transformerIds = uniq(nameGroup.map(({ transformerId }) => transformerId))
+        .filter((id) => id) as string[];
       const categoryCode = getCategoryCode(categoryName, categoryType);
       return {
         id: `${categoryCode}:${itemName}`,
@@ -60,7 +61,7 @@ export const getRowData = (originalTransactions: Transaction[], isIncome: boolea
         itemName,
         transactions: transactionsSummary,
         banks,
-        transformerId,
+        transformerIds,
       };
     });
     return values(nameDateGroups);

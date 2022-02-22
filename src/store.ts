@@ -99,7 +99,7 @@ class TableData {
 
   addTransformer(transformer: Transformer) {
     if ((transformer.categoryName && this.forbiddenToTransformCategoryNames.includes(transformer.categoryName))
-      || (transformer.itemName && this.forbiddenToTransformCategoryNames.includes(transformer.itemName))) {
+      || (transformer.itemName && this.forbiddenToTransformItemNames.includes(transformer.itemName))) {
       throw new Error('Запрещено добавление в качестве условий полей, в которые преобразуются другие записи');
     }
     if (!transformer.newCategoryName && !transformer.newItemName) {
