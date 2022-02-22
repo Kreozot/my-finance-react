@@ -20,40 +20,53 @@ import '@material/ripple/dist/mdc.ripple.css';
 
 import styles from './CategoryDialog.module.scss';
 
-type CategoryDialogProps = {
-
-};
-
 const escapeRegExp = (text: string) => {
   return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 };
 
 // TODO Возможность сбрасывать текстовые поля
-// TODO Обработка ошибок
-export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
+export const CategoryDialog: VFC<{}> = observer(() => {
   const {
-    categoryName, itemName, isVisible,
+    transformer, isVisible,
   } = categoryDialogState;
+
+  console.log(transformer.id, transformer.categoryName, transformer.itemName);
 
   const [isCategoryChecked, setCategoryChecked] = useState(false);
   const [isItemChecked, setItemChecked] = useState(false);
   const [isItemRegExpChecked, setItemRegExpChecked] = useState(false);
   const [isNewCategoryChecked, setNewCategoryChecked] = useState(false);
   const [isNewItemChecked, setNewItemChecked] = useState(false);
-  const [newCategoryName, setNewCategoryName] = useState(categoryName);
-  const [itemNameRegExp, setItemNameRegExp] = useState(itemName);
-  const [newItemName, setNewItemName] = useState(itemName);
+  const [newCategoryName, setNewCategoryName] = useState(transformer.categoryName || '');
+  const [itemNameRegExp, setItemNameRegExp] = useState(transformer.itemName || '');
+  const [newItemName, setNewItemName] = useState(transformer.itemName || '');
 
   useEffect(() => {
-    setNewCategoryName(categoryName);
-    setNewItemName(itemName);
-    setItemNameRegExp(escapeRegExp(itemName));
-    setCategoryChecked(false);
-    setItemChecked(false);
-    setItemRegExpChecked(false);
-    setNewCategoryChecked(false);
-    setNewItemChecked(false);
-  }, [itemName, categoryName]);
+    console.log('changed');
+    // Если редактируем трансформацию, подставляем её поля
+    if (transformer.id) {
+      setCategoryChecked(Boolean(transformer.categoryName));
+      setItemChecked(Boolean(transformer.itemName));
+      setItemRegExpChecked(Boolean(transformer.itemNameRegExp));
+      setNewCategoryChecked(Boolean(transformer.newCategoryName));
+      setNewItemChecked(Boolean(transformer.newItemName));
+      setNewCategoryName(transformer.newCategoryName || transformer.categoryName || '');
+      setNewItemName(transformer.newItemName || transformer.itemName || '');
+      setItemNameRegExp(transformer.itemNameRegExp
+        ? transformer.itemNameRegExp.toString().slice(1, -1)
+        : escapeRegExp(transformer.itemName || ''));
+    } else {
+      setNewCategoryName(transformer.categoryName || '');
+      setNewItemName(transformer.itemName || '');
+      setItemNameRegExp(escapeRegExp(transformer.itemName || ''));
+      setCategoryChecked(false);
+      setItemChecked(false);
+      setItemRegExpChecked(false);
+      setNewCategoryChecked(false);
+      setNewItemChecked(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transformer]);
 
   const handleClose = useCallback(() => {
     categoryDialogState.hide();
@@ -62,27 +75,26 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     const toastId = toast.loading('Применение изменений');
     setTimeout(() => {
       try {
+        if (transformer.id) {
+          tableData.deleteTransformer(transformer.id);
+        }
         tableData.addTransformer({
-          categoryName: isCategoryChecked ? categoryName : undefined,
-          itemName: isItemChecked ? itemName : undefined,
+          categoryName: isCategoryChecked ? transformer.categoryName : undefined,
+          itemName: isItemChecked ? transformer.itemName : undefined,
           itemNameRegExp: isItemRegExpChecked ? new RegExp(itemNameRegExp) : undefined,
-          newCategoryName: isNewCategoryChecked && categoryName !== newCategoryName
+          newCategoryName: isNewCategoryChecked && transformer.categoryName !== newCategoryName
             ? newCategoryName
             : undefined,
-          newItemName: isNewItemChecked && itemNameRegExp !== newItemName
+          newItemName: isNewItemChecked && transformer.itemName !== newItemName
             ? newItemName
             : undefined,
         });
         toast.dismiss(toastId);
-        toast('Успешно', {
-          type: toast.TYPE.SUCCESS,
-        });
+        toast.success('Успешно');
       } catch (err) {
-        categoryDialogState.show();
+        categoryDialogState.reopen();
         toast.dismiss(toastId);
-        toast((err as Error).message, {
-          type: toast.TYPE.ERROR,
-        });
+        toast.error((err as Error).message);
       }
     }, 0);
     categoryDialogState.hide();
@@ -90,9 +102,8 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
     isCategoryChecked,
     isItemChecked,
     isItemRegExpChecked,
-    categoryName,
-    itemName,
     itemNameRegExp,
+    transformer,
     newCategoryName,
     newItemName,
     isNewCategoryChecked,
@@ -100,12 +111,12 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
   ]);
 
   const isCategoryConditionDisabled = useMemo(() => {
-    return tableData.forbiddenToTransformCategoryNames.includes(categoryName);
-  }, [categoryName]);
+    return tableData.forbiddenToTransformCategoryNames.includes(transformer.categoryName);
+  }, [transformer.categoryName]);
 
   const isItemConditionDisabled = useMemo(() => {
-    return tableData.forbiddenToTransformItemNames.includes(itemName);
-  }, [itemName]);
+    return tableData.forbiddenToTransformItemNames.includes(transformer.itemName);
+  }, [transformer.itemName]);
 
   useEffect(() => {
     if (isItemRegExpChecked) {
@@ -130,14 +141,14 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
         <p>Выберите условия, при совпадении которых будут изменяться записи</p>
         <Checkbox
           id="categoryCheck"
-          label={<span>Название категории <strong>{categoryName}</strong></span>}
+          label={<span>Название категории <strong>{transformer.categoryName}</strong></span>}
           checked={isCategoryChecked}
           onValueChange={setCategoryChecked}
           disabled={isCategoryConditionDisabled}
         />
         <Checkbox
           id="itemCheck"
-          label={<span>Название перевода <strong>{itemName}</strong></span>}
+          label={<span>Название перевода <strong>{transformer.itemName}</strong></span>}
           checked={isItemChecked}
           onValueChange={setItemChecked}
           disabled={isItemConditionDisabled}
@@ -201,7 +212,6 @@ export const CategoryDialog: VFC<CategoryDialogProps> = observer(() => {
           Отмена
         </DialogButton>
         <DialogButton
-          // action="accept"
           isDefaultAction
           onClick={handleAcceptClick}
           disabled={!isCategoryChecked && !isItemChecked && !isItemRegExpChecked}

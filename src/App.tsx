@@ -1,4 +1,6 @@
 import { ToastContainer } from 'react-toastify';
+
+import { TransformerChoice } from 'TransformerChoice';
 import { CategoryDialog } from './CategoryDialog';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
@@ -9,6 +11,7 @@ const App = () => {
     <>
       <TransactionsTable />
       <CategoryDialog />
+      <TransformerChoice />
       <ToastContainer
         pauseOnFocusLoss={false}
       />

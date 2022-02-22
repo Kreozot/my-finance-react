@@ -6,7 +6,9 @@ import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/ed
 
 import { Bank } from 'types';
 import { IconButton } from 'components/IconButton';
-import { categoryDialogState } from 'CategoryDialog/categoryDialogState';
+import { categoryDialogState } from 'CategoryDialog';
+import { transformerChoiceState } from 'TransformerChoice';
+import { tableData } from 'store';
 import { BankIcon } from '../BankIcon';
 
 import styles from './Item.module.scss';
@@ -16,28 +18,43 @@ type ItemProps = {
   itemName: string,
   /** Сериализованный массив банков, чтобы мемоизировать функцию */
   banksString: string,
+  /** Сериализованный массив трансформаций, чтобы мемоизировать функцию */
+  transformersString: string,
   isHidden: boolean,
-  isTransformed: boolean,
 };
 
 export const Item: VFC<ItemProps> = memo((props) => {
   const {
-    categoryName, itemName, banksString, isHidden, isTransformed,
+    categoryName, itemName, banksString, isHidden, transformersString,
   } = props;
 
   const banks = useMemo(() => {
     return banksString.split(';') as Bank[];
   }, [banksString]);
 
+  const transformers = useMemo(() => {
+    return transformersString ? transformersString.split(';') : [];
+  }, [transformersString]);
+
   const handleEditClick = useCallback(() => {
-    categoryDialogState.show(categoryName, itemName);
-  }, [categoryName, itemName]);
+    if (transformers.length > 0) {
+      console.log('edit', transformers);
+      if (transformers.length > 1) {
+        transformerChoiceState.show(transformers);
+      } else {
+        categoryDialogState.edit(transformers[0]);
+      }
+    } else {
+      console.log('add', categoryName, itemName);
+      categoryDialogState.add(categoryName, itemName);
+    }
+  }, [transformers, categoryName, itemName]);
 
   const className = classNames(styles.name, { [styles.hidden]: isHidden });
 
   return (
     <span className={classNames(styles.nameCell, {
-      [styles.transformed]: isTransformed,
+      [styles.transformed]: Boolean(transformersString),
     })}
     >
       <span className={styles.banks}>

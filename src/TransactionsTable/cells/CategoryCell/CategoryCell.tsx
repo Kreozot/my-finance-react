@@ -24,7 +24,7 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
         itemName={itemName}
         banksString={banks.join(';')}
         isHidden={isHidden}
-        isTransformed={Boolean(transformerIds?.length)}
+        transformersString={(transformerIds || []).join(';')}
       />
     );
   }

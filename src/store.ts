@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {
-  uniq, minBy, groupBy, sortBy,
+  uniq, minBy, groupBy, sortBy, remove,
 } from 'lodash';
 import { autorun, makeAutoObservable } from 'mobx';
 import getHash from 'object-hash';
@@ -95,6 +95,10 @@ class TableData {
   /** Список названий переводов, запрещённых к выбору в качестве условий для преобразования */
   get forbiddenToTransformItemNames() {
     return this.transformers.map((transformer) => transformer.newItemName);
+  }
+
+  deleteTransformer(transformerId: string) {
+    remove(this.transformers, ({ id }) => id === transformerId);
   }
 
   addTransformer(transformer: Transformer) {
