@@ -8,7 +8,6 @@ import { Bank } from 'types';
 import { IconButton } from 'components/IconButton';
 import { categoryDialogState } from 'CategoryDialog';
 import { transformerChoiceState } from 'TransformerChoice';
-import { tableData } from 'store';
 import { BankIcon } from '../BankIcon';
 
 import styles from './Item.module.scss';

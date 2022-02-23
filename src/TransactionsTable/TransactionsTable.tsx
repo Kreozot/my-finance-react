@@ -26,7 +26,7 @@ import { RowData } from 'types';
 import { formatDateKeyHeader } from 'dates';
 import { loadSetting, Setting } from 'settingsStorage';
 import {
-  ChartCell, MeanCell, CategoryCell, MoneyCell,
+  ChartCell, MeanTotalCell, MeanLastCell, CategoryCell, MoneyCell,
 } from './cells';
 import { DateFilter, HiddenCategoriesFilter } from './filters';
 import {
@@ -88,9 +88,15 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       disableFilters: true,
     },
     {
+      Header: 'Среднее',
+      id: 'meanTotal',
+      Cell: MeanTotalCell,
+      disableFilters: true,
+    },
+    {
       Header: 'Среднее за год',
-      id: 'median',
-      Cell: MeanCell,
+      id: 'meanLast',
+      Cell: MeanLastCell,
       disableFilters: true,
     },
     ...dates.map((dateKey) => ({

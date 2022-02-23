@@ -1,11 +1,13 @@
 import { CategoryCell } from './CategoryCell/CategoryCell';
 import { ChartCell } from './ChartCell/ChartCell';
-import { MeanCell } from './MeanCell';
+import { MeanTotalCell } from './MeanCell/MeanTotalCell';
+import { MeanLastCell } from './MeanCell/MeanLastCell';
 import { MoneyCell } from './MoneyCell';
 
 export {
   CategoryCell,
   ChartCell,
-  MeanCell,
+  MeanTotalCell,
+  MeanLastCell,
   MoneyCell,
 };

@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite';
 import {
   Dialog, DialogContent,
 } from '@rmwc/dialog';
-import { toast } from 'react-toastify';
 
 import { tableData } from 'store';
 import { transformerChoiceState } from './transformerChoiceState';

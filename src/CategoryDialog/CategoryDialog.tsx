@@ -69,7 +69,6 @@ export const CategoryDialog: VFC<{}> = observer(() => {
     categoryDialogState.hide();
   }, []);
   const handleAcceptClick = useCallback(() => {
-    const toastId = toast.loading('Применение изменений');
     setTimeout(() => {
       try {
         if (transformer.id) {
@@ -86,11 +85,9 @@ export const CategoryDialog: VFC<{}> = observer(() => {
             ? newItemName
             : undefined,
         });
-        toast.dismiss(toastId);
         toast.success('Успешно');
       } catch (err) {
         categoryDialogState.reopen();
-        toast.dismiss(toastId);
         toast.error((err as Error).message);
       }
     }, 0);
