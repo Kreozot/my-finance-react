@@ -1,14 +1,13 @@
 import {
-  useCallback, useEffect, useMemo, useState, VFC,
+  useCallback, VFC,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Dialog, DialogActions, DialogContent, DialogButton,
+  Dialog, DialogContent,
 } from '@rmwc/dialog';
 import { toast } from 'react-toastify';
 
 import { tableData } from 'store';
-import { categoryDialogState } from 'CategoryDialog';
 import { transformerChoiceState } from './transformerChoiceState';
 
 import styles from './TransformerChoice.module.scss';
@@ -19,9 +18,14 @@ export const TransformerChoice: VFC<{}> = observer(() => {
     transformerIds, isVisible,
   } = transformerChoiceState;
 
+  const handleClose = useCallback(() => {
+    transformerChoiceState.hide();
+  }, []);
+
   return (
     <Dialog
       open={isVisible}
+      onClose={handleClose}
     >
       <DialogContent>
         <table className={styles.table}>
@@ -33,7 +37,6 @@ export const TransformerChoice: VFC<{}> = observer(() => {
                   <TransformerChoiceItem transformer={transformer} key={transformerId} />
                 );
               }
-              toast.error(`Не найдена трансформация с id=${transformerId}`);
               return null;
             })}
           </tbody>

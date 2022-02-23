@@ -30,8 +30,6 @@ export const CategoryDialog: VFC<{}> = observer(() => {
     transformer, isVisible,
   } = categoryDialogState;
 
-  console.log(transformer.id, transformer.categoryName, transformer.itemName);
-
   const [isCategoryChecked, setCategoryChecked] = useState(false);
   const [isItemChecked, setItemChecked] = useState(false);
   const [isItemRegExpChecked, setItemRegExpChecked] = useState(false);
@@ -42,7 +40,6 @@ export const CategoryDialog: VFC<{}> = observer(() => {
   const [newItemName, setNewItemName] = useState(transformer.itemName || '');
 
   useEffect(() => {
-    console.log('changed');
     // Если редактируем трансформацию, подставляем её поля
     if (transformer.id) {
       setCategoryChecked(Boolean(transformer.categoryName));

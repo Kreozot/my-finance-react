@@ -38,14 +38,12 @@ export const Item: VFC<ItemProps> = memo((props) => {
 
   const handleEditClick = useCallback(() => {
     if (transformers.length > 0) {
-      console.log('edit', transformers);
       if (transformers.length > 1) {
         transformerChoiceState.show(transformers);
       } else {
         categoryDialogState.edit(transformers[0]);
       }
     } else {
-      console.log('add', categoryName, itemName);
       categoryDialogState.add(categoryName, itemName);
     }
   }, [transformers, categoryName, itemName]);

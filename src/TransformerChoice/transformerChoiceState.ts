@@ -16,6 +16,7 @@ class TransformerChoiceState {
 
   hide() {
     this.isVisible = false;
+    this.transformerIds = [];
   }
 }
 

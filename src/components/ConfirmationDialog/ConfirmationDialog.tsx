@@ -6,8 +6,6 @@ import {
 
 import { confirmationDialogState } from './confirmationDialogState';
 
-import styles from './ConfirmationDialog.module.scss';
-
 export const ConfirmationDialog: VFC<{}> = observer(() => {
   const { message, isVisible, onConfirm } = confirmationDialogState;
 
