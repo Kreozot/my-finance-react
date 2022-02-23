@@ -3,26 +3,35 @@ import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/ed
 import { ReactComponent as DeleteIcon } from '@material-design-icons/svg/filled/delete.svg';
 import { ReactComponent as ArrowIcon } from '@material-design-icons/svg/filled/arrow_forward.svg';
 
-import { Transformer } from 'store';
+import { tableData, Transformer } from 'store';
 import { IconButton } from 'components/IconButton';
 
 import { categoryDialogState } from 'CategoryDialog';
+import { confirmationDialogState } from 'components/ConfirmationDialog';
 import styles from './TransformerChoiceItem.module.scss';
 
 type TransformerChoiceItemProps = {
   transformer: Transformer;
 };
 
+const DELETE_CONFIRMATION_MESSAGE = 'Удалить трансформацию? Это не приведёт к удалению транзакций, к которым она была применена. Они просто начнут отображаться в исходном виде.';
+
 export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((props) => {
   const { transformer } = props;
 
   const handleEditClick = useCallback(() => {
-    // categoryDialogState.show(categoryName, itemName);
-  }, []);
+    if (transformer.id) {
+      categoryDialogState.edit(transformer.id);
+    }
+  }, [transformer.id]);
 
   const handleDeleteClick = useCallback(() => {
-
-  }, []);
+    confirmationDialogState.confirm(DELETE_CONFIRMATION_MESSAGE, () => {
+      if (transformer.id) {
+        tableData.deleteTransformer(transformer.id);
+      }
+    });
+  }, [transformer.id]);
 
   return (
     <tr>

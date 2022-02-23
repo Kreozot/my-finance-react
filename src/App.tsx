@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 
 import { TransformerChoice } from 'TransformerChoice';
+import { ConfirmationDialog } from 'components/ConfirmationDialog';
 import { CategoryDialog } from './CategoryDialog';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
@@ -10,8 +11,9 @@ const App = () => {
   return (
     <>
       <TransactionsTable />
-      <CategoryDialog />
       <TransformerChoice />
+      <CategoryDialog />
+      <ConfirmationDialog />
       <ToastContainer
         pauseOnFocusLoss={false}
       />
