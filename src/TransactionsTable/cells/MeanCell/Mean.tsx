@@ -3,7 +3,7 @@ import { memo, VFC } from 'react';
 import { getMostAverage, roundInteger } from 'money';
 import { findIndex, findLastIndex } from 'lodash';
 import { FixedRow } from '../../data-table';
-import { MoneyCell } from '../MoneyCell';
+import { Money } from '../MoneyCell/Money';
 
 const MEANINGFULL_LIMIT = 100;
 const LAST_MONTHS_COUNT = 12;
@@ -34,14 +34,15 @@ export const getMoneyDataFromRow = (row: FixedRow, sliceLastMonths: boolean, tri
 
 type MeanCellProps = {
   data: number[];
+  isNonAbsolute: boolean;
 };
 
-export const MeanCell: VFC<MeanCellProps> = memo(({ data }) => {
+export const Mean: VFC<MeanCellProps> = memo(({ data, isNonAbsolute }) => {
   const mostAverage = getMostAverage(data);
-  if (Math.abs(mostAverage) < MEANINGFULL_LIMIT) {
+  if (mostAverage < MEANINGFULL_LIMIT && mostAverage > -MEANINGFULL_LIMIT) {
     return null;
   }
   return (
-    <MoneyCell value={roundInteger(mostAverage)} />
+    <Money value={roundInteger(isNonAbsolute ? mostAverage : Math.abs(mostAverage))} />
   );
 });

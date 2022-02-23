@@ -9,6 +9,7 @@ export const isNonAbsoluteRow = (row?: FixedRow) => {
   if (categoryCode) {
     return decodeCategory(categoryCode).categoryType === CategoryType.Both;
   }
+  return false;
 };
 
 export const isIncomeRow = (row?: FixedRow) => {
