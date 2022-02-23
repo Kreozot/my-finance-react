@@ -4,7 +4,7 @@ import {
 import classNames from 'classnames';
 import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/edit.svg';
 
-import { Bank } from 'types';
+import { Bank, CategoryType } from 'types';
 import { IconButton } from 'components/IconButton';
 import { categoryDialogState } from 'CategoryDialog';
 import { transformerChoiceState } from 'TransformerChoice';
@@ -14,6 +14,7 @@ import styles from './Item.module.scss';
 
 type ItemProps = {
   categoryName: string,
+  categoryType: CategoryType,
   itemName: string,
   /** Сериализованный массив банков, чтобы мемоизировать функцию */
   banksString: string,
@@ -24,7 +25,7 @@ type ItemProps = {
 
 export const Item: VFC<ItemProps> = memo((props) => {
   const {
-    categoryName, itemName, banksString, isHidden, transformersString,
+    categoryName, categoryType, itemName, banksString, isHidden, transformersString,
   } = props;
 
   const banks = useMemo(() => {
@@ -43,9 +44,9 @@ export const Item: VFC<ItemProps> = memo((props) => {
         categoryDialogState.edit(transformers[0]);
       }
     } else {
-      categoryDialogState.add(categoryName, itemName);
+      categoryDialogState.add(categoryName, itemName, categoryType);
     }
-  }, [transformers, categoryName, itemName]);
+  }, [transformers, categoryName, categoryType, itemName]);
 
   const className = classNames(styles.name, { [styles.hidden]: isHidden });
 

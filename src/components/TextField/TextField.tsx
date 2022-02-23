@@ -1,13 +1,15 @@
-import { VFC, memo, useCallback } from 'react';
+import {
+  memo, useCallback, forwardRef,
+} from 'react';
 import { TextField as RMWCTextField, TextFieldProps as RMWCTextFieldProps } from '@rmwc/textfield';
 
 import '@rmwc/textfield/styles';
 
-type TextFieldProps = Omit<RMWCTextFieldProps, 'onChange'> & {
+export type TextFieldProps = Omit<RMWCTextFieldProps, 'onChange'> & {
   onValueChange: (value: string) => void,
 };
 
-export const TextField: VFC<TextFieldProps> = memo((props) => {
+export const TextField = memo(forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const { onValueChange, ...rest } = props;
 
   const handleChange = useCallback(({ target: { value } }) => {
@@ -15,6 +17,6 @@ export const TextField: VFC<TextFieldProps> = memo((props) => {
   }, [onValueChange]);
 
   return (
-    <RMWCTextField {...rest} onChange={handleChange} />
+    <RMWCTextField inputRef={ref} onChange={handleChange} {...rest} />
   );
-});
+}));

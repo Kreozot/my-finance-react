@@ -1,0 +1,37 @@
+@import '../../mixins.scss';
+
+.combo {
+  display: inline-flex;
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: white;
+  border: 1px solid silver;
+}
+
+.item {
+  @include activeElement;
+
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.highlighted {
+  color: $activeHighlightedColor;
+}
+
+.button {
+  width: 32px;
+  position: absolute;
+  right: 0;
+  height: 100%;
+}
+
+.input {
+  padding-right: 32px;
+}

@@ -32,6 +32,8 @@ export const firstMonthKeys = Object.keys(datesByYears).map((year) => {
 export type Transformer = {
   /** Идентификатор трансформации */
   id?: string;
+  /** Тип категории */
+  categoryType?: CategoryType;
   /** Название категории */
   categoryName?: string;
   /** Название перевода */
@@ -140,6 +142,14 @@ class TableData {
 
   get expenseRowData() {
     return getRowData(this.expenseTransactions, false);
+  }
+
+  get incomeCategories() {
+    return uniq(this.incomeRowData.map(({ categoryName }) => categoryName));
+  }
+
+  get expenseCategories() {
+    return uniq(this.expenseRowData.map(({ categoryName }) => categoryName));
   }
 
   get tableRows() {

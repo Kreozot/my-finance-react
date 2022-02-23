@@ -11,6 +11,8 @@ import { toast } from 'react-toastify';
 import { tableData } from 'store';
 import { TextField } from 'components/TextField';
 import { Checkbox } from 'components/Checkbox';
+import { Autocomplete } from 'components/Autocomplete';
+import { CategoryType } from 'types';
 import { categoryDialogState } from './categoryDialogState';
 
 import '@rmwc/formfield/styles';
@@ -176,11 +178,14 @@ export const CategoryDialog: VFC<{}> = observer(() => {
               label="Категория"
             />
           </span>
-          <TextField
+          <Autocomplete
             value={newCategoryName}
             onValueChange={setNewCategoryName}
             fullwidth
             disabled={!isNewCategoryChecked}
+            items={transformer.categoryType === CategoryType.Income
+              ? tableData.incomeCategories
+              : tableData.expenseCategories}
           />
         </FormField>
         <FormField className={styles.field}>

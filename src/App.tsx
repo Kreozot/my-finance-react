@@ -6,6 +6,7 @@ import { CategoryDialog } from './CategoryDialog';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
 import 'react-toastify/dist/ReactToastify.css';
+import '@rmwc/button/styles';
 
 const App = () => {
   return (

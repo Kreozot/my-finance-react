@@ -1,3 +1,6 @@
+$activeColor: rgb(151, 154, 206);
+$activeHighlightedColor: rgb(30, 34, 112);
+
 @mixin buttonReset {
   border: none;
   margin: 0;
@@ -23,12 +26,12 @@
 }
 
 @mixin activeElement {
-  color: rgb(151, 154, 206);
+  color: $activeColor;
   transition: color, 0.3s;
   cursor: pointer;
 
   &:hover {
-    color: rgb(30, 34, 112);
+    color: $activeHighlightedColor;
   }
 }
 

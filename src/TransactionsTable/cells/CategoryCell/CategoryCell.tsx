@@ -14,13 +14,14 @@ import { Item } from './Item';
 export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
   if (row.original) {
     const {
-      categoryCode, categoryName, itemName, banks, transformerIds,
+      categoryCode, categoryType, categoryName, itemName, banks, transformerIds,
     } = row.original;
     const isHidden = tableData.isCategoryHidden(categoryCode);
 
     return (
       <Item
         categoryName={categoryName}
+        categoryType={categoryType}
         itemName={itemName}
         banksString={banks.join(';')}
         isHidden={isHidden}

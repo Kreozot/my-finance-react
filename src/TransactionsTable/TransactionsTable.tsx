@@ -176,7 +176,8 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
                     <DataTableCell
                       {...cell.getCellProps()}
                       className={classNames({
-                        [styles.highlightedCell]: isSummaryRow(row) || cell.column.filterValue,
+                        [styles.highlightedCell]: isSummaryRow(row)
+                          || (cell.column.filterValue && cell.column.id !== 'categoryCode'),
                         [styles.firstMonthCell]: firstMonthKeys.includes(cell.column.id),
                       })}
                     >

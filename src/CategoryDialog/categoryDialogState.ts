@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { tableData, Transformer } from 'store';
+import { CategoryType } from 'types';
 
 class CategoryDialogState {
   isVisible: boolean = false;
@@ -10,10 +11,11 @@ class CategoryDialogState {
     makeAutoObservable(this);
   }
 
-  add(categoryName?: string, itemName?: string) {
+  add(categoryName: string, itemName: string, categoryType: CategoryType) {
     const transformer: Transformer = {};
     transformer.categoryName = categoryName;
     transformer.itemName = itemName;
+    transformer.categoryType = categoryType;
     this.transformer = transformer;
     this.isVisible = true;
   }
