@@ -9,9 +9,14 @@ import styles from './Autocomplete.module.scss';
 
 type AutocompleteProps = TextFieldProps & {
   items: string[];
+  fullwidth: boolean;
+  disabled: boolean;
 };
 
-export const Autocomplete: VFC<AutocompleteProps> = memo(({ items, ...restProps }) => {
+export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
+  const {
+    items, fullwidth, disabled, ...restProps
+  } = props;
   const [inputItems, setInputItems] = useState(items);
 
   const {
@@ -32,12 +37,24 @@ export const Autocomplete: VFC<AutocompleteProps> = memo(({ items, ...restProps 
   });
 
   return (
-    <div className={styles.combo} {...getComboboxProps()}>
-      <TextField {...restProps} {...getInputProps()} className={styles.input} />
+    <div
+      className={classNames(styles.combo, {
+        [styles.fullWidth]: fullwidth,
+      })}
+      {...getComboboxProps()}
+    >
+      <TextField
+        {...restProps}
+        {...getInputProps()}
+        className={styles.input}
+        fullwidth={fullwidth}
+        disabled={disabled}
+      />
       <IconButton
         {...getToggleButtonProps()}
         Icon={ArrowIcon}
         className={styles.button}
+        disabled={disabled}
       />
       {isOpen
             && (

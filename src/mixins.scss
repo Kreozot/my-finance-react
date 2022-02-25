@@ -33,6 +33,10 @@ $activeHighlightedColor: rgb(30, 34, 112);
   &:hover {
     color: $activeHighlightedColor;
   }
+  &:disabled {
+    cursor: default;
+    color: $activeColor;
+  }
 }
 
 @mixin iconButton {
