@@ -7,6 +7,16 @@
 }
 
 :global {
+  .mdc-dialog {
+    .mdc-dialog__surface {
+      overflow: unset;
+    }
+
+    .mdc-dialog__content {
+      overflow: unset;
+    }
+  }
+
   .mdc-dialog__content > .mdc-form-field {
     display: flex;
   }

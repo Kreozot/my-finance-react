@@ -1,7 +1,6 @@
 import { TextField, TextFieldProps } from 'components/TextField';
 import { useCombobox } from 'downshift';
 import { VFC, memo, useState } from 'react';
-import { Button } from '@rmwc/button';
 import { ReactComponent as ArrowIcon } from '@material-design-icons/svg/filled/arrow_drop_down.svg';
 
 import classNames from 'classnames';

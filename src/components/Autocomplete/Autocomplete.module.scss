@@ -12,6 +12,8 @@
   z-index: 1;
   background-color: white;
   border: 1px solid silver;
+  max-height: 200px;
+  overflow: auto;
 }
 
 .item {
