@@ -55,7 +55,7 @@ export const CategoryDialog: VFC<{}> = observer(() => {
         ? transformer.itemNameRegExp.toString().slice(1, -1)
         : escapeRegExp(transformer.itemName || ''));
     } else {
-      setNewCategoryName(transformer.categoryName || '');
+      setNewCategoryName('');
       setNewItemName(transformer.itemName || '');
       setItemNameRegExp(escapeRegExp(transformer.itemName || ''));
       setCategoryChecked(false);
@@ -125,6 +125,20 @@ export const CategoryDialog: VFC<{}> = observer(() => {
       setItemRegExpChecked(false);
     }
   }, [isItemChecked]);
+
+  const canBeApplied = useMemo(() => {
+    console.log(newCategoryName);
+    return (isCategoryChecked || isItemChecked || isItemRegExpChecked)
+      && ((isNewCategoryChecked && newCategoryName) || (isNewItemChecked && newItemName));
+  }, [
+    isCategoryChecked,
+    isItemChecked,
+    isItemRegExpChecked,
+    newCategoryName,
+    newItemName,
+    isNewCategoryChecked,
+    isNewItemChecked,
+  ]);
 
   return (
     <Dialog
@@ -213,7 +227,7 @@ export const CategoryDialog: VFC<{}> = observer(() => {
         <DialogButton
           isDefaultAction
           onClick={handleAcceptClick}
-          disabled={!isCategoryChecked && !isItemChecked && !isItemRegExpChecked}
+          disabled={!canBeApplied}
         >
           Применить
         </DialogButton>

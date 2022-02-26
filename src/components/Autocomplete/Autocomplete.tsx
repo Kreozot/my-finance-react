@@ -15,7 +15,7 @@ type AutocompleteProps = TextFieldProps & {
 
 export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
   const {
-    items, fullwidth, disabled, ...restProps
+    items, fullwidth, disabled, onValueChange, ...restProps
   } = props;
   const [inputItems, setInputItems] = useState(items);
 
@@ -33,6 +33,7 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
       setInputItems(
         items.filter((item) => item.toLowerCase().startsWith((inputValue || '').toLowerCase())),
       );
+      onValueChange(inputValue || '');
     },
   });
 
@@ -57,21 +58,21 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
         disabled={disabled}
       />
       {isOpen
-            && (
-              <div {...getMenuProps()} className={styles.menu}>
-                {inputItems.map((item, index) => (
-                  <div
-                    className={classNames(styles.item, {
-                      [styles.highlighted]: highlightedIndex === index,
-                    })}
-                    key={item}
-                    {...getItemProps({ item, index })}
-                  >
-                    {item}
-                  </div>
-                ))}
+        && (
+          <div {...getMenuProps()} className={styles.menu}>
+            {inputItems.map((item, index) => (
+              <div
+                {...getItemProps({ item, index })}
+                className={classNames(styles.item, {
+                  [styles.highlighted]: highlightedIndex === index,
+                })}
+                key={item}
+              >
+                {item}
               </div>
-            )}
+            ))}
+          </div>
+        )}
     </div>
   );
 });
