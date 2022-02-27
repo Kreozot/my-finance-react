@@ -14,10 +14,13 @@
   top: 100%;
   width: 100%;
   z-index: 1;
-  background-color: white;
-  border: 1px solid silver;
   max-height: 200px;
   overflow: auto;
+
+  &.open {
+    background-color: white;
+    border: 1px solid silver;
+  }
 }
 
 .item {

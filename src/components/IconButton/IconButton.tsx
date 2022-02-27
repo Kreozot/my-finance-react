@@ -1,10 +1,11 @@
 import {
-  FunctionComponent, memo, SVGProps, VFC,
+  forwardRef,
+  FunctionComponent, memo, SVGProps,
 } from 'react';
 
 import styles from './IconButton.module.scss';
 
-type IconButtonProps = {
+export type IconButtonProps = {
   className?: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string | undefined; }>;
   title: string
@@ -12,7 +13,7 @@ type IconButtonProps = {
   disabled?: boolean;
 };
 
-export const IconButton: VFC<IconButtonProps> = memo((props) => {
+export const IconButton = memo(forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const {
     className = '', Icon, title, onClick, disabled = false,
   } = props;
@@ -24,11 +25,11 @@ export const IconButton: VFC<IconButtonProps> = memo((props) => {
       className={`${styles.iconButton} ${className}`}
       onClick={onClick}
       disabled={disabled}
+      ref={ref}
     >
       <Icon
         className={styles.icon}
-        // icon={{ icon, size: 'small' }}
       />
     </button>
   );
-});
+}));

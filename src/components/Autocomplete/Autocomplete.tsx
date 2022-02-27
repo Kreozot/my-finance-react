@@ -57,22 +57,27 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
         className={styles.button}
         disabled={disabled}
       />
-      {isOpen
-        && (
-          <div {...getMenuProps()} className={styles.menu}>
-            {inputItems.map((item, index) => (
-              <div
-                {...getItemProps({ item, index })}
-                className={classNames(styles.item, {
-                  [styles.highlighted]: highlightedIndex === index,
-                })}
-                key={item}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        )}
+      <div
+        {...getMenuProps()}
+        className={classNames(styles.menu, {
+          [styles.open]: isOpen,
+        })}
+      >
+        {
+          isOpen
+          && (inputItems.map((item, index) => (
+            <div
+              {...getItemProps({ item, index })}
+              className={classNames(styles.item, {
+                [styles.highlighted]: highlightedIndex === index,
+              })}
+              key={item}
+            >
+              {item}
+            </div>
+          )))
+        }
+      </div>
     </div>
   );
 });

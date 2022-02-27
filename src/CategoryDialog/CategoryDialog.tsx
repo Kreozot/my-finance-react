@@ -127,7 +127,6 @@ export const CategoryDialog: VFC<{}> = observer(() => {
   }, [isItemChecked]);
 
   const canBeApplied = useMemo(() => {
-    console.log(newCategoryName);
     return (isCategoryChecked || isItemChecked || isItemRegExpChecked)
       && ((isNewCategoryChecked && newCategoryName) || (isNewItemChecked && newItemName));
   }, [
