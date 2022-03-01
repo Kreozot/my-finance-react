@@ -6,7 +6,7 @@ import { ReactComponent as EditIcon } from '@material-design-icons/svg/filled/ed
 
 import { Bank, CategoryType } from 'types';
 import { IconButton } from 'components/IconButton';
-import { categoryDialogState } from 'CategoryDialog';
+import { transformerEditDialogState } from 'TransformerEditDialog';
 import { transformerChoiceState } from 'TransformerChoice';
 import { BankIcon } from '../BankIcon';
 
@@ -41,10 +41,10 @@ export const Item: VFC<ItemProps> = memo((props) => {
       if (transformers.length > 1) {
         transformerChoiceState.show(transformers);
       } else {
-        categoryDialogState.edit(transformers[0]);
+        transformerEditDialogState.edit(transformers[0]);
       }
     } else {
-      categoryDialogState.add(categoryName, itemName, categoryType);
+      transformerEditDialogState.add(categoryName, itemName, categoryType);
     }
   }, [transformers, categoryName, categoryType, itemName]);
 

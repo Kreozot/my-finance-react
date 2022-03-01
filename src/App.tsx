@@ -8,7 +8,7 @@ import '@rmwc/dialog/styles';
 
 import { TransformerChoice } from 'TransformerChoice';
 import { ConfirmationDialog } from 'components/ConfirmationDialog';
-import { CategoryDialog } from './CategoryDialog';
+import { TransformerEditDialog } from './TransformerEditDialog';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
     <>
       <TransactionsTable />
       <TransformerChoice />
-      <CategoryDialog />
+      <TransformerEditDialog />
       <ConfirmationDialog />
       <ToastContainer
         pauseOnFocusLoss={false}

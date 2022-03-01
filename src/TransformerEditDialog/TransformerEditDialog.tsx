@@ -14,9 +14,9 @@ import { Checkbox } from 'components/Checkbox';
 import { Autocomplete } from 'components/Autocomplete';
 import { confirmationDialogState } from 'components/ConfirmationDialog';
 import { CategoryType } from 'types';
-import { categoryDialogState } from './categoryDialogState';
+import { transformerEditDialogState } from './transformerEditDialogState';
 
-import styles from './CategoryDialog.module.scss';
+import styles from './TransformerEditDialog.module.scss';
 
 const DELETE_CONFIRMATION_MESSAGE = 'Удалить трансформацию? Это не приведёт к удалению транзакций, к которым она была применена. Они просто начнут отображаться в исходном виде.';
 
@@ -26,10 +26,10 @@ const escapeRegExp = (text: string) => {
 
 // TODO Возможность сбрасывать текстовые поля
 // FIXME Если поле Новая Категория заполнено, и поставить галочку, то оно не применится
-export const CategoryDialog: VFC<{}> = observer(() => {
+export const TransformerEditDialog: VFC<{}> = observer(() => {
   const {
     transformer, isVisible,
-  } = categoryDialogState;
+  } = transformerEditDialogState;
 
   const [isCategoryChecked, setCategoryChecked] = useState(false);
   const [isItemChecked, setItemChecked] = useState(false);
@@ -67,7 +67,7 @@ export const CategoryDialog: VFC<{}> = observer(() => {
   }, [transformer]);
 
   const handleClose = useCallback(() => {
-    categoryDialogState.hide();
+    transformerEditDialogState.hide();
   }, []);
   const handleAcceptClick = useCallback(() => {
     setTimeout(() => {
@@ -89,11 +89,11 @@ export const CategoryDialog: VFC<{}> = observer(() => {
         });
         toast.success('Успешно');
       } catch (err) {
-        categoryDialogState.reopen();
+        transformerEditDialogState.reopen();
         toast.error((err as Error).message);
       }
     }, 0);
-    categoryDialogState.hide();
+    transformerEditDialogState.hide();
   }, [
     isCategoryChecked,
     isItemChecked,
@@ -142,7 +142,7 @@ export const CategoryDialog: VFC<{}> = observer(() => {
   const handleDeleteClick = useCallback(() => {
     confirmationDialogState.confirm(DELETE_CONFIRMATION_MESSAGE, () => {
       if (transformer.id) {
-        categoryDialogState.hide();
+        transformerEditDialogState.hide();
         tableData.deleteTransformer(transformer.id);
       }
     });
@@ -258,4 +258,4 @@ export const CategoryDialog: VFC<{}> = observer(() => {
 
   );
 });
-CategoryDialog.displayName = 'CategoryDialog';
+TransformerEditDialog.displayName = 'TransformerEditDialog';

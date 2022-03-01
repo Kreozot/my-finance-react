@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { tableData, Transformer } from 'store';
 import { CategoryType } from 'types';
 
-class CategoryDialogState {
+class TransformerEditDialogState {
   isVisible: boolean = false;
 
   transformer: Transformer = {};
@@ -38,4 +38,4 @@ class CategoryDialogState {
   }
 }
 
-export const categoryDialogState = new CategoryDialogState();
+export const transformerEditDialogState = new TransformerEditDialogState();

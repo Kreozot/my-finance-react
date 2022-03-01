@@ -6,7 +6,7 @@ import { ReactComponent as ArrowIcon } from '@material-design-icons/svg/filled/a
 import { tableData, Transformer } from 'store';
 import { IconButton } from 'components/IconButton';
 
-import { categoryDialogState } from 'CategoryDialog';
+import { transformerEditDialogState } from 'TransformerEditDialog';
 import { confirmationDialogState } from 'components/ConfirmationDialog';
 import styles from './TransformerChoiceItem.module.scss';
 
@@ -23,7 +23,7 @@ export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((prop
 
   const handleEditClick = useCallback(() => {
     if (transformer.id) {
-      categoryDialogState.edit(transformer.id);
+      transformerEditDialogState.edit(transformer.id);
     }
   }, [transformer.id]);
 
