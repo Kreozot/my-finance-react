@@ -21,12 +21,9 @@ export const TransformerChoice: VFC<{}> = observer(() => {
     transformerChoiceState.hide();
   }, []);
 
-  const transformers = useMemo(() => {
-    return transformerIds
-      .map((transformerId) => tableData.transformers.find(({ id }) => id === transformerId))
-      .filter((transformer) => Boolean(transformer)) as Transformer[];
-    // FIXME useStore и добавить зависимость от transformers
-  }, [transformerIds]);
+  const transformers = transformerIds
+    .map((transformerId) => tableData.transformers.find(({ id }) => id === transformerId))
+    .filter((transformer) => Boolean(transformer)) as Transformer[];
 
   return (
     <Dialog
