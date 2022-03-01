@@ -57,6 +57,7 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
         className={styles.button}
         disabled={disabled}
       />
+      {/* Из-за особенностей downshift, меню должно рендериться всегда */}
       <div
         {...getMenuProps()}
         className={classNames(styles.menu, {

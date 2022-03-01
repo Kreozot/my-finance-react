@@ -12,12 +12,14 @@ import styles from './TransformerChoiceItem.module.scss';
 
 type TransformerChoiceItemProps = {
   transformer: Transformer;
+  isFirst: boolean;
+  rowsCount: number;
 };
 
 const DELETE_CONFIRMATION_MESSAGE = 'Удалить трансформацию? Это не приведёт к удалению транзакций, к которым она была применена. Они просто начнут отображаться в исходном виде.';
 
 export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((props) => {
-  const { transformer } = props;
+  const { transformer, isFirst, rowsCount } = props;
 
   const handleEditClick = useCallback(() => {
     if (transformer.id) {
@@ -52,21 +54,28 @@ export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((prop
           </div>
         )}
       </td>
-      <td>
-        <ArrowIcon className={styles.arrow} />
-      </td>
-      <td className={styles.contentCell}>
-        {transformer.newCategoryName && (
-          <div>
-            Категория <strong>{transformer.newCategoryName}</strong>
-          </div>
-        )}
-        {transformer.newItemName && (
-          <div>
-            Название перевода <strong>{transformer.newItemName}</strong>
-          </div>
-        )}
-      </td>
+      {
+        isFirst
+          && (
+            <>
+              <td rowSpan={rowsCount}>
+                <ArrowIcon className={styles.arrow} />
+              </td>
+              <td className={styles.contentCell} rowSpan={rowsCount}>
+                {transformer.newCategoryName && (
+                  <div>
+                    Категория <strong>{transformer.newCategoryName}</strong>
+                  </div>
+                )}
+                {transformer.newItemName && (
+                  <div>
+                    Название перевода <strong>{transformer.newItemName}</strong>
+                  </div>
+                )}
+              </td>
+            </>
+          )
+      }
       <td>
         <IconButton
           Icon={EditIcon}

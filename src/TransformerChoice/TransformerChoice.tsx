@@ -1,12 +1,12 @@
 import {
-  useCallback, VFC,
+  useCallback, useMemo, VFC,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Dialog, DialogContent,
 } from '@rmwc/dialog';
 
-import { tableData } from 'store';
+import { tableData, Transformer } from 'store';
 import { transformerChoiceState } from './transformerChoiceState';
 
 import styles from './TransformerChoice.module.scss';
@@ -21,6 +21,13 @@ export const TransformerChoice: VFC<{}> = observer(() => {
     transformerChoiceState.hide();
   }, []);
 
+  const transformers = useMemo(() => {
+    return transformerIds
+      .map((transformerId) => tableData.transformers.find(({ id }) => id === transformerId))
+      .filter((transformer) => Boolean(transformer)) as Transformer[];
+    // FIXME useStore и добавить зависимость от transformers
+  }, [transformerIds]);
+
   return (
     <Dialog
       open={isVisible}
@@ -29,15 +36,14 @@ export const TransformerChoice: VFC<{}> = observer(() => {
       <DialogContent>
         <table className={styles.table}>
           <tbody>
-            {transformerIds.map((transformerId) => {
-              const transformer = tableData.transformers.find(({ id }) => id === transformerId);
-              if (transformer) {
-                return (
-                  <TransformerChoiceItem transformer={transformer} key={transformerId} />
-                );
-              }
-              return null;
-            })}
+            {transformers.map((transformer, index) => (
+              <TransformerChoiceItem
+                transformer={transformer}
+                key={transformer.id}
+                isFirst={index === 0}
+                rowsCount={transformers.length}
+              />
+            ))}
           </tbody>
         </table>
       </DialogContent>

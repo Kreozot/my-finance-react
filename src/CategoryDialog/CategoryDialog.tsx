@@ -12,15 +12,13 @@ import { tableData } from 'store';
 import { TextField } from 'components/TextField';
 import { Checkbox } from 'components/Checkbox';
 import { Autocomplete } from 'components/Autocomplete';
+import { confirmationDialogState } from 'components/ConfirmationDialog';
 import { CategoryType } from 'types';
 import { categoryDialogState } from './categoryDialogState';
 
-import '@rmwc/formfield/styles';
-import '@material/dialog/dist/mdc.dialog.css';
-import '@material/button/dist/mdc.button.css';
-import '@material/ripple/dist/mdc.ripple.css';
-
 import styles from './CategoryDialog.module.scss';
+
+const DELETE_CONFIRMATION_MESSAGE = 'Удалить трансформацию? Это не приведёт к удалению транзакций, к которым она была применена. Они просто начнут отображаться в исходном виде.';
 
 const escapeRegExp = (text: string) => {
   return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
@@ -77,6 +75,7 @@ export const CategoryDialog: VFC<{}> = observer(() => {
           tableData.deleteTransformer(transformer.id);
         }
         tableData.addTransformer({
+          categoryType: transformer.categoryType,
           categoryName: isCategoryChecked ? transformer.categoryName : undefined,
           itemName: isItemChecked ? transformer.itemName : undefined,
           itemNameRegExp: isItemRegExpChecked ? new RegExp(itemNameRegExp) : undefined,
@@ -138,6 +137,17 @@ export const CategoryDialog: VFC<{}> = observer(() => {
     isNewCategoryChecked,
     isNewItemChecked,
   ]);
+
+  const handleDeleteClick = useCallback(() => {
+    confirmationDialogState.confirm(DELETE_CONFIRMATION_MESSAGE, () => {
+      if (transformer.id) {
+        categoryDialogState.hide();
+        tableData.deleteTransformer(transformer.id);
+      }
+    });
+  }, [transformer.id]);
+
+  console.log(newCategoryName, transformer.categoryType, transformer.categoryType === CategoryType.Income);
 
   return (
     <Dialog
@@ -220,6 +230,18 @@ export const CategoryDialog: VFC<{}> = observer(() => {
       </DialogContent>
 
       <DialogActions>
+        {/* FIXME Разобраться почему не стилизуется danger */}
+        {
+          Boolean(transformer.id)
+            && (
+              <DialogButton
+                danger
+                onClick={handleDeleteClick}
+              >
+                Удалить
+              </DialogButton>
+            )
+        }
         <DialogButton action="close">
           Отмена
         </DialogButton>
