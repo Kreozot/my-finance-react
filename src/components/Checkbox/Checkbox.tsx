@@ -19,3 +19,4 @@ export const Checkbox: VFC<CheckboxProps> = memo((props) => {
     <RMWCCheckbox {...rest} onChange={handleChange} />
   );
 });
+Checkbox.displayName = 'Checkbox';

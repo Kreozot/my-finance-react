@@ -70,3 +70,4 @@ export const Item: VFC<ItemProps> = memo((props) => {
     </span>
   );
 });
+Item.displayName = 'Item';

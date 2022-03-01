@@ -31,3 +31,4 @@ export const ChartCell: VFC<FixedCellProps> = memo(({ row }) => {
     />
   );
 });
+ChartCell.displayName = 'ChartCell';

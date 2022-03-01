@@ -46,3 +46,4 @@ export const Mean: VFC<MeanCellProps> = memo(({ data, isNonAbsolute }) => {
     <Money value={roundInteger(isNonAbsolute ? mostAverage : Math.abs(mostAverage))} />
   );
 });
+Mean.displayName = 'Mean';

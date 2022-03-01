@@ -25,6 +25,7 @@ const escapeRegExp = (text: string) => {
 };
 
 // TODO Возможность сбрасывать текстовые поля
+// FIXME Если поле Новая Категория заполнено, и поставить галочку, то оно не применится
 export const CategoryDialog: VFC<{}> = observer(() => {
   const {
     transformer, isVisible,
@@ -257,3 +258,4 @@ export const CategoryDialog: VFC<{}> = observer(() => {
 
   );
 });
+CategoryDialog.displayName = 'CategoryDialog';

@@ -189,3 +189,4 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
     </DataTable>
   );
 });
+TransactionsTable.displayName = 'TransactionsTable';

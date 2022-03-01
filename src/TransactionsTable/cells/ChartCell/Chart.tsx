@@ -92,3 +92,4 @@ export const Chart: VFC<any> = memo(({ chartDataSet, isNonAbsolute }) => {
     </RumbleChart>
   );
 });
+Chart.displayName = 'Chart';

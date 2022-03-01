@@ -38,3 +38,4 @@ export const ConfirmationDialog: VFC<{}> = observer(() => {
     </Dialog>
   );
 });
+ConfirmationDialog.displayName = 'ConfirmationDialog';

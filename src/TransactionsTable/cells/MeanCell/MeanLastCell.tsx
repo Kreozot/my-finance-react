@@ -11,3 +11,4 @@ export const MeanLastCell: VFC<FixedCellProps> = memo(({ row }) => {
     <Mean data={data} isNonAbsolute={isNonAbsoluteRow(row)} />
   );
 });
+MeanLastCell.displayName = 'MeanLastCell';

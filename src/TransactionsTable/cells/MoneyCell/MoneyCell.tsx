@@ -10,3 +10,4 @@ export const MoneyCell: VFC<Partial<FixedCellProps>> = memo(({ value, row }) => 
     <Money value={isNonAbsoluteRow(row) ? value : Math.abs(value)} />
   );
 });
+MoneyCell.displayName = 'MoneyCell';

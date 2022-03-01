@@ -11,3 +11,4 @@ export const MeanTotalCell: VFC<FixedCellProps> = memo(({ row }) => {
     <Mean data={data} isNonAbsolute={isNonAbsoluteRow(row)} />
   );
 });
+MeanTotalCell.displayName = 'MeanTotalCell';

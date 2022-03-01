@@ -50,3 +50,4 @@ export const CategoryCell: VFC<FixedCellProps> = observer(({ row, cell }) => {
     </span>
   );
 });
+CategoryCell.displayName = 'CategoryCell';

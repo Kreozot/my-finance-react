@@ -33,3 +33,4 @@ export const IconButton = memo(forwardRef<HTMLButtonElement, IconButtonProps>((p
     </button>
   );
 }));
+IconButton.displayName = 'IconButton';

@@ -47,3 +47,4 @@ export const TransformerChoice: VFC<{}> = observer(() => {
     </Dialog>
   );
 });
+TransformerChoice.displayName = 'TransformerChoice';

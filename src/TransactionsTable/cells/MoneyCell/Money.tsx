@@ -22,3 +22,4 @@ export const Money: VFC<MoneyProps> = memo(({ value }) => {
     </span>
   );
 });
+Money.displayName = 'Money';

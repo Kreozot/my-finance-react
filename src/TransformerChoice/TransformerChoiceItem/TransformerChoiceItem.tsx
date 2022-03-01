@@ -95,3 +95,4 @@ export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((prop
     </tr>
   );
 });
+TransformerChoiceItem.displayName = 'TransformerChoiceItem';

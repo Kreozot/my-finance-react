@@ -33,3 +33,4 @@ export const DateFilter: VFC<FixedFilterProps> = memo(({ column }) => {
     />
   );
 });
+DateFilter.displayName = 'DateFilter';

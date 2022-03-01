@@ -28,3 +28,4 @@ export const BankIcon: VFC<BankIconProps> = memo((props) => {
     </span>
   );
 });
+BankIcon.displayName = 'BankIcon';

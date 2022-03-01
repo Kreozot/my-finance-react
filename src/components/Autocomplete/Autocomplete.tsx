@@ -82,3 +82,4 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
     </div>
   );
 });
+Autocomplete.displayName = 'Autocomplete';

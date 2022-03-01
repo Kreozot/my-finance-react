@@ -20,3 +20,4 @@ export const TextField = memo(forwardRef<HTMLInputElement, TextFieldProps>((prop
     <RMWCTextField inputRef={ref} onChange={handleChange} {...rest} />
   );
 }));
+TextField.displayName = 'TextField';

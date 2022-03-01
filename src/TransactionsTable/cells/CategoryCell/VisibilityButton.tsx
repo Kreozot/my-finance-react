@@ -49,3 +49,4 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
     />
   );
 });
+VisibilityButton.displayName = 'VisibilityButton';

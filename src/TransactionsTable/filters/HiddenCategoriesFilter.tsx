@@ -37,3 +37,4 @@ export const HiddenCategoriesFilter: VFC<FixedFilterProps> = memo(({ column }) =
     />
   );
 });
+HiddenCategoriesFilter.displayName = 'HiddenCategoriesFilter';

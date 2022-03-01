@@ -6,10 +6,11 @@ type CategoryProps = {
 };
 
 export const Category: VFC<CategoryProps> = memo((props) => {
-  const {  } = props;
+  const { } = props;
 
   return (
     <>
     </>
   );
 });
+Category.displayName = 'Category';
