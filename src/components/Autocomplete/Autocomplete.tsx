@@ -29,6 +29,7 @@ export const Autocomplete: VFC<AutocompleteProps> = memo((props) => {
     getItemProps,
   } = useCombobox({
     items: inputItems,
+    selectedItem: restProps.value,
     onInputValueChange: ({ inputValue }) => {
       setInputItems(
         items.filter((item) => item.toLowerCase().startsWith((inputValue || '').toLowerCase())),

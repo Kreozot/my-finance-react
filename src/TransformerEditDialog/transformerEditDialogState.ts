@@ -16,7 +16,6 @@ class TransformerEditDialogState {
     transformer.categoryName = categoryName;
     transformer.itemName = itemName;
     transformer.categoryType = categoryType;
-    console.log(categoryType);
     this.transformer = transformer;
     this.isVisible = true;
   }

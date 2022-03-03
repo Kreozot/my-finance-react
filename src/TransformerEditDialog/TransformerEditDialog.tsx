@@ -25,7 +25,6 @@ const escapeRegExp = (text: string) => {
 };
 
 // TODO Возможность сбрасывать текстовые поля
-// FIXME Если поле Новая Категория заполнено, и поставить галочку, то оно не применится
 export const TransformerEditDialog: VFC<{}> = observer(() => {
   const {
     transformer, isVisible,
@@ -147,8 +146,6 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
       }
     });
   }, [transformer.id]);
-
-  console.log(newCategoryName, transformer.categoryType, transformer.categoryType === CategoryType.Income);
 
   return (
     <Dialog
