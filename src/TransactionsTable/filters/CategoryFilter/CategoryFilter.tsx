@@ -2,6 +2,7 @@ import {
   memo, useCallback, useMemo, VFC,
 } from 'react';
 
+import { ReactComponent as FilterIcon } from '@material-design-icons/svg/filled/search.svg';
 import { ReactComponent as VisibilityIcon } from '@material-design-icons/svg/filled/visibility.svg';
 import { ReactComponent as VisibilityOffIcon } from '@material-design-icons/svg/filled/visibility_off.svg';
 
@@ -41,7 +42,7 @@ export const CategoryFilter: VFC<FixedFilterProps> = memo(({ column }) => {
       hiddenColumns: !filterValue.hiddenColumns,
     };
     setFilter(newFilterValue);
-    saveSetting(Setting.HiddenCategoriesFilter, newFilterValue);
+    saveSetting(Setting.HiddenCategoriesFilter, newFilterValue.hiddenColumns);
   }, [filterValue, setFilter]);
 
   const handleTextChange = useCallback((text: string) => {
@@ -50,7 +51,6 @@ export const CategoryFilter: VFC<FixedFilterProps> = memo(({ column }) => {
       text,
     };
     setFilter(newFilterValue);
-    saveSetting(Setting.HiddenCategoriesFilter, newFilterValue);
   }, [filterValue, setFilter]);
 
   return (
@@ -58,7 +58,7 @@ export const CategoryFilter: VFC<FixedFilterProps> = memo(({ column }) => {
       <TextField
         onValueChange={handleTextChange}
         outlined
-        label="Фильтр"
+        icon={<FilterIcon className={styles.filterIcon} />}
       />
       <IconButton
         title={iconTitle}

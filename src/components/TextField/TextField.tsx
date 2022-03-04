@@ -7,6 +7,7 @@ import '@rmwc/textfield/styles';
 
 export type TextFieldProps = Omit<RMWCTextFieldProps, 'onChange'> & {
   onValueChange: (value: string) => void,
+  clearIcon?: boolean,
 };
 
 export const TextField = memo(forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
@@ -17,7 +18,12 @@ export const TextField = memo(forwardRef<HTMLInputElement, TextFieldProps>((prop
   }, [onValueChange]);
 
   return (
-    <RMWCTextField inputRef={ref} onChange={handleChange} {...rest} />
+    <RMWCTextField
+      inputRef={ref}
+      onChange={handleChange}
+      // trailingIcon
+      {...rest}
+    />
   );
 }));
 TextField.displayName = 'TextField';

@@ -18,6 +18,7 @@ import {
   DataTableHead,
 } from '@rmwc/data-table';
 import classNames from 'classnames';
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 
 import {
   dates, tableData, firstMonthKeys,
@@ -40,6 +41,8 @@ type TransactionsTableProps = {
 
 };
 
+const cyrillicToTranslit = new CyrillicToTranslit();
+
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const [expandedState, setExpandedState] = useState({});
 
@@ -48,12 +51,19 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       if (isSummaryRow(row)) {
         return true;
       }
-      const categoryCode: string = row.values[id].toLowerCase();
+      const categoryCode: string = row.values[id];
+
+      if (filterValue.hiddenColumns && tableData.isCategoryHidden(categoryCode)) {
+        return false;
+      }
+
       const itemName = row.original?.itemName.toLowerCase() || '';
-      return (!filterValue.hiddenColumns || !tableData.isCategoryHidden(categoryCode))
-        && (!filterValue.text
-          || categoryCode.includes(filterValue.text.toLowerCase())
-          || itemName.includes(filterValue.text.toLowerCase()));
+
+      return (!filterValue.text
+        || categoryCode.toLowerCase().includes(filterValue.text.toLowerCase())
+        || itemName.includes(filterValue.text.toLowerCase())
+        || itemName.includes(cyrillicToTranslit.transform(filterValue.text.toLowerCase()))
+      );
     });
   }, []);
 
@@ -130,8 +140,8 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
         filters: [
           {
             id: 'categoryCode',
-            value: loadSetting(Setting.HiddenCategoriesFilter) || {
-              hiddenColumns: true,
+            value: {
+              hiddenColumns: loadSetting(Setting.HiddenCategoriesFilter),
             } as CategoryFilterValue,
           },
         ],

@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@rmwc/data-table/styles';
 import '@rmwc/button/styles';
 import '@rmwc/formfield/styles';
+import '@rmwc/textfield/styles';
 import '@rmwc/dialog/styles';
 
 import { TransformerChoice } from 'TransformerChoice';
