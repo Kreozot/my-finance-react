@@ -1,7 +1,2 @@
-import { DateFilter } from './DateFilter';
-import { HiddenCategoriesFilter } from './HiddenCategoriesFilter';
-
-export {
-  DateFilter,
-  HiddenCategoriesFilter,
-};
+export * from './DateFilter/DateFilter';
+export * from './CategoryFilter/CategoryFilter';

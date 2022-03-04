@@ -6,7 +6,7 @@ import { ReactComponent as FilterIcon } from '@material-design-icons/svg/filled/
 import { ReactComponent as FilterOffIcon } from '@material-design-icons/svg/filled/filter_alt_off.svg';
 
 import { IconButton } from 'components/IconButton';
-import { FixedFilterProps } from '../data-table';
+import { FixedFilterProps } from '../../data-table';
 
 export const DateFilter: VFC<FixedFilterProps> = memo(({ column }) => {
   const { setFilter, filterValue } = column;

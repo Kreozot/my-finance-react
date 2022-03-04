@@ -28,7 +28,7 @@ import { loadSetting, Setting } from 'settingsStorage';
 import {
   ChartCell, MeanTotalCell, MeanLastCell, CategoryCell, MoneyCell,
 } from './cells';
-import { DateFilter, HiddenCategoriesFilter } from './filters';
+import { DateFilter, CategoryFilter, CategoryFilterValue } from './filters';
 import {
   FixedRow, FixedTableInstance, FixedColumn, FixedTableOptions,
 } from './data-table';
@@ -43,26 +43,36 @@ type TransactionsTableProps = {
 export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
   const [expandedState, setExpandedState] = useState({});
 
-  const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
+  const categoryFilter = useCallback((rows: FixedRow[], id: string, filterValue: CategoryFilterValue) => {
     return rows.filter((row) => {
-      const categoryCode = row.values[id];
-      return !filterValue || isSummaryRow(row) || !tableData.isCategoryHidden(categoryCode);
+      if (isSummaryRow(row)) {
+        return true;
+      }
+      const categoryCode: string = row.values[id].toLowerCase();
+      const itemName = row.original?.itemName.toLowerCase() || '';
+      return (!filterValue.hiddenColumns || !tableData.isCategoryHidden(categoryCode))
+        && (!filterValue.text
+          || categoryCode.includes(filterValue.text.toLowerCase())
+          || itemName.includes(filterValue.text.toLowerCase()));
     });
   }, []);
 
   const dateFilter = useCallback((rows: FixedRow[], id: string, filterValue: boolean) => {
     return rows.filter((row) => {
+      if (isSummaryRow(row)) {
+        return true;
+      }
       const value = row.values[id];
-      return !filterValue || isSummaryRow(row) || Boolean(value);
+      return !filterValue || Boolean(value);
     });
   }, []);
 
   const columns = useMemo(() => [
     {
-      Header: 'Категория',
+      Header: '',
       accessor: 'categoryCode',
       Cell: CategoryCell,
-      Filter: HiddenCategoriesFilter,
+      Filter: CategoryFilter,
       filter: categoryFilter,
     },
     {
@@ -118,7 +128,12 @@ export const TransactionsTable: VFC<TransactionsTableProps> = observer(() => {
       data: tableData.tableRows,
       initialState: {
         filters: [
-          { id: 'categoryCode', value: loadSetting(Setting.HiddenCategoriesFilter) },
+          {
+            id: 'categoryCode',
+            value: loadSetting(Setting.HiddenCategoriesFilter) || {
+              hiddenColumns: true,
+            } as CategoryFilterValue,
+          },
         ],
         groupBy: ['categoryCode'],
         expanded: expandedState,
