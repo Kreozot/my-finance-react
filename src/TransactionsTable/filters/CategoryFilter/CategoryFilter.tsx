@@ -45,6 +45,7 @@ export const CategoryFilter: VFC<FixedFilterProps> = memo(({ column }) => {
     saveSetting(Setting.HiddenCategoriesFilter, newFilterValue.hiddenColumns);
   }, [filterValue, setFilter]);
 
+  // TODO useDebounce
   const handleTextChange = useCallback((text: string) => {
     const newFilterValue: CategoryFilterValue = {
       ...filterValue,

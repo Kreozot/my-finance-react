@@ -10,6 +10,7 @@ export type TextFieldProps = Omit<RMWCTextFieldProps, 'onChange'> & {
   clearIcon?: boolean,
 };
 
+// TODO clearIcon
 export const TextField = memo(forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const { onValueChange, ...rest } = props;
 
