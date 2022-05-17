@@ -6,10 +6,14 @@ import {
   randGitCommitSha,
 } from '@ngneat/falso';
 import fsExtra from 'fs-extra';
+import path from 'path';
 
-const TRANSACTIONS_FILE_PATH = 'src/data/allTransactions.json';
+const TRANSACTIONS_FILE_NAME = 'allTransactions.json';
+const TRANSACTIONS_FILE_PATH = path.join(__dirname, 'src/data', TRANSACTIONS_FILE_NAME);
 
 if (!fsExtra.existsSync(TRANSACTIONS_FILE_PATH)) {
+  console.log(`${TRANSACTIONS_FILE_NAME} not found. Generating mock data...`);
+
   const SPEND_CATEGORIES = [
     'Food',
     'Groceries',
@@ -68,5 +72,7 @@ if (!fsExtra.existsSync(TRANSACTIONS_FILE_PATH)) {
       };
       return item;
     });
-  fsExtra.writeFileSync(TRANSACTIONS_FILE_PATH, JSON.stringify([...spentElements, ...incomeElements], null, 2));
+  const data = [...spentElements, ...incomeElements];
+  fsExtra.writeFileSync(TRANSACTIONS_FILE_PATH, JSON.stringify(data, null, 2));
+  console.log(`Generated and saved ${data} mock records.`);
 }
