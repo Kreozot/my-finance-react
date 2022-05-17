@@ -75,5 +75,5 @@ if (!fsExtra.existsSync(TRANSACTIONS_FILE_PATH)) {
   const data = [...spentElements, ...incomeElements];
   fsExtra.ensureFileSync(TRANSACTIONS_FILE_PATH);
   fsExtra.writeFileSync(TRANSACTIONS_FILE_PATH, JSON.stringify(data, null, 2));
-  console.log(`Generated and saved ${data} mock records.`);
+  console.log(`Generated and saved ${data.length} mock records.`);
 }
