@@ -1,5 +1,5 @@
 import {
-  useCallback, useMemo, VFC,
+  useCallback, VFC,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import {

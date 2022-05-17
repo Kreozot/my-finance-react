@@ -77,7 +77,8 @@
     "overrides": [
       {
         "files": [
-          "plopfile.ts"
+          "plopfile.ts",
+          "generate.ts"
         ],
         "env": {
           "node": true,
