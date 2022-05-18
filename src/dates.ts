@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
+// import 'dayjs/locale/ru';
 
-dayjs.locale('ru');
+// dayjs.locale('en');
 
 export const getDayjsFromKey = (dateKey: string) => {
   return dayjs(`${dateKey}-01`);

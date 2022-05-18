@@ -191,15 +191,15 @@ class TableData {
   }
 
   get incomeSumRow() {
-    return this.calculateSumRow(this.incomeRowData, 'Доход', CategoryType.Income);
+    return this.calculateSumRow(this.incomeRowData, 'Income', CategoryType.Income);
   }
 
   get expensesSumRow() {
-    return this.calculateSumRow(this.expenseRowData, 'Расход', CategoryType.Expense);
+    return this.calculateSumRow(this.expenseRowData, 'Outcome', CategoryType.Expense);
   }
 
   get marginSumRow() {
-    return this.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Остаток', CategoryType.Both);
+    return this.calculateSumRow([this.incomeSumRow, this.expensesSumRow], 'Rest', CategoryType.Both);
   }
 }
 
