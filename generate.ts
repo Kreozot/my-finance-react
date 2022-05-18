@@ -7,6 +7,7 @@ import {
 } from '@ngneat/falso';
 import fsExtra from 'fs-extra';
 import path from 'path';
+import padStart from 'lodash/padStart';
 
 const TRANSACTIONS_FILE_NAME = 'allTransactions.json';
 const TRANSACTIONS_FILE_PATH = path.join(__dirname, 'src/data', TRANSACTIONS_FILE_NAME);
@@ -46,7 +47,7 @@ if (!fsExtra.existsSync(TRANSACTIONS_FILE_PATH)) {
       const date = randBetweenDate({ from: new Date('10/07/2020'), to: new Date() });
       const item = {
         date,
-        dateKey: `${date.getFullYear()}-${date.getMonth()}`,
+        dateKey: `${date.getFullYear()}-${padStart(String(date.getMonth() + 1), 2, '0')}`,
         amount: randNumber({ min: -1, max: -100 }),
         currency: CURRENCY,
         category: rand(SPEND_CATEGORIES),
