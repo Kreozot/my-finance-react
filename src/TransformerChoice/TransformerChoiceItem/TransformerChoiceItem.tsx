@@ -40,17 +40,17 @@ export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((prop
       <td className={styles.contentCell}>
         {transformer.categoryName && (
           <div>
-            Категория <strong>{transformer.categoryName}</strong>
+            Category <strong>{transformer.categoryName}</strong>
           </div>
         )}
         {transformer.itemName && (
           <div>
-            Название перевода <strong>{transformer.itemName}</strong>
+            Transaction name <strong>{transformer.itemName}</strong>
           </div>
         )}
         {transformer.itemNameRegExp && (
           <div>
-            Название перевода (RegExp) <strong>{transformer.itemNameRegExp}</strong>
+            Transaction name (RegExp) <strong>{transformer.itemNameRegExp}</strong>
           </div>
         )}
       </td>
@@ -64,12 +64,12 @@ export const TransformerChoiceItem: VFC<TransformerChoiceItemProps> = memo((prop
               <td className={styles.contentCell} rowSpan={rowsCount}>
                 {transformer.newCategoryName && (
                   <div>
-                    Категория <strong>{transformer.newCategoryName}</strong>
+                    Category <strong>{transformer.newCategoryName}</strong>
                   </div>
                 )}
                 {transformer.newItemName && (
                   <div>
-                    Название перевода <strong>{transformer.newItemName}</strong>
+                    Transaction name <strong>{transformer.newItemName}</strong>
                   </div>
                 )}
               </td>

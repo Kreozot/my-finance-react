@@ -13,8 +13,8 @@ export const DateFilter: VFC<FixedFilterProps> = memo(({ column }) => {
 
   const title = useMemo(() => {
     return filterValue
-      ? 'Отключить фильтр по месяцу'
-      : 'Фильтровать по этому месяцу';
+      ? 'Turn off month filter'
+      : 'Filter by this month';
   }, [filterValue]);
 
   const icon = useMemo(() => {

@@ -62,7 +62,7 @@ export const Item: VFC<ItemProps> = memo((props) => {
         {itemName}
       </span>
       <IconButton
-        title="Редактировать информацию"
+        title="Edit data"
         Icon={EditIcon}
         className={styles.editButton}
         onClick={handleEditClick}

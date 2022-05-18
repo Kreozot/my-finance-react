@@ -26,8 +26,8 @@ export const CategoryFilter: VFC<FixedFilterProps> = memo(({ column }) => {
 
   const iconTitle = useMemo(() => {
     return filterValue.hiddenColumns
-      ? 'Показать скрытые категории'
-      : 'Не показывать скрытые категории';
+      ? 'Show hidden categories'
+      : 'Don\'t show hidden categories';
   }, [filterValue]);
 
   const icon = useMemo(() => {

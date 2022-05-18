@@ -158,14 +158,14 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
         <p>Выберите условия, при совпадении которых будут изменяться записи</p>
         <Checkbox
           id="categoryCheck"
-          label={<span>Название категории <strong>{transformer.categoryName}</strong></span>}
+          label={<span>Category name <strong>{transformer.categoryName}</strong></span>}
           checked={isCategoryChecked}
           onValueChange={setCategoryChecked}
           disabled={isCategoryConditionDisabled}
         />
         <Checkbox
           id="itemCheck"
-          label={<span>Название перевода <strong>{transformer.itemName}</strong></span>}
+          label={<span>Transaction name <strong>{transformer.itemName}</strong></span>}
           checked={isItemChecked}
           onValueChange={setItemChecked}
           disabled={isItemConditionDisabled}
@@ -174,7 +174,7 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
           <span className={styles.fieldLabel}>
             <Checkbox
               id="itemRegExpCheck"
-              label={<span>Название перевода (RegExp)</span>}
+              label={<span>Transaction name (RegExp)</span>}
               checked={isItemRegExpChecked}
               onValueChange={setItemRegExpChecked}
               disabled={isItemConditionDisabled}
@@ -188,15 +188,15 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
           />
         </FormField>
 
-        <h4>Трансформации</h4>
-        <p>Выберите трансформации, которые будут применяться к записям</p>
+        <h4>Transformations</h4>
+        <p>Choose transformations to apply to the records</p>
         <FormField className={styles.field}>
           <span className={styles.fieldLabel}>
             <Checkbox
               id="newCategoryCheck"
               checked={isNewCategoryChecked}
               onValueChange={setNewCategoryChecked}
-              label="Категория"
+              label="Category"
             />
           </span>
           <Autocomplete
@@ -215,7 +215,7 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
               id="newItemCheck"
               checked={isNewItemChecked}
               onValueChange={setNewItemChecked}
-              label="Название перевода"
+              label="Transaction name"
             />
           </span>
           <TextField
@@ -241,14 +241,14 @@ export const TransformerEditDialog: VFC<{}> = observer(() => {
             )
         }
         <DialogButton action="close">
-          Отмена
+          Cancel
         </DialogButton>
         <DialogButton
           isDefaultAction
           onClick={handleAcceptClick}
           disabled={!canBeApplied}
         >
-          Применить
+          Apply
         </DialogButton>
       </DialogActions>
     </Dialog>

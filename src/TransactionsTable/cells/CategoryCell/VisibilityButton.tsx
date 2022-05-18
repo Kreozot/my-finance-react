@@ -22,8 +22,8 @@ export const VisibilityButton: VFC<VisibilityButtonProps> = observer((props) => 
 
   const title = useMemo(() => {
     return isHidden
-      ? 'Показать категорию'
-      : 'Скрыть категорию';
+      ? 'Show category'
+      : 'Hide category';
   }, [isHidden]);
 
   const icon = useMemo(() => {
