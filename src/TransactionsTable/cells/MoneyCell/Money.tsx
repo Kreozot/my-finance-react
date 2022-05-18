@@ -5,7 +5,8 @@ import classNames from 'classnames';
 
 import styles from './MoneyCell.module.scss';
 
-const MEANINGFULL_LIMIT = 100;
+// TODO: Limit depends of the currency
+const MEANINGFULL_LIMIT = 5;
 
 type MoneyProps = {
   value: number;
